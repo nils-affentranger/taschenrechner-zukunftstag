@@ -145,13 +145,14 @@ namespace Taschenrechner.WinForms {
 
         private void buttonEvaluate_Click(object sender, EventArgs e) {
             try {
-                double result = calculator.Evaluate();
-                inputLabel.Text = result.ToString(CultureInfo.InvariantCulture);
+                string result = calculator.Evaluate();
+                inputLabel.Text = result;
             }
             catch (Exception ex) {
                 MessageBox.Show("Invalid expression: " + ex.Message);
             }
         }
+
 
         private void UpdateDisplay() {
             inputLabel.Text = calculator.GetCurrentCalculation();

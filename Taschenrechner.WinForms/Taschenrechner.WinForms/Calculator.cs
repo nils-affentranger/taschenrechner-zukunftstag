@@ -75,10 +75,12 @@ namespace Taschenrechner.WinForms {
             currentCalculation.Clear();
         }
 
-        public double Evaluate() {
+        public string Evaluate() {
             string postfix = ConvertToPostfix(currentCalculation);
-            return EvaluatePostfix(postfix);
+            double result = EvaluatePostfix(postfix);
+            return FormatNumber(result);
         }
+
 
         public string GetCurrentCalculation() {
             List<string> parts = new List<string>();
@@ -98,6 +100,11 @@ namespace Taschenrechner.WinForms {
 
         private int GetPrecedence(string op) {
             return op == "+" || op == "-" ? 1 : 2;
+        }
+        private string FormatNumber(double number) {
+            var nfi = new NumberFormatInfo { NumberGroupSeparator = "'", NumberDecimalDigits = 0 };
+            string formattedNumber = number.ToString("N", nfi);
+            return formattedNumber;
         }
 
         private string ConvertToPostfix(List<Token> infixTokens) {

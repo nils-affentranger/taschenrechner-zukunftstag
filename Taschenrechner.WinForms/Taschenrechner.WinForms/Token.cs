@@ -36,7 +36,14 @@ namespace Taschenrechner {
         }
 
         public override string ToString() {
-            return Type == TokenType.Number ? NumberString : Operator;
+            if (Type == TokenType.Number) {
+                var nfi = new NumberFormatInfo { NumberGroupSeparator = "'", NumberDecimalDigits = 0 };
+                if (NumberString.Contains(".")) {
+                    nfi.NumberDecimalDigits = NumberString.Split('.')[1].Length;
+                }
+                return double.Parse(NumberString, CultureInfo.InvariantCulture).ToString("N", nfi);
+            }
+            return Operator;
         }
     }
 }
