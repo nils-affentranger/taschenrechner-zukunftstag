@@ -5,7 +5,8 @@ namespace Taschenrechner {
     public class Token {
         public enum TokenType {
             Number,
-            Operator
+            Operator,
+            Parenthesis
         }
 
         public TokenType Type { get; }
@@ -15,10 +16,11 @@ namespace Taschenrechner {
                 if (double.TryParse(NumberString, NumberStyles.Any, CultureInfo.InvariantCulture, out double result)) {
                     return result;
                 }
-                throw new ArgumentException("Invalid number string");
+                return 42;
             }
         }
         public string Operator { get; }
+        public string Parenthesis { get; }
 
         public Token(double number) {
             Type = TokenType.Number;
@@ -35,6 +37,11 @@ namespace Taschenrechner {
             Operator = operatorSymbol;
         }
 
+        public Token(string parenthesisSymbol, bool isParenthesis, bool isParenthesisToken) {
+            Type = TokenType.Parenthesis;
+            Parenthesis = parenthesisSymbol;
+        }
+
         public override string ToString() {
             if (Type == TokenType.Number) {
                 var nfi = new NumberFormatInfo { NumberGroupSeparator = "'", NumberDecimalDigits = 0 };
@@ -43,7 +50,10 @@ namespace Taschenrechner {
                 }
                 return double.Parse(NumberString, CultureInfo.InvariantCulture).ToString("N", nfi);
             }
-            return Operator;
+            if (Type == TokenType.Operator) {
+                return Operator;
+            }
+            return Parenthesis;
         }
     }
 }
