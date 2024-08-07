@@ -24,7 +24,6 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalculatorForm));
-            this.KeyPreview = true;
             this.button0 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -40,11 +39,11 @@
             this.buttonSubtract = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonEvaluate = new System.Windows.Forms.Button();
-            this.buttonDot = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
+            this.buttonDecimal = new System.Windows.Forms.Button();
+            this.buttonPlusMinus = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.inputLabel = new System.Windows.Forms.Label();
             this.buttonClear = new System.Windows.Forms.Button();
+            this.inputLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -363,45 +362,47 @@
             this.buttonEvaluate.UseVisualStyleBackColor = false;
             this.buttonEvaluate.Click += new System.EventHandler(this.buttonEvaluate_Click);
             // 
-            // buttonDot
+            // buttonDecimal
             // 
-            this.buttonDot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.buttonDecimal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonDot.AutoSize = true;
-            this.buttonDot.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.buttonDot.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
-            this.buttonDot.FlatAppearance.BorderSize = 0;
-            this.buttonDot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDot.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.buttonDot.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
-            this.buttonDot.Location = new System.Drawing.Point(123, 169);
-            this.buttonDot.Margin = new System.Windows.Forms.Padding(1);
-            this.buttonDot.Name = "buttonDot";
-            this.buttonDot.Size = new System.Drawing.Size(59, 43);
-            this.buttonDot.TabIndex = 1;
-            this.buttonDot.Text = ".";
-            this.buttonDot.UseVisualStyleBackColor = false;
+            this.buttonDecimal.AutoSize = true;
+            this.buttonDecimal.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonDecimal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
+            this.buttonDecimal.FlatAppearance.BorderSize = 0;
+            this.buttonDecimal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDecimal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.buttonDecimal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
+            this.buttonDecimal.Location = new System.Drawing.Point(123, 169);
+            this.buttonDecimal.Margin = new System.Windows.Forms.Padding(1);
+            this.buttonDecimal.Name = "buttonDecimal";
+            this.buttonDecimal.Size = new System.Drawing.Size(59, 43);
+            this.buttonDecimal.TabIndex = 1;
+            this.buttonDecimal.Text = ".";
+            this.buttonDecimal.UseVisualStyleBackColor = false;
+            this.buttonDecimal.Click += new System.EventHandler(this.buttonDecimal_Click);
             // 
-            // button10
+            // buttonPlusMinus
             // 
-            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.buttonPlusMinus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button10.AutoSize = true;
-            this.button10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
-            this.button10.FlatAppearance.BorderSize = 0;
-            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.button10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
-            this.button10.Location = new System.Drawing.Point(1, 169);
-            this.button10.Margin = new System.Windows.Forms.Padding(1);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(59, 43);
-            this.button10.TabIndex = 1;
-            this.button10.Text = "±";
-            this.button10.UseVisualStyleBackColor = false;
+            this.buttonPlusMinus.AutoSize = true;
+            this.buttonPlusMinus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonPlusMinus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
+            this.buttonPlusMinus.FlatAppearance.BorderSize = 0;
+            this.buttonPlusMinus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPlusMinus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.buttonPlusMinus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
+            this.buttonPlusMinus.Location = new System.Drawing.Point(1, 169);
+            this.buttonPlusMinus.Margin = new System.Windows.Forms.Padding(1);
+            this.buttonPlusMinus.Name = "buttonPlusMinus";
+            this.buttonPlusMinus.Size = new System.Drawing.Size(59, 43);
+            this.buttonPlusMinus.TabIndex = 1;
+            this.buttonPlusMinus.Text = "±";
+            this.buttonPlusMinus.UseVisualStyleBackColor = false;
+            this.buttonPlusMinus.Click += new System.EventHandler(this.buttonPlusMinus_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -411,7 +412,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.Controls.Add(this.buttonDivide, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button10, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.buttonPlusMinus, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.button4, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.button7, 0, 1);
@@ -422,7 +423,7 @@
             this.tableLayoutPanel1.Controls.Add(this.buttonSubtract, 3, 2);
             this.tableLayoutPanel1.Controls.Add(this.buttonAdd, 3, 3);
             this.tableLayoutPanel1.Controls.Add(this.buttonEvaluate, 3, 4);
-            this.tableLayoutPanel1.Controls.Add(this.buttonDot, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.buttonDecimal, 2, 4);
             this.tableLayoutPanel1.Controls.Add(this.button3, 2, 3);
             this.tableLayoutPanel1.Controls.Add(this.button6, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.buttonClear, 2, 0);
@@ -438,16 +439,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(244, 213);
             this.tableLayoutPanel1.TabIndex = 11;
-            // 
-            // inputLabel
-            // 
-            this.inputLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
-            this.inputLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
-            this.inputLabel.Location = new System.Drawing.Point(13, 14);
-            this.inputLabel.Name = "inputLabel";
-            this.inputLabel.Size = new System.Drawing.Size(242, 38);
-            this.inputLabel.TabIndex = 12;
-            this.inputLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // buttonClear
             // 
@@ -470,6 +461,17 @@
             this.buttonClear.UseVisualStyleBackColor = false;
             this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
+            // inputLabel
+            // 
+            this.inputLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
+            this.inputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inputLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
+            this.inputLabel.Location = new System.Drawing.Point(13, 14);
+            this.inputLabel.Name = "inputLabel";
+            this.inputLabel.Size = new System.Drawing.Size(242, 38);
+            this.inputLabel.TabIndex = 12;
+            this.inputLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // CalculatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -480,6 +482,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "CalculatorForm";
             this.Text = "Calculator";
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -504,8 +507,8 @@
         private System.Windows.Forms.Button buttonSubtract;
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Button buttonEvaluate;
-        private System.Windows.Forms.Button buttonDot;
-        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button buttonDecimal;
+        private System.Windows.Forms.Button buttonPlusMinus;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label inputLabel;
         private System.Windows.Forms.Button buttonClear;

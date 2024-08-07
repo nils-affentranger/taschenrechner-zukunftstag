@@ -1,33 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
+using System;
 
-namespace Taschenrechner.WinForms {
-    internal class Token {
+namespace Taschenrechner {
+    public class Token {
         public enum TokenType {
             Number,
             Operator
         }
 
         public TokenType Type { get; }
-        public double Number { get; }
+        public string NumberString { get; }
+        public double Number {
+            get {
+                if (double.TryParse(NumberString, NumberStyles.Any, CultureInfo.InvariantCulture, out double result)) {
+                    return result;
+                }
+                throw new ArgumentException("Invalid number string");
+            }
+        }
         public string Operator { get; }
 
         public Token(double number) {
             Type = TokenType.Number;
-            Number = number;
+            NumberString = number.ToString(CultureInfo.InvariantCulture);
         }
 
-        public Token(string operatorSymbol) {
+        public Token(string numberString) {
+            Type = TokenType.Number;
+            NumberString = numberString;
+        }
+
+        public Token(string operatorSymbol, bool isOperator) {
             Type = TokenType.Operator;
             Operator = operatorSymbol;
         }
 
         public override string ToString() {
-            return Type == TokenType.Number ? Number.ToString() : Operator;
+            return Type == TokenType.Number ? NumberString : Operator;
         }
     }
 }

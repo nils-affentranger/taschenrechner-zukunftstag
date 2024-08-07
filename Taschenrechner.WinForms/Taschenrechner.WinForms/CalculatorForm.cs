@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,6 +86,9 @@ namespace Taschenrechner.WinForms {
                 case Keys.Back:
                     buttonClear_Click(buttonClear, EventArgs.Empty);
                     return true;
+                case Keys.OemPeriod:
+                    buttonDecimal_Click(buttonDecimal, EventArgs.Empty);
+                    return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
@@ -113,6 +117,19 @@ namespace Taschenrechner.WinForms {
             }
         }
 
+        private void buttonPlusMinus_Click(object sender, EventArgs e) {
+            if (calculator.ToggleSign()) {
+                UpdateDisplay();
+            }
+        }
+
+        private void buttonDecimal_Click(object sender, EventArgs e) {
+            if (calculator.AddDecimalPoint()) {
+                UpdateDisplay();
+            }
+        }
+
+
         private void buttonDivide_Click(object sender, EventArgs e) {
             Button button = sender as Button;
             if (button != null) {
@@ -129,7 +146,7 @@ namespace Taschenrechner.WinForms {
         private void buttonEvaluate_Click(object sender, EventArgs e) {
             try {
                 double result = calculator.Evaluate();
-                inputLabel.Text = result.ToString();
+                inputLabel.Text = result.ToString(CultureInfo.InvariantCulture);
             }
             catch (Exception ex) {
                 MessageBox.Show("Invalid expression: " + ex.Message);
