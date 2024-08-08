@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing.Text;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,9 +22,6 @@ namespace Taschenrechner.WinForms {
             if (IsValidCharacter(character)) {
                 if (lastActionWasEvaluation) {
                     if (IsOperator(character)) {
-                        string result = Evaluate();
-                        currentCalculation.Clear();
-                        currentCalculation.Add(new Token(result));
                         lastActionWasEvaluation = false;
                     }
                     else {
@@ -34,21 +33,21 @@ namespace Taschenrechner.WinForms {
                     if (!currentCalculation.Any()) {
                         return false;
                     }
-                    // Check if the last token is also an operator
                     if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Operator) {
                         currentCalculation[currentCalculation.Count - 1] = new Token(character, true);
                     }
                     else {
-                        // Add the operator as a new token
                         currentCalculation.Add(new Token(character, true));
                     }
                 }
                 else if (IsParenthesis(character)) {
-                    // Add the parenthesis as a new token
+                    var lastToken = currentCalculation[currentCalculation.Count - 1];
+                    if (lastToken.Type == Token.TokenType.Number && character == "(") {
+                        currentCalculation.Add(new Token("*", true));
+                    }
                     currentCalculation.Add(new Token(character, false, true));
                 }
                 else {
-                    // Handle numbers
                     if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Number) {
                         var lastToken = currentCalculation[currentCalculation.Count - 1];
                         var newNumberString = lastToken.NumberString + character;
@@ -80,6 +79,39 @@ namespace Taschenrechner.WinForms {
         }
 
         public bool Backspace() {
+            if (currentCalculation.Any() && !lastActionWasEvaluation) {
+                if (GetCurrentCalculation().Length >= 1) {
+                    var lastToken = currentCalculation[currentCalculation.Count - 1];
+                    if (lastToken.Type == Token.TokenType.Number) {
+                        string invariantNumberString = double.Parse(lastToken.NumberString, CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
+                        if (invariantNumberString.Length == 1) {
+                            currentCalculation.Remove(lastToken);
+                        }
+                        else {
+                            var newNumberString = lastToken.NumberString.Remove(lastToken.NumberString.Length - 1);
+                            currentCalculation[currentCalculation.Count - 1] = new Token(newNumberString);
+                        }
+                    }
+                    else if (lastToken.Type == Token.TokenType.Operator) {
+                        currentCalculation.Remove(lastToken);
+                    }
+                    else if (lastToken.Type == Token.TokenType.Parenthesis) {
+                        currentCalculation.Remove(lastToken);
+                    }
+                    else throw new Exception();
+                }
+                else {
+                    CE();
+                }
+                return true;
+            }
+            else {
+                Clear();
+                return false;
+            }
+        }
+
+        public bool CE() {
             if (currentCalculation.Any()) {
                 currentCalculation.RemoveAt(currentCalculation.Count - 1);
                 return true;
@@ -94,16 +126,28 @@ namespace Taschenrechner.WinForms {
         public string Evaluate() {
             string postfix = ConvertToPostfix(currentCalculation);
             double result = EvaluatePostfix(postfix);
+            Clear();
+            currentCalculation.Add(new Token(result));
             lastActionWasEvaluation = true;
             return FormatNumber(result);
         }
 
         public string GetCurrentCalculation() {
-            List<string> parts = new List<string>();
+            StringBuilder sb = new StringBuilder();
             foreach (var token in currentCalculation) {
-                parts.Add(token.ToString());
+                switch (token.Type) {
+                    case Token.TokenType.Number:
+                        sb.Append(token.NumberString); break;
+                    case Token.TokenType.Operator:
+                        sb.Append(token.Operator); break;
+                    case Token.TokenType.Parenthesis:
+                        sb.Append(token.Parenthesis); break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                        ;
+                }
             }
-            return string.Join("", parts);
+            return sb.ToString();
         }
 
         public bool ToggleSign() {
@@ -129,12 +173,15 @@ namespace Taschenrechner.WinForms {
                 case "/":
                     return left / right;
 
+                case "^":
+                    return (double)Math.Pow((double)left, (double)right);
+
                 default:
                     throw new InvalidOperationException("Invalid operator");
             }
         }
 
-        private string ConvertToPostfix(List<Token> infixTokens) {
+        public string ConvertToPostfix(List<Token> infixTokens) {
             Stack<string> stack = new Stack<string>();
             List<string> output = new List<string>();
 
@@ -156,7 +203,7 @@ namespace Taschenrechner.WinForms {
                         while (stack.Count > 0 && stack.Peek() != "(") {
                             output.Add(stack.Pop());
                         }
-                        stack.Pop(); // Remove the '(' from the stack
+                        stack.Pop();
                     }
                 }
             }
@@ -187,9 +234,21 @@ namespace Taschenrechner.WinForms {
         }
 
         private string FormatNumber(double number) {
-            var nfi = new NumberFormatInfo { NumberGroupSeparator = "'", NumberDecimalDigits = 0 };
-            string formattedNumber = number.ToString("N", nfi);
+            bool useScientific = Math.Abs(number) >= 1e15 || Math.Abs(number) < 1e-2;
+            string format = useScientific ? "E" : "N";
+            int decimalPlaces = GetDecimalPlaces(number);
+            var nfi = new NumberFormatInfo { NumberGroupSeparator = "'", NumberDecimalDigits = decimalPlaces };
+            string formattedNumber = number.ToString(format, nfi);
             return formattedNumber;
+        }
+
+        private static int GetDecimalPlaces(double number) {
+            string str = number.ToString("G", CultureInfo.InvariantCulture);
+            int index = str.IndexOf('.');
+            if (index == -1) {
+                return 0;
+            }
+            else return str.Length - index - 1;
         }
 
         private int GetPrecedence(string op) {
@@ -197,7 +256,7 @@ namespace Taschenrechner.WinForms {
         }
 
         private bool IsOperator(string character) {
-            return character == "+" || character == "-" || character == "*" || character == "/";
+            return character == "+" || character == "-" || character == "*" || character == "/" || character == "^";
         }
 
         private bool IsParenthesis(string character) {

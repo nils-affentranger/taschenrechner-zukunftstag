@@ -129,7 +129,7 @@ namespace Taschenrechner.WinForms {
                     return true;
 
                 case Keys.Delete:
-                    buttonClear_Click(buttonClear, EventArgs.Empty);
+                    buttonClear_Click(buttonCE, EventArgs.Empty);
                     return true;
 
                 case Keys.OemPeriod:
@@ -179,8 +179,18 @@ namespace Taschenrechner.WinForms {
             }
         }
 
+        private void buttonPower_Click(object sender, EventArgs e) {
+            calculator.AddCharacter("^");
+            UpdateDisplay();
+        }
+
         private void buttonClear_Click(object sender, EventArgs e) {
             calculator.Clear();
+            UpdateDisplay();
+        }
+
+        private void buttonBackspace_Click(object sender, EventArgs e) {
+            calculator.Backspace();
             UpdateDisplay();
         }
 
@@ -190,17 +200,19 @@ namespace Taschenrechner.WinForms {
                 inputLabel.Text = result;
             }
             catch (Exception ex) {
-                MessageBox.Show("Invalid expression: " + ex.Message);
+                inputLabel.Text = "Invalid Expression";
+                calculator.Clear();
             }
         }
 
-        private void buttonBackspace_Click(object sender, EventArgs e) {
-            calculator.Backspace();
+        private void buttonCE_Click(object sender, EventArgs e) {
+            calculator.CE();
             UpdateDisplay();
         }
 
         private void UpdateDisplay() {
-            inputLabel.Text = calculator.GetCurrentCalculation();
+            var displayText = calculator.GetCurrentCalculation();
+            inputLabel.Text = Convert.ToString(displayText);
         }
     }
 }

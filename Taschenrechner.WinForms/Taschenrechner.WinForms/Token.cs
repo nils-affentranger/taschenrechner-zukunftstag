@@ -2,7 +2,9 @@
 using System;
 
 namespace Taschenrechner {
+
     public class Token {
+
         public enum TokenType {
             Number,
             Operator,
@@ -11,6 +13,7 @@ namespace Taschenrechner {
 
         public TokenType Type { get; }
         public string NumberString { get; }
+
         public double Number {
             get {
                 if (double.TryParse(NumberString, NumberStyles.Any, CultureInfo.InvariantCulture, out double result)) {
@@ -19,12 +22,13 @@ namespace Taschenrechner {
                 return 42;
             }
         }
+
         public string Operator { get; }
         public string Parenthesis { get; }
 
         public Token(double number) {
             Type = TokenType.Number;
-            NumberString = number.ToString(CultureInfo.InvariantCulture);
+            NumberString = Convert.ToString(number);
         }
 
         public Token(string numberString) {
@@ -40,20 +44,6 @@ namespace Taschenrechner {
         public Token(string parenthesisSymbol, bool isParenthesis, bool isParenthesisToken) {
             Type = TokenType.Parenthesis;
             Parenthesis = parenthesisSymbol;
-        }
-
-        public override string ToString() {
-            if (Type == TokenType.Number) {
-                var nfi = new NumberFormatInfo { NumberGroupSeparator = "'", NumberDecimalDigits = 0 };
-                if (NumberString.Contains(".")) {
-                    nfi.NumberDecimalDigits = NumberString.Split('.')[1].Length;
-                }
-                return double.Parse(NumberString, CultureInfo.InvariantCulture).ToString("N", nfi);
-            }
-            if (Type == TokenType.Operator) {
-                return Operator;
-            }
-            return Parenthesis;
         }
     }
 }

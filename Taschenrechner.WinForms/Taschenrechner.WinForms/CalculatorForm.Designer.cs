@@ -24,7 +24,7 @@
 
         private System.Windows.Forms.Button buttonBackspace;
 
-        private System.Windows.Forms.Button buttonClear;
+        private System.Windows.Forms.Button buttonCE;
 
         private System.Windows.Forms.Button buttonDecimal;
 
@@ -88,10 +88,12 @@
             this.buttonDecimal = new System.Windows.Forms.Button();
             this.buttonPlusMinus = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonClear = new System.Windows.Forms.Button();
             this.buttonBackspace = new System.Windows.Forms.Button();
             this.buttonRightBrace = new System.Windows.Forms.Button();
             this.buttonLeftBrace = new System.Windows.Forms.Button();
+            this.buttonPow = new System.Windows.Forms.Button();
+            this.buttonCE = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
             this.inputLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -106,7 +108,7 @@
             this.button0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.button0.FlatAppearance.BorderSize = 0;
             this.button0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button0.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button0.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.button0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.button0.Location = new System.Drawing.Point(62, 191);
             this.button0.Margin = new System.Windows.Forms.Padding(1);
@@ -127,7 +129,7 @@
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.button1.Location = new System.Drawing.Point(1, 153);
             this.button1.Margin = new System.Windows.Forms.Padding(1);
@@ -148,7 +150,7 @@
             this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.button2.FlatAppearance.BorderSize = 0;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.button2.Location = new System.Drawing.Point(62, 153);
             this.button2.Margin = new System.Windows.Forms.Padding(1);
@@ -169,7 +171,7 @@
             this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.button3.FlatAppearance.BorderSize = 0;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.button3.Location = new System.Drawing.Point(123, 153);
             this.button3.Margin = new System.Windows.Forms.Padding(1);
@@ -190,7 +192,7 @@
             this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.button4.FlatAppearance.BorderSize = 0;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.button4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.button4.Location = new System.Drawing.Point(1, 115);
             this.button4.Margin = new System.Windows.Forms.Padding(1);
@@ -211,7 +213,7 @@
             this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.button5.FlatAppearance.BorderSize = 0;
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.button5.Location = new System.Drawing.Point(62, 115);
             this.button5.Margin = new System.Windows.Forms.Padding(1);
@@ -232,7 +234,7 @@
             this.button6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.button6.FlatAppearance.BorderSize = 0;
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button6.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.button6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.button6.Location = new System.Drawing.Point(123, 115);
             this.button6.Margin = new System.Windows.Forms.Padding(1);
@@ -253,7 +255,7 @@
             this.button7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.button7.FlatAppearance.BorderSize = 0;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button7.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.button7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.button7.Location = new System.Drawing.Point(1, 77);
             this.button7.Margin = new System.Windows.Forms.Padding(1);
@@ -274,7 +276,7 @@
             this.button8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.button8.FlatAppearance.BorderSize = 0;
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button8.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.button8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.button8.Location = new System.Drawing.Point(62, 77);
             this.button8.Margin = new System.Windows.Forms.Padding(1);
@@ -295,7 +297,7 @@
             this.button9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.button9.FlatAppearance.BorderSize = 0;
             this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button9.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.button9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.button9.Location = new System.Drawing.Point(123, 77);
             this.button9.Margin = new System.Windows.Forms.Padding(1);
@@ -316,7 +318,7 @@
             this.buttonDivide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.buttonDivide.FlatAppearance.BorderSize = 0;
             this.buttonDivide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDivide.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.buttonDivide.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.buttonDivide.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.buttonDivide.Location = new System.Drawing.Point(184, 39);
             this.buttonDivide.Margin = new System.Windows.Forms.Padding(1);
@@ -337,7 +339,7 @@
             this.buttonMultiply.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.buttonMultiply.FlatAppearance.BorderSize = 0;
             this.buttonMultiply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonMultiply.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.buttonMultiply.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.buttonMultiply.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.buttonMultiply.Location = new System.Drawing.Point(184, 77);
             this.buttonMultiply.Margin = new System.Windows.Forms.Padding(1);
@@ -358,7 +360,7 @@
             this.buttonSubtract.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.buttonSubtract.FlatAppearance.BorderSize = 0;
             this.buttonSubtract.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSubtract.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.buttonSubtract.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.buttonSubtract.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.buttonSubtract.Location = new System.Drawing.Point(184, 115);
             this.buttonSubtract.Margin = new System.Windows.Forms.Padding(1);
@@ -379,7 +381,7 @@
             this.buttonAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.buttonAdd.FlatAppearance.BorderSize = 0;
             this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.buttonAdd.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.buttonAdd.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.buttonAdd.Location = new System.Drawing.Point(184, 153);
             this.buttonAdd.Margin = new System.Windows.Forms.Padding(1);
@@ -400,7 +402,7 @@
             this.buttonEvaluate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(166)))), ((int)(((byte)(247)))));
             this.buttonEvaluate.FlatAppearance.BorderSize = 0;
             this.buttonEvaluate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonEvaluate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.buttonEvaluate.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.buttonEvaluate.ForeColor = System.Drawing.Color.White;
             this.buttonEvaluate.Location = new System.Drawing.Point(184, 191);
             this.buttonEvaluate.Margin = new System.Windows.Forms.Padding(1);
@@ -421,7 +423,7 @@
             this.buttonDecimal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.buttonDecimal.FlatAppearance.BorderSize = 0;
             this.buttonDecimal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDecimal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.buttonDecimal.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.buttonDecimal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.buttonDecimal.Location = new System.Drawing.Point(123, 191);
             this.buttonDecimal.Margin = new System.Windows.Forms.Padding(1);
@@ -442,7 +444,7 @@
             this.buttonPlusMinus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.buttonPlusMinus.FlatAppearance.BorderSize = 0;
             this.buttonPlusMinus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonPlusMinus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.buttonPlusMinus.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.buttonPlusMinus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.buttonPlusMinus.Location = new System.Drawing.Point(1, 191);
             this.buttonPlusMinus.Margin = new System.Windows.Forms.Padding(1);
@@ -474,13 +476,15 @@
             this.tableLayoutPanel1.Controls.Add(this.button9, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.button8, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.button7, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.buttonClear, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.buttonDivide, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.buttonBackspace, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.buttonRightBrace, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.buttonLeftBrace, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.button5, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.buttonPow, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.buttonCE, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.button10, 1, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 179);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
@@ -493,27 +497,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(244, 233);
             this.tableLayoutPanel1.TabIndex = 11;
             // 
-            // buttonClear
-            // 
-            this.buttonClear.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonClear.AutoSize = true;
-            this.buttonClear.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.buttonClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
-            this.buttonClear.FlatAppearance.BorderSize = 0;
-            this.buttonClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonClear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
-            this.buttonClear.Location = new System.Drawing.Point(123, 1);
-            this.buttonClear.Margin = new System.Windows.Forms.Padding(1);
-            this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(59, 36);
-            this.buttonClear.TabIndex = 1;
-            this.buttonClear.Text = "C";
-            this.buttonClear.UseVisualStyleBackColor = false;
-            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
-            // 
             // buttonBackspace
             // 
             this.buttonBackspace.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -524,7 +507,7 @@
             this.buttonBackspace.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.buttonBackspace.FlatAppearance.BorderSize = 0;
             this.buttonBackspace.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonBackspace.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonBackspace.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.buttonBackspace.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.buttonBackspace.Location = new System.Drawing.Point(184, 1);
             this.buttonBackspace.Margin = new System.Windows.Forms.Padding(1);
@@ -533,7 +516,7 @@
             this.buttonBackspace.TabIndex = 1;
             this.buttonBackspace.Text = "←";
             this.buttonBackspace.UseVisualStyleBackColor = false;
-            this.buttonBackspace.Click += new System.EventHandler(this.buttonClear_Click);
+            this.buttonBackspace.Click += new System.EventHandler(this.buttonBackspace_Click);
             // 
             // buttonRightBrace
             // 
@@ -545,7 +528,7 @@
             this.buttonRightBrace.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.buttonRightBrace.FlatAppearance.BorderSize = 0;
             this.buttonRightBrace.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonRightBrace.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.buttonRightBrace.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.buttonRightBrace.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.buttonRightBrace.Location = new System.Drawing.Point(123, 39);
             this.buttonRightBrace.Margin = new System.Windows.Forms.Padding(1);
@@ -566,7 +549,7 @@
             this.buttonLeftBrace.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
             this.buttonLeftBrace.FlatAppearance.BorderSize = 0;
             this.buttonLeftBrace.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonLeftBrace.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.buttonLeftBrace.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.buttonLeftBrace.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
             this.buttonLeftBrace.Location = new System.Drawing.Point(62, 39);
             this.buttonLeftBrace.Margin = new System.Windows.Forms.Padding(1);
@@ -576,6 +559,69 @@
             this.buttonLeftBrace.Text = "(";
             this.buttonLeftBrace.UseVisualStyleBackColor = false;
             this.buttonLeftBrace.Click += new System.EventHandler(this.buttonNumber_Click);
+            // 
+            // buttonPow
+            // 
+            this.buttonPow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPow.AutoSize = true;
+            this.buttonPow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonPow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
+            this.buttonPow.FlatAppearance.BorderSize = 0;
+            this.buttonPow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPow.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.buttonPow.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
+            this.buttonPow.Location = new System.Drawing.Point(1, 39);
+            this.buttonPow.Margin = new System.Windows.Forms.Padding(1);
+            this.buttonPow.Name = "buttonPow";
+            this.buttonPow.Size = new System.Drawing.Size(59, 36);
+            this.buttonPow.TabIndex = 1;
+            this.buttonPow.Text = "^";
+            this.buttonPow.UseVisualStyleBackColor = false;
+            this.buttonPow.Click += new System.EventHandler(this.buttonPower_Click);
+            // 
+            // buttonCE
+            // 
+            this.buttonCE.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCE.AutoSize = true;
+            this.buttonCE.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonCE.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
+            this.buttonCE.FlatAppearance.BorderSize = 0;
+            this.buttonCE.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCE.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.buttonCE.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
+            this.buttonCE.Location = new System.Drawing.Point(123, 1);
+            this.buttonCE.Margin = new System.Windows.Forms.Padding(1);
+            this.buttonCE.Name = "buttonCE";
+            this.buttonCE.Size = new System.Drawing.Size(59, 36);
+            this.buttonCE.TabIndex = 1;
+            this.buttonCE.Text = "CE";
+            this.buttonCE.UseVisualStyleBackColor = false;
+            this.buttonCE.Click += new System.EventHandler(this.buttonCE_Click);
+            // 
+            // button10
+            // 
+            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button10.AutoSize = true;
+            this.button10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
+            this.button10.FlatAppearance.BorderSize = 0;
+            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button10.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.button10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
+            this.button10.Location = new System.Drawing.Point(62, 1);
+            this.button10.Margin = new System.Windows.Forms.Padding(1);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(59, 36);
+            this.button10.TabIndex = 1;
+            this.button10.Text = "C";
+            this.button10.UseVisualStyleBackColor = false;
+            this.button10.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // inputLabel
             // 
@@ -608,6 +654,9 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Button buttonPow;
+        private System.Windows.Forms.Button button10;
     }
 }
 
