@@ -9,11 +9,13 @@ namespace Taschenrechner.WinForms {
     public class Calculator {
         private bool lastActionWasEvaluation;
         private readonly List<Token> currentCalculation;
-        private readonly List<string> history = new List<string>();
+        private readonly List<string> history = new List<string>(6);
         private string historyString;
 
         public string HistoryString {
-            get { return historyString; }
+            get {
+                return string.Join("\r\n", history);
+            }
         }
 
         public Calculator() {
@@ -21,47 +23,51 @@ namespace Taschenrechner.WinForms {
         }
 
         public bool AddCharacter(string character) {
-            if (IsValidCharacter(character)) {
-                if (lastActionWasEvaluation) {
-                    if (IsOperator(character)) {
-                        lastActionWasEvaluation = false;
-                    }
-                    else {
-                        currentCalculation.Clear();
-                        lastActionWasEvaluation = false;
-                    }
+            if (!IsValidCharacter(character)) {
+                return false;
+            }
+
+            if (lastActionWasEvaluation) {
+                if (!IsOperator(character)) {
+                    currentCalculation.Clear();
                 }
-                if (IsOperator(character)) {
-                    if (!currentCalculation.Any()) {
-                        return false;
-                    }
-                    if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Operator) {
-                        currentCalculation[currentCalculation.Count - 1] = new Token(character, true);
-                    }
-                    else {
-                        currentCalculation.Add(new Token(character, true));
-                    }
+
+                lastActionWasEvaluation = false;
+            }
+
+            if (IsOperator(character)) {
+                if (!currentCalculation.Any()) {
+                    return false;
                 }
-                else if (IsParenthesis(character)) {
-                    var lastToken = currentCalculation[currentCalculation.Count - 1];
-                    if (lastToken.Type == Token.TokenType.Number && character == "(") {
-                        currentCalculation.Add(new Token("*", true));
-                    }
-                    currentCalculation.Add(new Token(character, false, true));
+                if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Operator) {
+                    currentCalculation[currentCalculation.Count - 1] = new Token(character, true);
                 }
                 else {
-                    if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Number) {
-                        var lastToken = currentCalculation[currentCalculation.Count - 1];
-                        var newNumberString = lastToken.NumberString + character;
-                        currentCalculation[currentCalculation.Count - 1] = new Token(newNumberString);
-                    }
-                    else {
-                        currentCalculation.Add(new Token(character));
-                    }
+                    currentCalculation.Add(new Token(character, true));
                 }
                 return true;
             }
-            return false;
+
+            if (IsParenthesis(character)) {
+                var lastToken = currentCalculation[currentCalculation.Count - 1];
+                if (lastToken.Type == Token.TokenType.Number && character == "(") {
+                    currentCalculation.Add(new Token("*", true));
+                }
+                currentCalculation.Add(new Token(character, false, true));
+
+                return true;
+            }
+
+            if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Number) {
+                var lastToken = currentCalculation[currentCalculation.Count - 1];
+                var newNumberString = lastToken.NumberString + character;
+                currentCalculation[currentCalculation.Count - 1] = new Token(newNumberString);
+            }
+            else {
+                currentCalculation.Add(new Token(character));
+            }
+
+            return true;
         }
 
         public bool AddDecimalPoint() {
@@ -154,6 +160,9 @@ namespace Taschenrechner.WinForms {
 
         public void AppendHistory(string result) {
             history.Insert(0, result);
+            if (history.Count > 6) {
+                history.RemoveAt(6);
+            }
             historyString = string.Join("\r\n", history);
         }
 

@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <ApplicationIcon>calc.ico</ApplicationIcon>
+    <Title>Taschenrechner.WinForms</Title>
+    <Authors>Nils Affentranger</Authors>
+    <Company>Exanic AG</Company>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="calc.ico" />
+  </ItemGroup>
 
 </Project>

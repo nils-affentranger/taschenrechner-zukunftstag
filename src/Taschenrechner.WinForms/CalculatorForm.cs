@@ -1,14 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Taschenrechner.WinForms {
@@ -23,178 +13,97 @@ namespace Taschenrechner.WinForms {
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
             bool shiftPressed = (keyData & Keys.Shift) == Keys.Shift;
-            switch (keyData & ~Keys.Shift) {
-                case Keys.D0:
-                case Keys.NumPad0:
-                    if (shiftPressed) {
-                        buttonEvaluate_Click(buttonEvaluate, EventArgs.Empty);
-                    }
-                    else if (calculator.AddCharacter("0")) {
-                        inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
-                    }
-                    return true;
+            Keys key = keyData & ~Keys.Shift;
 
-                case Keys.D1:
-                case Keys.NumPad1:
-                    if (shiftPressed) {
-                        buttonNumber_Click(buttonAdd, EventArgs.Empty);
-                    }
-                    else {
-                        buttonNumber_Click(button1, EventArgs.Empty);
-                    }
-                    return true;
+            if (HandleNumericKey(key, shiftPressed) ||
+                HandleOperatorKey(key, shiftPressed) ||
+                HandleSpecialKey(key)) {
+                return true;
+            }
 
-                case Keys.D2:
-                case Keys.NumPad2:
-                    buttonNumber_Click(button2, EventArgs.Empty);
-                    return true;
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
-                case Keys.D3:
-                case Keys.NumPad3:
-                    if (shiftPressed) {
-                        buttonMultiply_Click(buttonMultiply, EventArgs.Empty);
-                    }
-                    else {
-                        buttonNumber_Click(button3, EventArgs.Empty);
-                    }
-                    return true;
+        private bool HandleNumericKey(Keys key, bool shiftPressed) {
+            if (key >= Keys.D0 && key <= Keys.D9 || key >= Keys.NumPad0 && key <= Keys.NumPad9) {
+                char digit = (char)('0' + (key & Keys.KeyCode) - (key <= Keys.D9 ? Keys.D0 : Keys.NumPad0));
+                if (shiftPressed) {
+                    HandleShiftedNumericKey(digit);
+                }
+                else {
+                    AddCharacterToCalculation(digit.ToString());
+                }
+                return true;
+            }
+            return false;
+        }
 
-                case Keys.D4:
-                case Keys.NumPad4:
-                    buttonNumber_Click(button4, EventArgs.Empty);
-                    return true;
+        private void HandleShiftedNumericKey(char digit) {
+            switch (digit) {
+                case '0': EvaluateExpression(); break;
+                case '1': AddCharacterToCalculation("+"); break;
+                case '3': AddCharacterToCalculation("*"); break;
+                case '7': AddCharacterToCalculation("/"); break;
+                case '8': AddCharacterToCalculation("("); break;
+                case '9': AddCharacterToCalculation(")"); break;
+            }
+        }
 
-                case Keys.D5:
-                case Keys.NumPad5:
-                    buttonNumber_Click(button5, EventArgs.Empty);
-                    return true;
-
-                case Keys.D6:
-                case Keys.NumPad6:
-                    buttonNumber_Click(button6, EventArgs.Empty);
-                    return true;
-
-                case Keys.D7:
-                case Keys.NumPad7:
-                    if (shiftPressed) {
-                        buttonDivide_Click(buttonDivide, EventArgs.Empty);
-                    }
-                    else {
-                        buttonNumber_Click(button7, EventArgs.Empty);
-                    }
-                    return true;
-
-                case Keys.D8:
-                case Keys.NumPad8:
-                    if (shiftPressed) {
-                        buttonNumber_Click(buttonLeftBrace, EventArgs.Empty);
-                    }
-                    else {
-                        buttonNumber_Click(button8, EventArgs.Empty);
-                    }
-                    return true;
-
-                case Keys.D9:
-                case Keys.NumPad9:
-                    if (shiftPressed) {
-                        buttonNumber_Click(buttonRightBrace, EventArgs.Empty);
-                    }
-                    else {
-                        buttonNumber_Click(button9, EventArgs.Empty);
-                    }
-                    return true;
-
+        private bool HandleOperatorKey(Keys key, bool shiftPressed) {
+            switch (key) {
                 case Keys.Add:
-                case Keys.Oemplus when (Control.ModifierKeys & Keys.Shift) != 0:
-                    buttonNumber_Click(buttonAdd, EventArgs.Empty);
+                case Keys.Oemplus when shiftPressed:
+                    AddCharacterToCalculation("+");
                     return true;
 
                 case Keys.Subtract:
                 case Keys.OemMinus:
-                    buttonNumber_Click(buttonSubtract, EventArgs.Empty);
+                    AddCharacterToCalculation("-");
                     return true;
 
                 case Keys.Multiply:
-                    calculator.AddCharacter("*");
-                    inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
+                    AddCharacterToCalculation("*");
                     return true;
 
                 case Keys.Divide:
                 case Keys.OemQuestion:
-                    calculator.AddCharacter("/");
-                    inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
+                    AddCharacterToCalculation("/");
                     return true;
 
+                default:
+                    return false;
+            }
+        }
+
+        private bool HandleSpecialKey(Keys key) {
+            switch (key) {
                 case Keys.Enter:
-                    buttonEvaluate_Click(buttonEvaluate, EventArgs.Empty);
+                    EvaluateExpression();
                     return true;
 
                 case Keys.Delete:
-                    buttonClear_Click(buttonCE, EventArgs.Empty);
+                    ClearCalculation();
                     return true;
 
                 case Keys.OemPeriod:
-                    buttonDecimal_Click(buttonDecimal, EventArgs.Empty);
+                    AddDecimalPoint();
                     return true;
 
                 case Keys.Back:
-                    buttonBackspace_Click(buttonBackspace, EventArgs.Empty);
+                    Backspace();
                     return true;
-            }
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
 
-#pragma warning disable IDE1006 // Naming Styles
-
-        private void buttonNumber_Click(object sender, EventArgs e) {
-            if (sender is Button button) {
-                calculator.AddCharacter(button.Text);
-                inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
+                default:
+                    return false;
             }
         }
 
-        private void buttonMultiply_Click(object sender, EventArgs e) {
-            if (sender is Button) {
-                calculator.AddCharacter("*");
-                inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
-            }
+        private void AddCharacterToCalculation(string character) {
+            calculator.AddCharacter(character);
+            inputLabel.Text = calculator.GetCurrentCalculation();
         }
 
-        private void buttonPlusMinus_Click(object sender, EventArgs e) {
-            if (calculator.ToggleSign()) {
-                inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
-            }
-        }
-
-        private void buttonDecimal_Click(object sender, EventArgs e) {
-            if (calculator.AddDecimalPoint()) {
-                inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
-            }
-        }
-
-        private void buttonDivide_Click(object sender, EventArgs e) {
-            if (sender is Button) {
-                calculator.AddCharacter("/");
-                inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
-            }
-        }
-
-        private void buttonPower_Click(object sender, EventArgs e) {
-            calculator.AddCharacter("^");
-            inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
-        }
-
-        private void buttonClear_Click(object sender, EventArgs e) {
-            calculator.Clear();
-            inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
-        }
-
-        private void buttonBackspace_Click(object sender, EventArgs e) {
-            calculator.Backspace();
-            inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
-        }
-
-        private void buttonEvaluate_Click(object sender, EventArgs e) {
+        private void EvaluateExpression() {
             try {
                 string result = calculator.Evaluate();
                 inputLabel.Text = result;
@@ -206,9 +115,32 @@ namespace Taschenrechner.WinForms {
             }
         }
 
-        private void buttonCE_Click(object sender, EventArgs e) {
+        private void ClearCalculation() {
+            calculator.Clear();
+            inputLabel.Text = calculator.GetCurrentCalculation();
+        }
+
+        private void AddDecimalPoint() {
+            if (calculator.AddDecimalPoint()) {
+                inputLabel.Text = calculator.GetCurrentCalculation();
+            }
+        }
+
+        private void Backspace() {
+            calculator.Backspace();
+            inputLabel.Text = calculator.GetCurrentCalculation();
+        }
+
+        private void ToggleSign() {
+            calculator.ToggleSign();
+            inputLabel.Text = calculator.GetCurrentCalculation();
+        }
+
+        private void CE() {
             calculator.CE();
-            inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
+            inputLabel.Text = calculator.GetCurrentCalculation();
         }
     }
+
+    // Implement other necessary methods (button click event handlers, etc.)
 }
