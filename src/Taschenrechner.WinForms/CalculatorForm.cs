@@ -14,7 +14,7 @@ using System.Windows.Forms;
 namespace Taschenrechner.WinForms {
 
     public partial class CalculatorForm : Form {
-        public Calculator calculator;
+        private readonly Calculator calculator;
 
         public CalculatorForm() {
             InitializeComponent();
@@ -144,17 +144,17 @@ namespace Taschenrechner.WinForms {
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+#pragma warning disable IDE1006 // Naming Styles
+
         private void buttonNumber_Click(object sender, EventArgs e) {
-            Button button = sender as Button;
-            if (button != null) {
+            if (sender is Button button) {
                 calculator.AddCharacter(button.Text);
                 inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
             }
         }
 
         private void buttonMultiply_Click(object sender, EventArgs e) {
-            Button button = sender as Button;
-            if (button != null) {
+            if (sender is Button) {
                 calculator.AddCharacter("*");
                 inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
             }
@@ -173,8 +173,7 @@ namespace Taschenrechner.WinForms {
         }
 
         private void buttonDivide_Click(object sender, EventArgs e) {
-            Button button = sender as Button;
-            if (button != null) {
+            if (sender is Button) {
                 calculator.AddCharacter("/");
                 inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
             }
@@ -199,9 +198,9 @@ namespace Taschenrechner.WinForms {
             try {
                 string result = calculator.Evaluate();
                 inputLabel.Text = result;
-                historyBox.Text = calculator.historyString;
+                historyBox.Text = calculator.HistoryString;
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 inputLabel.Text = "Invalid Expression";
                 calculator.Clear();
             }
@@ -210,12 +209,6 @@ namespace Taschenrechner.WinForms {
         private void buttonCE_Click(object sender, EventArgs e) {
             calculator.CE();
             inputLabel.Text = Convert.ToString(calculator.GetCurrentCalculation());
-        }
-
-        private void historyBox_Click(object sender, EventArgs e) {
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e) {
         }
     }
 }

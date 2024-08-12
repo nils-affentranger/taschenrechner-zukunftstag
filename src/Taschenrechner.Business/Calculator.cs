@@ -9,8 +9,12 @@ namespace Taschenrechner.WinForms {
     public class Calculator {
         private bool lastActionWasEvaluation;
         private readonly List<Token> currentCalculation;
-        private List<string> history = new List<string>();
-        public string historyString;
+        private readonly List<string> history = new List<string>();
+        private string historyString;
+
+        public string HistoryString {
+            get { return historyString; }
+        }
 
         public Calculator() {
             currentCalculation = new List<Token>();
@@ -96,7 +100,7 @@ namespace Taschenrechner.WinForms {
                     else if (lastToken.Type == Token.TokenType.Parenthesis) {
                         currentCalculation.Remove(lastToken);
                     }
-                    else throw new Exception();
+                    else throw new InvalidOperationException();
                 }
                 else {
                     CE();
@@ -143,7 +147,6 @@ namespace Taschenrechner.WinForms {
                         sb.Append(token.Parenthesis); break;
                     default:
                         throw new ArgumentOutOfRangeException();
-                        ;
                 }
             }
             return sb.ToString();
@@ -178,7 +181,7 @@ namespace Taschenrechner.WinForms {
                     return left / right;
 
                 case "^":
-                    return (double)Math.Pow((double)left, (double)right);
+                    return Math.Pow(left, right);
 
                 default:
                     throw new InvalidOperationException("Invalid operator");
