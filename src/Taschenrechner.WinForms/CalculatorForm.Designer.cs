@@ -88,6 +88,7 @@
             this.buttonDecimal = new System.Windows.Forms.Button();
             this.buttonPlusMinus = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.historyBox = new System.Windows.Forms.Label();
             this.buttonBackspace = new System.Windows.Forms.Button();
             this.buttonRightBrace = new System.Windows.Forms.Button();
             this.buttonLeftBrace = new System.Windows.Forms.Button();
@@ -457,6 +458,7 @@
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 4;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -496,6 +498,19 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.6632F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(244, 233);
             this.tableLayoutPanel1.TabIndex = 11;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
+            // 
+            // historyBox
+            // 
+            this.historyBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.historyBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.historyBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(173)))), ((int)(((byte)(200)))));
+            this.historyBox.Location = new System.Drawing.Point(12, 63);
+            this.historyBox.Name = "historyBox";
+            this.historyBox.Size = new System.Drawing.Size(243, 99);
+            this.historyBox.TabIndex = 14;
+            this.historyBox.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.historyBox.Click += new System.EventHandler(this.historyBox_Click);
             // 
             // buttonBackspace
             // 
@@ -640,6 +655,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
             this.ClientSize = new System.Drawing.Size(268, 424);
+            this.Controls.Add(this.historyBox);
             this.Controls.Add(this.inputLabel);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -657,6 +673,7 @@
 
         private System.Windows.Forms.Button buttonPow;
         private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Label historyBox;
     }
 }
 

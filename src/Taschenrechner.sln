@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taschenrechner.WinForms", "Taschenrechner.WinForms\Taschenrechner.WinForms.csproj", "{23E9795C-4218-4DA3-B8E6-9B4B870A0312}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taschenrechner.Business", "Taschenrechner.Business\Taschenrechner.Business.csproj", "{7CBDF25D-4657-4AEE-86FF-4259100F3EE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{23E9795C-4218-4DA3-B8E6-9B4B870A0312}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23E9795C-4218-4DA3-B8E6-9B4B870A0312}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23E9795C-4218-4DA3-B8E6-9B4B870A0312}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CBDF25D-4657-4AEE-86FF-4259100F3EE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CBDF25D-4657-4AEE-86FF-4259100F3EE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CBDF25D-4657-4AEE-86FF-4259100F3EE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CBDF25D-4657-4AEE-86FF-4259100F3EE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

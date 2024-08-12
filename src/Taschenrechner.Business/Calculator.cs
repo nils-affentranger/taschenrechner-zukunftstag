@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing.Text;
 using System.Globalization;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Taschenrechner.WinForms {
 
-    internal class Calculator {
+    public class Calculator {
         private bool lastActionWasEvaluation;
         private readonly List<Token> currentCalculation;
+        private List<string> history = new List<string>();
+        public string historyString;
 
         public Calculator() {
             currentCalculation = new List<Token>();
@@ -129,6 +127,7 @@ namespace Taschenrechner.WinForms {
             Clear();
             currentCalculation.Add(new Token(result));
             lastActionWasEvaluation = true;
+            AppendHistory(FormatNumber(result));
             return FormatNumber(result);
         }
 
@@ -148,6 +147,11 @@ namespace Taschenrechner.WinForms {
                 }
             }
             return sb.ToString();
+        }
+
+        public void AppendHistory(string result) {
+            history.Insert(0, result);
+            historyString = string.Join("\r\n", history);
         }
 
         public bool ToggleSign() {
