@@ -27,41 +27,32 @@ namespace Taschenrechner.WinForms {
                 return false;
             }
 
-            if (lastActionWasEvaluation) {
-                if (!IsOperator(character)) {
-                    currentCalculation.Clear();
-                }
-
-                lastActionWasEvaluation = false;
+            if (lastActionWasEvaluation && !IsOperator(character)) {
+                currentCalculation.Clear();
             }
 
+            lastActionWasEvaluation = false;
+
+            var lastToken = currentCalculation.LastOrDefault();
+
             if (IsOperator(character)) {
-                if (!currentCalculation.Any()) {
+                if (lastToken == null || lastToken.Type == Token.TokenType.Operator) {
                     return false;
                 }
-                if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Operator) {
-                    currentCalculation[currentCalculation.Count - 1] = new Token(character, true);
-                }
-                else {
-                    currentCalculation.Add(new Token(character, true));
-                }
+                currentCalculation.Add(new Token(character, true));
                 return true;
             }
 
             if (IsParenthesis(character)) {
-                var lastToken = currentCalculation[currentCalculation.Count - 1];
-                if (lastToken.Type == Token.TokenType.Number && character == "(") {
+                if (lastToken?.Type == Token.TokenType.Number && character == "(") {
                     currentCalculation.Add(new Token("*", true));
                 }
-                currentCalculation.Add(new Token(character, false, true));
-
+                currentCalculation.Add(new Token("*", true));
                 return true;
             }
 
-            if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Number) {
-                var lastToken = currentCalculation[currentCalculation.Count - 1];
-                var newNumberString = lastToken.NumberString + character;
-                currentCalculation[currentCalculation.Count - 1] = new Token(newNumberString);
+            if (lastToken?.Type == Token.TokenType.Number) {
+                currentCalculation[currentCalculation.Count - 1] = new Token(lastToken.NumberString + character);
             }
             else {
                 currentCalculation.Add(new Token(character));
@@ -87,36 +78,27 @@ namespace Taschenrechner.WinForms {
         }
 
         public bool Backspace() {
-            if (currentCalculation.Any() && !lastActionWasEvaluation) {
-                if (GetCurrentCalculation().Length >= 1) {
-                    var lastToken = currentCalculation[currentCalculation.Count - 1];
-                    if (lastToken.Type == Token.TokenType.Number) {
-                        string invariantNumberString = double.Parse(lastToken.NumberString, CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
-                        if (invariantNumberString.Length == 1) {
-                            currentCalculation.Remove(lastToken);
-                        }
-                        else {
-                            var newNumberString = lastToken.NumberString.Remove(lastToken.NumberString.Length - 1);
-                            currentCalculation[currentCalculation.Count - 1] = new Token(newNumberString);
-                        }
-                    }
-                    else if (lastToken.Type == Token.TokenType.Operator) {
-                        currentCalculation.Remove(lastToken);
-                    }
-                    else if (lastToken.Type == Token.TokenType.Parenthesis) {
-                        currentCalculation.Remove(lastToken);
-                    }
-                    else throw new InvalidOperationException();
-                }
-                else {
-                    CE();
-                }
-                return true;
-            }
-            else {
+            if (!currentCalculation.Any() || lastActionWasEvaluation) {
                 Clear();
                 return false;
             }
+
+            var lastToken = currentCalculation[currentCalculation.Count - 1];
+
+            if (lastToken.Type == Token.TokenType.Number) {
+                var newNumberString = lastToken.NumberString.Remove(lastToken.NumberString.Length - 1);
+                if (string.IsNullOrEmpty(newNumberString)) {
+                    currentCalculation.RemoveAt(currentCalculation.Count - 1);
+                }
+                else {
+                    currentCalculation[currentCalculation.Count - 1] = new Token(newNumberString);
+                }
+            }
+            else {
+                currentCalculation.RemoveAt(currentCalculation.Count - 1);
+            }
+
+            return true;
         }
 
         public bool CE() {

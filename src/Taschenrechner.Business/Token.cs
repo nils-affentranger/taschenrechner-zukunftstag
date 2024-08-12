@@ -19,7 +19,7 @@ namespace Taschenrechner {
                 if (double.TryParse(NumberString, NumberStyles.Any, CultureInfo.InvariantCulture, out double result)) {
                     return result;
                 }
-                return 42;
+                throw new InvalidOperationException("invalid number format.");
             }
         }
 

@@ -52,7 +52,7 @@ namespace Taschenrechner.WinForms {
         private bool HandleOperatorKey(Keys key, bool shiftPressed) {
             switch (key) {
                 case Keys.Add:
-                case Keys.Oemplus when shiftPressed:
+                case Keys.Oemplus:
                     AddCharacterToCalculation("+");
                     return true;
 
