@@ -47,7 +47,7 @@ namespace Taschenrechner.WinForms {
                 if (lastToken?.Type == Token.TokenType.Number && character == "(") {
                     currentCalculation.Add(new Token("*", true));
                 }
-                currentCalculation.Add(new Token(character, true));
+                currentCalculation.Add(new Token(character, true, true));
                 return true;
             }
 
@@ -181,36 +181,37 @@ namespace Taschenrechner.WinForms {
 
         public string ConvertToPostfix(List<Token> infixTokens) {
             Stack<string> stack = new Stack<string>();
-            List<string> output = new List<string>();
+            StringBuilder output = new StringBuilder();
 
             foreach (var token in infixTokens) {
                 if (token.Type == Token.TokenType.Number) {
-                    output.Add(token.NumberString);
+                    output.Append(token.NumberString).Append(' ');
                 }
                 else if (token.Type == Token.TokenType.Operator) {
                     while (stack.Count > 0 && IsOperator(stack.Peek()) && GetPrecedence(token.Operator) <= GetPrecedence(stack.Peek())) {
-                        output.Add(stack.Pop());
+                        output.Append(stack.Pop()).Append(' ');
                     }
                     stack.Push(token.Operator);
                 }
                 else if (token.Type == Token.TokenType.Parenthesis) {
                     if (token.Parenthesis == "(") {
-                        stack.Push(token.Parenthesis);
+                        stack.Push(token.Parenthesis);  // Push '(' to stack
                     }
-                    else {
+                    else if (token.Parenthesis == ")") {
                         while (stack.Count > 0 && stack.Peek() != "(") {
-                            output.Add(stack.Pop());
+                            output.Append(stack.Pop()).Append(' ');
                         }
-                        stack.Pop();
+                        stack.Pop(); // Pop the '(' from the stack and discard it
                     }
                 }
             }
 
+            // Pop all remaining operators in the stack
             while (stack.Count > 0) {
-                output.Add(stack.Pop());
+                output.Append(stack.Pop()).Append(' ');
             }
 
-            return string.Join(" ", output);
+            return output.ToString().Trim();
         }
 
         private double EvaluatePostfix(string postfix) {
