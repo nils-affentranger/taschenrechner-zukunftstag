@@ -6,6 +6,7 @@ namespace Taschenrechner.WinForms {
 
         private System.Windows.Forms.Button button1;
 
+        private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button2;
 
         private System.Windows.Forms.Button button3;
@@ -40,6 +41,7 @@ namespace Taschenrechner.WinForms {
 
         private System.Windows.Forms.Button buttonPlusMinus;
 
+        private System.Windows.Forms.Button buttonPow;
         private System.Windows.Forms.Button buttonRightBrace;
 
         private System.Windows.Forms.Button buttonSubtract;
@@ -49,6 +51,7 @@ namespace Taschenrechner.WinForms {
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        private System.Windows.Forms.Label historyBox;
         private System.Windows.Forms.Label inputLabel;
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -670,10 +673,6 @@ namespace Taschenrechner.WinForms {
         }
 
         #endregion
-
-        private System.Windows.Forms.Button buttonPow;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Label historyBox;
     }
 }
 

@@ -139,18 +139,17 @@ namespace Taschenrechner.WinForms {
                 }
                 else if (token.Type == Token.TokenType.Parenthesis) {
                     if (token.Parenthesis == "(") {
-                        stack.Push(token.Parenthesis);  // Push '(' to stack
+                        stack.Push(token.Parenthesis);
                     }
                     else if (token.Parenthesis == ")") {
                         while (stack.Count > 0 && stack.Peek() != "(") {
                             output.Append(stack.Pop()).Append(' ');
                         }
-                        stack.Pop(); // Pop the '(' from the stack and discard it
+                        stack.Pop();
                     }
                 }
             }
 
-            // Pop all remaining operators in the stack
             while (stack.Count > 0) {
                 output.Append(stack.Pop()).Append(' ');
             }
