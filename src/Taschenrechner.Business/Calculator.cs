@@ -10,6 +10,8 @@ namespace Taschenrechner.WinForms {
         private bool lastActionWasEvaluation;
         private readonly List<Token> currentCalculation;
         private readonly List<string> history = new List<string>(6);
+        private readonly HashSet<string> Operators = new HashSet<string> { "+", "-", "*", "/", "^" };
+        private readonly HashSet<string> Parenthesis = new HashSet<string> { "(", ")" };
         private string historyString;
 
         public string HistoryString {
@@ -27,7 +29,7 @@ namespace Taschenrechner.WinForms {
                 return false;
             }
 
-            if (lastActionWasEvaluation && !IsOperator(character)) {
+            if (lastActionWasEvaluation && !Operators.Contains(character)) {
                 currentCalculation.Clear();
             }
 
@@ -35,7 +37,7 @@ namespace Taschenrechner.WinForms {
 
             var lastToken = currentCalculation.LastOrDefault();
 
-            if (IsOperator(character)) {
+            if (Operators.Contains(character)) {
                 if (lastToken == null || lastToken.Type == Token.TokenType.Operator) {
                     return false;
                 }
@@ -43,7 +45,7 @@ namespace Taschenrechner.WinForms {
                 return true;
             }
 
-            if (IsParenthesis(character)) {
+            if (Parenthesis.Contains(character)) {
                 if (lastToken?.Type == Token.TokenType.Number && character == "(") {
                     currentCalculation.Add(new Token("*", true));
                 }
@@ -188,7 +190,7 @@ namespace Taschenrechner.WinForms {
                     output.Append(token.NumberString).Append(' ');
                 }
                 else if (token.Type == Token.TokenType.Operator) {
-                    while (stack.Count > 0 && IsOperator(stack.Peek()) && GetPrecedence(token.Operator) <= GetPrecedence(stack.Peek())) {
+                    while (stack.Count > 0 && Operators.Contains(stack.Peek()) && GetPrecedence(token.Operator) <= GetPrecedence(stack.Peek())) {
                         output.Append(stack.Pop()).Append(' ');
                     }
                     stack.Push(token.Operator);
@@ -222,7 +224,7 @@ namespace Taschenrechner.WinForms {
                 if (double.TryParse(token, NumberStyles.Any, CultureInfo.InvariantCulture, out double number)) {
                     stack.Push(number);
                 }
-                else if (IsOperator(token)) {
+                else if (Operators.Contains(token)) {
                     double right = stack.Pop();
                     double left = stack.Pop();
                     stack.Push(ApplyOperator(token, left, right));
@@ -252,14 +254,6 @@ namespace Taschenrechner.WinForms {
 
         private int GetPrecedence(string op) {
             return op == "+" || op == "-" ? 1 : 2;
-        }
-
-        private bool IsOperator(string character) {
-            return character == "+" || character == "-" || character == "*" || character == "/" || character == "^";
-        }
-
-        private bool IsParenthesis(string character) {
-            return character == "(" || character == ")";
         }
 
         private bool IsValidCharacter(string character) {
