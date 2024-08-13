@@ -47,7 +47,7 @@ namespace Taschenrechner.WinForms {
                 if (lastToken?.Type == Token.TokenType.Number && character == "(") {
                     currentCalculation.Add(new Token("*", true));
                 }
-                currentCalculation.Add(new Token("*", true));
+                currentCalculation.Add(new Token(character, true));
                 return true;
             }
 
