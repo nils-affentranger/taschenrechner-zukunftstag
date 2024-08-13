@@ -12,62 +12,41 @@ namespace Taschenrechner.WinForms {
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
-            bool shiftPressed = (keyData & Keys.Shift) == Keys.Shift;
-            Keys key = keyData & ~Keys.Shift;
-
-            if (HandleNumericKey(key, shiftPressed) ||
-                HandleOperatorKey(key, shiftPressed) ||
-                HandleSpecialKey(key)) {
+            if (HandleSpecialKey(keyData)) {
                 return true;
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private bool HandleNumericKey(Keys key, bool shiftPressed) {
-            if (key >= Keys.D0 && key <= Keys.D9 || key >= Keys.NumPad0 && key <= Keys.NumPad9) {
-                char digit = (char)('0' + (key & Keys.KeyCode) - (key <= Keys.D9 ? Keys.D0 : Keys.NumPad0));
-                if (shiftPressed) {
-                    HandleShiftedNumericKey(digit);
-                }
-                else {
-                    AddCharacterToCalculation(digit.ToString());
-                }
+        protected override void OnKeyPress(KeyPressEventArgs e) {
+            base.OnKeyPress(e);
+
+            char keyChar = e.KeyChar;
+            if (HandleCharacterInput(keyChar)) {
+                e.Handled = true;
+            }
+        }
+
+        private bool HandleCharacterInput(char keyChar) {
+            if (char.IsDigit(keyChar)) {
+                AddCharacterToCalculation(keyChar.ToString());
                 return true;
             }
-            return false;
-        }
 
-        private void HandleShiftedNumericKey(char digit) {
-            switch (digit) {
-                case '0': EvaluateExpression(); break;
-                case '1': AddCharacterToCalculation("+"); break;
-                case '3': AddCharacterToCalculation("*"); break;
-                case '7': AddCharacterToCalculation("/"); break;
-                case '8': AddCharacterToCalculation("("); break;
-                case '9': AddCharacterToCalculation(")"); break;
-            }
-        }
-
-        private bool HandleOperatorKey(Keys key, bool shiftPressed) {
-            switch (key) {
-                case Keys.Add:
-                case Keys.Oemplus:
-                    AddCharacterToCalculation("+");
+            switch (keyChar) {
+                case '+':
+                case '-':
+                case '*':
+                case '/':
+                case '(':
+                case ')':
+                case '.':
+                    AddCharacterToCalculation(keyChar.ToString());
                     return true;
 
-                case Keys.Subtract:
-                case Keys.OemMinus:
-                    AddCharacterToCalculation("-");
-                    return true;
-
-                case Keys.Multiply:
-                    AddCharacterToCalculation("*");
-                    return true;
-
-                case Keys.Divide:
-                case Keys.OemQuestion:
-                    AddCharacterToCalculation("/");
+                case '=':
+                    EvaluateExpression();
                     return true;
 
                 default:
@@ -83,10 +62,6 @@ namespace Taschenrechner.WinForms {
 
                 case Keys.Delete:
                     ClearCalculation();
-                    return true;
-
-                case Keys.OemPeriod:
-                    AddDecimalPoint();
                     return true;
 
                 case Keys.Back:
@@ -120,15 +95,15 @@ namespace Taschenrechner.WinForms {
             inputLabel.Text = calculator.GetCurrentCalculation();
         }
 
+        private void Backspace() {
+            calculator.Backspace();
+            inputLabel.Text = calculator.GetCurrentCalculation();
+        }
+
         private void AddDecimalPoint() {
             if (calculator.AddDecimalPoint()) {
                 inputLabel.Text = calculator.GetCurrentCalculation();
             }
-        }
-
-        private void Backspace() {
-            calculator.Backspace();
-            inputLabel.Text = calculator.GetCurrentCalculation();
         }
 
         private void ToggleSign() {
