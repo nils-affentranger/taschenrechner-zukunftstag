@@ -208,5 +208,9 @@ namespace Taschenrechner.WinForms {
             calculator.ToggleSign();
             inputLabel.Text = calculator.GetCurrentCalculation();
         }
+
+        private void tabPage1_Click(object sender, EventArgs e) {
+
+        }
     }
 }
