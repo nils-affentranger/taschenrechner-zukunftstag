@@ -7,21 +7,21 @@ using System.Text;
 namespace Taschenrechner.WinForms {
 
     public class Calculator {
-        private bool lastActionWasEvaluation;
         private readonly List<Token> currentCalculation;
         private readonly List<string> history = new List<string>(6);
         private readonly HashSet<string> Operators = new HashSet<string> { "+", "-", "*", "/", "^" };
         private readonly HashSet<string> Parenthesis = new HashSet<string> { "(", ")" };
         private string historyString;
+        private bool lastActionWasEvaluation;
+
+        public Calculator() {
+            currentCalculation = new List<Token>();
+        }
 
         public string HistoryString {
             get {
                 return string.Join("\r\n", history);
             }
-        }
-
-        public Calculator() {
-            currentCalculation = new List<Token>();
         }
 
         public bool AddCharacter(string character) {
@@ -79,6 +79,14 @@ namespace Taschenrechner.WinForms {
             return false;
         }
 
+        public void AppendHistory(string result) {
+            history.Insert(0, result);
+            if (history.Count > 6) {
+                history.RemoveAt(6);
+            }
+            historyString = string.Join("\r\n", history);
+        }
+
         public bool Backspace() {
             if (!currentCalculation.Any() || lastActionWasEvaluation) {
                 Clear();
@@ -113,72 +121,6 @@ namespace Taschenrechner.WinForms {
 
         public void Clear() {
             currentCalculation.Clear();
-        }
-
-        public string Evaluate() {
-            string postfix = ConvertToPostfix(currentCalculation);
-            double result = EvaluatePostfix(postfix);
-            Clear();
-            currentCalculation.Add(new Token(result));
-            lastActionWasEvaluation = true;
-            AppendHistory(FormatNumber(result));
-            return FormatNumber(result);
-        }
-
-        public string GetCurrentCalculation() {
-            StringBuilder sb = new StringBuilder();
-            foreach (var token in currentCalculation) {
-                switch (token.Type) {
-                    case Token.TokenType.Number:
-                        sb.Append(token.NumberString); break;
-                    case Token.TokenType.Operator:
-                        sb.Append(token.Operator); break;
-                    case Token.TokenType.Parenthesis:
-                        sb.Append(token.Parenthesis); break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-            return sb.ToString();
-        }
-
-        public void AppendHistory(string result) {
-            history.Insert(0, result);
-            if (history.Count > 6) {
-                history.RemoveAt(6);
-            }
-            historyString = string.Join("\r\n", history);
-        }
-
-        public bool ToggleSign() {
-            if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Number) {
-                var lastNumber = currentCalculation[currentCalculation.Count - 1].Number;
-                currentCalculation[currentCalculation.Count - 1] = new Token(-lastNumber);
-                return true;
-            }
-            return false;
-        }
-
-        private double ApplyOperator(string op, double left, double right) {
-            switch (op) {
-                case "+":
-                    return left + right;
-
-                case "-":
-                    return left - right;
-
-                case "*":
-                    return left * right;
-
-                case "/":
-                    return left / right;
-
-                case "^":
-                    return Math.Pow(left, right);
-
-                default:
-                    throw new InvalidOperationException("Invalid operator");
-            }
         }
 
         public string ConvertToPostfix(List<Token> infixTokens) {
@@ -216,6 +158,73 @@ namespace Taschenrechner.WinForms {
             return output.ToString().Trim();
         }
 
+        public string Evaluate() {
+            string postfix = ConvertToPostfix(currentCalculation);
+            double result = EvaluatePostfix(postfix);
+            Clear();
+            currentCalculation.Add(new Token(result));
+            lastActionWasEvaluation = true;
+            AppendHistory(FormatNumber(result));
+            return FormatNumber(result);
+        }
+
+        public string GetCurrentCalculation() {
+            StringBuilder sb = new StringBuilder();
+            foreach (var token in currentCalculation) {
+                switch (token.Type) {
+                    case Token.TokenType.Number:
+                        sb.Append(token.NumberString); break;
+                    case Token.TokenType.Operator:
+                        sb.Append(token.Operator); break;
+                    case Token.TokenType.Parenthesis:
+                        sb.Append(token.Parenthesis); break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            return sb.ToString();
+        }
+
+        public bool ToggleSign() {
+            if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Number) {
+                var lastNumber = currentCalculation[currentCalculation.Count - 1].Number;
+                currentCalculation[currentCalculation.Count - 1] = new Token(-lastNumber);
+                return true;
+            }
+            return false;
+        }
+
+        private static int GetDecimalPlaces(double number) {
+            string str = number.ToString("G", CultureInfo.InvariantCulture);
+            int index = str.IndexOf('.');
+            if (index == -1) {
+                return 0;
+            }
+            else return str.Length - index - 1;
+        }
+
+        private double ApplyOperator(string op, double left, double right) {
+            switch (op) {
+                case "+":
+                    return left + right;
+
+                case "-":
+                    return left - right;
+
+                case "*":
+                    return left * right;
+
+                case "/":
+                    return left / right;
+
+                case "^":
+                    return Math.Pow(left, right);
+
+                default:
+                    throw new InvalidOperationException("Invalid operator");
+            }
+        }
+
         private double EvaluatePostfix(string postfix) {
             Stack<double> stack = new Stack<double>();
             string[] tokens = postfix.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -241,15 +250,6 @@ namespace Taschenrechner.WinForms {
             var nfi = new NumberFormatInfo { NumberGroupSeparator = "'", NumberDecimalDigits = decimalPlaces };
             string formattedNumber = number.ToString(format, nfi);
             return formattedNumber;
-        }
-
-        private static int GetDecimalPlaces(double number) {
-            string str = number.ToString("G", CultureInfo.InvariantCulture);
-            int index = str.IndexOf('.');
-            if (index == -1) {
-                return 0;
-            }
-            else return str.Length - index - 1;
         }
 
         private int GetPrecedence(string op) {

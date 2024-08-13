@@ -92,7 +92,7 @@ namespace Taschenrechner.WinForms {
 
         private void ClearCalculation() {
             calculator.Clear();
-            inputLabel.Text = calculator.GetCurrentCalculation();
+            inputLabel.Text = "";
         }
 
         private void Backspace() {
