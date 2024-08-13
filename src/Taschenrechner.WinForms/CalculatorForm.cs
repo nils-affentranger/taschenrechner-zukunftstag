@@ -43,6 +43,101 @@ namespace Taschenrechner.WinForms {
             inputLabel.Text = calculator.GetCurrentCalculation();
         }
 
+        private void button0_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("0");
+        }
+
+        private void button1_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("1");
+        }
+
+        private void button2_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("2");
+        }
+
+        private void button3_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("3");
+        }
+
+        private void button4_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("4");
+        }
+
+        private void button5_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("5");
+        }
+        private void button6_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("6");
+        }
+
+        private void button7_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("7");
+        }
+
+        private void button8_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("8");
+        }
+
+        private void button9_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("9");
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("+");
+        }
+
+        private void buttonBackspace_Click(object sender, EventArgs e) {
+            Backspace();
+        }
+
+        private void buttonC_Click(object sender, EventArgs e) {
+            ClearCalculation();
+        }
+
+        private void buttonCE_Click(object sender, EventArgs e) {
+            CE();
+        }
+
+        private void buttonDecimal_Click(object sender, EventArgs e) {
+            AddDecimalPoint();
+        }
+
+        private void buttonDivide_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("/");
+        }
+
+        private void buttonEvaluate_Click(object sender, EventArgs e) {
+            EvaluateExpression();
+        }
+
+        private void buttonLeftBrace_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("(");
+        }
+
+        private void buttonMultiply_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("*");
+        }
+
+        private void buttonPlusMinus_Click(object sender, EventArgs e) {
+            ToggleSign();
+        }
+
+        private void buttonPower_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("^");
+        }
+
+        private void buttonRightBrace_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation(")");
+        }
+
+        private void buttonSubtract_Click(object sender, EventArgs e) {
+            AddCharacterToCalculation("-");
+        }
+
+        private void CalculatorForm_Load(object sender, EventArgs e) {
+
+        }
+
         private void CE() {
             calculator.CE();
             inputLabel.Text = calculator.GetCurrentCalculation();

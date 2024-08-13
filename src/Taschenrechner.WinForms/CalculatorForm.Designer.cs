@@ -6,27 +6,17 @@ namespace Taschenrechner.WinForms {
 
         private System.Windows.Forms.Button button1;
 
-        private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button2;
-
         private System.Windows.Forms.Button button3;
-
         private System.Windows.Forms.Button button4;
-
         private System.Windows.Forms.Button button5;
-
         private System.Windows.Forms.Button button6;
-
         private System.Windows.Forms.Button button7;
-
         private System.Windows.Forms.Button button8;
-
         private System.Windows.Forms.Button button9;
-
         private System.Windows.Forms.Button buttonAdd;
-
         private System.Windows.Forms.Button buttonBackspace;
-
+        private System.Windows.Forms.Button buttonC;
         private System.Windows.Forms.Button buttonCE;
 
         private System.Windows.Forms.Button buttonDecimal;
@@ -98,7 +88,7 @@ namespace Taschenrechner.WinForms {
             this.buttonLeftBrace = new System.Windows.Forms.Button();
             this.buttonPow = new System.Windows.Forms.Button();
             this.buttonCE = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
+            this.buttonC = new System.Windows.Forms.Button();
             this.historyBox = new System.Windows.Forms.Label();
             this.inputLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
@@ -123,7 +113,7 @@ namespace Taschenrechner.WinForms {
             this.button0.TabIndex = 1;
             this.button0.Text = "0";
             this.button0.UseVisualStyleBackColor = false;
-            this.button0.Click += (sender, e) => AddCharacterToCalculation("0");
+            this.button0.Click += new System.EventHandler(this.button0_Click);
             // 
             // button1
             // 
@@ -144,7 +134,7 @@ namespace Taschenrechner.WinForms {
             this.button1.TabIndex = 2;
             this.button1.Text = "1";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += (sender, e) => AddCharacterToCalculation("1");
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -165,7 +155,7 @@ namespace Taschenrechner.WinForms {
             this.button2.TabIndex = 3;
             this.button2.Text = "2";
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += (sender, e) => AddCharacterToCalculation("2");
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -186,7 +176,7 @@ namespace Taschenrechner.WinForms {
             this.button3.TabIndex = 4;
             this.button3.Text = "3";
             this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += (sender, e) => AddCharacterToCalculation("3");
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -207,7 +197,7 @@ namespace Taschenrechner.WinForms {
             this.button4.TabIndex = 5;
             this.button4.Text = "4";
             this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += (sender, e) => AddCharacterToCalculation("4");
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
@@ -228,7 +218,7 @@ namespace Taschenrechner.WinForms {
             this.button5.TabIndex = 6;
             this.button5.Text = "5";
             this.button5.UseVisualStyleBackColor = false;
-            this.button5.Click += (sender, e) => AddCharacterToCalculation("5");
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -249,7 +239,7 @@ namespace Taschenrechner.WinForms {
             this.button6.TabIndex = 7;
             this.button6.Text = "6";
             this.button6.UseVisualStyleBackColor = false;
-            this.button6.Click += (sender, e) => AddCharacterToCalculation("6");
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 
@@ -270,7 +260,7 @@ namespace Taschenrechner.WinForms {
             this.button7.TabIndex = 8;
             this.button7.Text = "7";
             this.button7.UseVisualStyleBackColor = false;
-            this.button7.Click += (sender, e) => AddCharacterToCalculation("7");
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button8
             // 
@@ -291,7 +281,7 @@ namespace Taschenrechner.WinForms {
             this.button8.TabIndex = 9;
             this.button8.Text = "8";
             this.button8.UseVisualStyleBackColor = false;
-            this.button8.Click += (sender, e) => AddCharacterToCalculation("8");
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button9
             // 
@@ -312,7 +302,7 @@ namespace Taschenrechner.WinForms {
             this.button9.TabIndex = 10;
             this.button9.Text = "9";
             this.button9.UseVisualStyleBackColor = false;
-            this.button9.Click += (sender, e) => AddCharacterToCalculation("9");
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // buttonDivide
             // 
@@ -333,7 +323,7 @@ namespace Taschenrechner.WinForms {
             this.buttonDivide.TabIndex = 1;
             this.buttonDivide.Text = "÷";
             this.buttonDivide.UseVisualStyleBackColor = false;
-            this.buttonDivide.Click += (sender, e) => AddCharacterToCalculation("/");
+            this.buttonDivide.Click += new System.EventHandler(this.buttonDivide_Click);
             // 
             // buttonMultiply
             // 
@@ -354,7 +344,7 @@ namespace Taschenrechner.WinForms {
             this.buttonMultiply.TabIndex = 1;
             this.buttonMultiply.Text = "×";
             this.buttonMultiply.UseVisualStyleBackColor = false;
-            this.buttonMultiply.Click += (sender, e) => AddCharacterToCalculation("*");
+            this.buttonMultiply.Click += new System.EventHandler(this.buttonMultiply_Click);
             // 
             // buttonSubtract
             // 
@@ -375,7 +365,7 @@ namespace Taschenrechner.WinForms {
             this.buttonSubtract.TabIndex = 1;
             this.buttonSubtract.Text = "-";
             this.buttonSubtract.UseVisualStyleBackColor = false;
-            this.buttonSubtract.Click += (sender, e) => AddCharacterToCalculation("-");
+            this.buttonSubtract.Click += new System.EventHandler(this.buttonSubtract_Click);
             // 
             // buttonAdd
             // 
@@ -396,7 +386,7 @@ namespace Taschenrechner.WinForms {
             this.buttonAdd.TabIndex = 1;
             this.buttonAdd.Text = "+";
             this.buttonAdd.UseVisualStyleBackColor = false;
-            this.buttonAdd.Click += (sender, e) => AddCharacterToCalculation("+");
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // buttonEvaluate
             // 
@@ -417,7 +407,7 @@ namespace Taschenrechner.WinForms {
             this.buttonEvaluate.TabIndex = 1;
             this.buttonEvaluate.Text = "=";
             this.buttonEvaluate.UseVisualStyleBackColor = false;
-            this.buttonEvaluate.Click += (sender, e) => EvaluateExpression();
+            this.buttonEvaluate.Click += new System.EventHandler(this.buttonEvaluate_Click);
             // 
             // buttonDecimal
             // 
@@ -438,7 +428,7 @@ namespace Taschenrechner.WinForms {
             this.buttonDecimal.TabIndex = 1;
             this.buttonDecimal.Text = ".";
             this.buttonDecimal.UseVisualStyleBackColor = false;
-            this.buttonDecimal.Click += (sender, e) => AddDecimalPoint();
+            this.buttonDecimal.Click += new System.EventHandler(this.buttonDecimal_Click);
             // 
             // buttonPlusMinus
             // 
@@ -459,7 +449,7 @@ namespace Taschenrechner.WinForms {
             this.buttonPlusMinus.TabIndex = 1;
             this.buttonPlusMinus.Text = "±";
             this.buttonPlusMinus.UseVisualStyleBackColor = false;
-            this.buttonPlusMinus.Click += (sender, e) => ToggleSign();
+            this.buttonPlusMinus.Click += new System.EventHandler(this.buttonPlusMinus_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -491,7 +481,7 @@ namespace Taschenrechner.WinForms {
             this.tableLayoutPanel1.Controls.Add(this.button5, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.buttonPow, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.buttonCE, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button10, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.buttonC, 1, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 196);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
@@ -523,7 +513,7 @@ namespace Taschenrechner.WinForms {
             this.buttonBackspace.TabIndex = 1;
             this.buttonBackspace.Text = "←";
             this.buttonBackspace.UseVisualStyleBackColor = false;
-            this.buttonBackspace.Click += (sender, e) => Backspace();
+            this.buttonBackspace.Click += new System.EventHandler(this.buttonBackspace_Click);
             // 
             // buttonRightBrace
             // 
@@ -544,7 +534,7 @@ namespace Taschenrechner.WinForms {
             this.buttonRightBrace.TabIndex = 1;
             this.buttonRightBrace.Text = ")";
             this.buttonRightBrace.UseVisualStyleBackColor = false;
-            this.buttonRightBrace.Click += (sender, e) => AddCharacterToCalculation(")");
+            this.buttonRightBrace.Click += new System.EventHandler(this.buttonRightBrace_Click);
             // 
             // buttonLeftBrace
             // 
@@ -565,7 +555,7 @@ namespace Taschenrechner.WinForms {
             this.buttonLeftBrace.TabIndex = 1;
             this.buttonLeftBrace.Text = "(";
             this.buttonLeftBrace.UseVisualStyleBackColor = false;
-            this.buttonLeftBrace.Click += (sender, e) => AddCharacterToCalculation("(");
+            this.buttonLeftBrace.Click += new System.EventHandler(this.buttonLeftBrace_Click);
             // 
             // buttonPow
             // 
@@ -586,7 +576,7 @@ namespace Taschenrechner.WinForms {
             this.buttonPow.TabIndex = 1;
             this.buttonPow.Text = "^";
             this.buttonPow.UseVisualStyleBackColor = false;
-            this.buttonPow.Click += (sender, e) => AddCharacterToCalculation("^");
+            this.buttonPow.Click += new System.EventHandler(this.buttonPower_Click);
             // 
             // buttonCE
             // 
@@ -607,28 +597,28 @@ namespace Taschenrechner.WinForms {
             this.buttonCE.TabIndex = 1;
             this.buttonCE.Text = "CE";
             this.buttonCE.UseVisualStyleBackColor = false;
-            this.buttonCE.Click += (sender, e) => CE();
+            this.buttonCE.Click += new System.EventHandler(this.buttonCE_Click);
             // 
-            // button10
+            // buttonC
             // 
-            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.buttonC.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button10.AutoSize = true;
-            this.button10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
-            this.button10.FlatAppearance.BorderSize = 0;
-            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button10.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.button10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
-            this.button10.Location = new System.Drawing.Point(62, 1);
-            this.button10.Margin = new System.Windows.Forms.Padding(1);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(59, 34);
-            this.button10.TabIndex = 1;
-            this.button10.Text = "C";
-            this.button10.UseVisualStyleBackColor = false;
-            this.button10.Click += (sender, e) => ClearCalculation();
+            this.buttonC.AutoSize = true;
+            this.buttonC.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(71)))), ((int)(((byte)(90)))));
+            this.buttonC.FlatAppearance.BorderSize = 0;
+            this.buttonC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonC.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.buttonC.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
+            this.buttonC.Location = new System.Drawing.Point(62, 1);
+            this.buttonC.Margin = new System.Windows.Forms.Padding(1);
+            this.buttonC.Name = "buttonC";
+            this.buttonC.Size = new System.Drawing.Size(59, 34);
+            this.buttonC.TabIndex = 1;
+            this.buttonC.Text = "C";
+            this.buttonC.UseVisualStyleBackColor = false;
+            this.buttonC.Click += new System.EventHandler(this.buttonC_Click);
             // 
             // historyBox
             // 
@@ -666,6 +656,7 @@ namespace Taschenrechner.WinForms {
             this.KeyPreview = true;
             this.Name = "CalculatorForm";
             this.Text = "Calculator";
+            this.Load += new System.EventHandler(this.CalculatorForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
