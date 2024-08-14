@@ -63,6 +63,36 @@ namespace Taschenrechner.WinForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap noun_back_button_251451 {
+            get {
+                object obj = ResourceManager.GetObject("noun-back-button-251451", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap noun_back_button_2514511 {
+            get {
+                object obj = ResourceManager.GetObject("noun-back-button-2514511", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap noun_back_button_2514512 {
+            get {
+                object obj = ResourceManager.GetObject("noun-back-button-2514512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap settings_btn {
             get {
                 object obj = ResourceManager.GetObject("settings_btn", resourceCulture);

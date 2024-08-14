@@ -92,14 +92,17 @@ namespace Taschenrechner.WinForms {
             this.historyBox = new System.Windows.Forms.Label();
             this.inputLabel = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.calculatorPage = new System.Windows.Forms.TabPage();
+            this.settingsPage = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonBack = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.calculatorPage.SuspendLayout();
+            this.settingsPage.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button0
@@ -652,39 +655,40 @@ namespace Taschenrechner.WinForms {
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.calculatorPage);
+            this.tabControl1.Controls.Add(this.settingsPage);
             this.tabControl1.Location = new System.Drawing.Point(-5, -23);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(279, 452);
             this.tabControl1.TabIndex = 15;
             // 
-            // tabPage1
+            // calculatorPage
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
-            this.tabPage1.Controls.Add(this.tableLayoutPanel1);
-            this.tabPage1.Controls.Add(this.historyBox);
-            this.tabPage1.Controls.Add(this.inputLabel);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(271, 426);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            this.calculatorPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
+            this.calculatorPage.Controls.Add(this.button10);
+            this.calculatorPage.Controls.Add(this.tableLayoutPanel1);
+            this.calculatorPage.Controls.Add(this.historyBox);
+            this.calculatorPage.Controls.Add(this.inputLabel);
+            this.calculatorPage.Location = new System.Drawing.Point(4, 22);
+            this.calculatorPage.Margin = new System.Windows.Forms.Padding(0);
+            this.calculatorPage.Name = "calculatorPage";
+            this.calculatorPage.Size = new System.Drawing.Size(271, 426);
+            this.calculatorPage.TabIndex = 0;
+            this.calculatorPage.Text = "calculator";
+            this.calculatorPage.Click += new System.EventHandler(this.tabPage1_Click);
             // 
-            // tabPage2
+            // settingsPage
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.panel1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(271, 426);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.settingsPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
+            this.settingsPage.Controls.Add(this.label1);
+            this.settingsPage.Controls.Add(this.panel1);
+            this.settingsPage.Location = new System.Drawing.Point(4, 22);
+            this.settingsPage.Name = "settingsPage";
+            this.settingsPage.Padding = new System.Windows.Forms.Padding(3);
+            this.settingsPage.Size = new System.Drawing.Size(271, 426);
+            this.settingsPage.TabIndex = 1;
+            this.settingsPage.Text = "settings";
             // 
             // label1
             // 
@@ -702,10 +706,41 @@ namespace Taschenrechner.WinForms {
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(50)))), ((int)(((byte)(68)))));
+            this.panel1.Controls.Add(this.buttonBack);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(271, 45);
             this.panel1.TabIndex = 1;
+            // 
+            // buttonBack
+            // 
+            this.buttonBack.AutoSize = true;
+            this.buttonBack.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonBack.FlatAppearance.BorderSize = 0;
+            this.buttonBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonBack.Image = global::Taschenrechner.WinForms.Properties.Resources.noun_back_button_2514512;
+            this.buttonBack.Location = new System.Drawing.Point(9, 9);
+            this.buttonBack.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonBack.Name = "buttonBack";
+            this.buttonBack.Size = new System.Drawing.Size(27, 27);
+            this.buttonBack.TabIndex = 0;
+            this.buttonBack.UseVisualStyleBackColor = true;
+            this.buttonBack.Click += new System.EventHandler(this.backButton_Click);
+            // 
+            // button10
+            // 
+            this.button10.AutoSize = true;
+            this.button10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button10.FlatAppearance.BorderSize = 0;
+            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button10.Image = global::Taschenrechner.WinForms.Properties.Resources.settings_btn1;
+            this.button10.Location = new System.Drawing.Point(14, 63);
+            this.button10.Margin = new System.Windows.Forms.Padding(0);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(26, 26);
+            this.button10.TabIndex = 15;
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.buttonSettings_Click);
             // 
             // CalculatorForm
             // 
@@ -723,9 +758,12 @@ namespace Taschenrechner.WinForms {
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.calculatorPage.ResumeLayout(false);
+            this.calculatorPage.PerformLayout();
+            this.settingsPage.ResumeLayout(false);
+            this.settingsPage.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -733,10 +771,12 @@ namespace Taschenrechner.WinForms {
         #endregion
 
         private TabControl tabControl1;
-        private TabPage tabPage1;
-        private TabPage tabPage2;
+        private TabPage calculatorPage;
+        private TabPage settingsPage;
         private Label label1;
         private Panel panel1;
+        private Button buttonBack;
+        private Button button10;
     }
 }
 

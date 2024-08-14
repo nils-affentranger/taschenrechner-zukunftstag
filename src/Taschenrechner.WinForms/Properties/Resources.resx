@@ -124,4 +124,13 @@
   <data name="settings_btn1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\settings_btn1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="noun-back-button-2514511" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noun-back-button-2514511.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="noun-back-button-251451" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noun-back-button-251451.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="noun-back-button-2514512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noun-back-button-2514512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
