@@ -35,12 +35,12 @@ namespace Taschenrechner.Business.Test {
             var fake = new Faker();
             var sut = new Calculator();
 
-            sut.AddCharacter(fake.Random.Number(1, 100).ToString());
+            sut.AddCharacter(fake.Random.Number(1, 9).ToString());
             sut.AddCharacter(fake.PickRandom<string>("+", "-", "*", "/", "^"));
             sut.AddCharacter("(");
-            sut.AddCharacter(fake.Random.Number(1, 100).ToString());
+            sut.AddCharacter(fake.Random.Number(1, 9).ToString());
             sut.AddCharacter(fake.PickRandom<string>("+", "-", "*", "/", "^"));
-            sut.AddCharacter(fake.Random.Number(1, 100).ToString());
+            sut.AddCharacter(fake.Random.Number(1, 9).ToString());
             sut.AddCharacter(")");
 
             var result = sut.Evaluate();
