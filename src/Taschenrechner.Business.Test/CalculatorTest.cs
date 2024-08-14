@@ -10,6 +10,20 @@ namespace Taschenrechner.Business.Test {
     public class CalculatorTest {
 
         [TestMethod]
+        public void backspaceTest() {
+            var sut = new Calculator();
+
+            sut.AddCharacter("6");
+            sut.AddCharacter("4");
+            sut.Backspace();
+            sut.AddCharacter("9");
+
+            var result = sut.GetCurrentCalculation();
+
+            Assert.AreEqual("69", result);
+        }
+
+        [TestMethod]
         public void clearTest() {
             var fake = new Faker();
             var sut = new Calculator();
@@ -126,8 +140,5 @@ namespace Taschenrechner.Business.Test {
 
             Assert.IsTrue(Convert.ToInt32(sut.GetCurrentCalculation()) < 0);
         }
-
-        [TestMethod]
-        public void
     }
 }
