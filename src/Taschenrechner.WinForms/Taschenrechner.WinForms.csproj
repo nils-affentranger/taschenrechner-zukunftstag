@@ -116,5 +116,14 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noun-back-button-251451.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noun-back-button-2514511.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noun-back-button-2514512.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
