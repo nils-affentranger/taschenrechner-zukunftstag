@@ -27,11 +27,11 @@ namespace Taschenrechner.Business.Test {
             var fake = new Faker();
             var sut = new Calculator();
 
-            Assert.IsFalse(sut.AddCharacter("A"));
+            Assert.IsFalse(sut.AddCharacter(fake.Random.String(length:1)));
         }
 
         [TestMethod]
-        public void AddCharacter_andEvaluate() {
+        public void evaluationTypeTest() {
             var fake = new Faker();
             var sut = new Calculator();
 
@@ -46,6 +46,21 @@ namespace Taschenrechner.Business.Test {
             var result = sut.Evaluate();
 
             Assert.IsInstanceOfType(result, typeof(string));
+        }
+
+        [TestMethod]
+        public void orderOfOperationsTest() {
+            var sut = new Calculator();
+
+            sut.AddCharacter("3");
+            sut.AddCharacter("+");
+            sut.AddCharacter("5");
+            sut.AddCharacter("*");
+            sut.AddCharacter("4");
+
+            var result = sut.Evaluate();
+
+            Assert.AreEqual("23", result);
         }
     }
 }
