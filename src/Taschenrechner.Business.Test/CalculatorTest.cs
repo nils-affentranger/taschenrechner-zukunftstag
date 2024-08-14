@@ -1,8 +1,11 @@
 using Bogus;
+using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using Taschenrechner.WinForms;
 
 namespace Taschenrechner.Business.Test {
+
     [TestClass]
     public class CalculatorTest {
 
@@ -17,6 +20,24 @@ namespace Taschenrechner.Business.Test {
             sut.Clear();
 
             Assert.AreEqual(string.Empty, sut.GetCurrentCalculation());
+        }
+
+        [TestMethod]
+        public void decimalTest() {
+            var fake = new Faker();
+            var sut = new Calculator();
+
+            sut.AddCharacter("4");
+            sut.AddDecimalPoint();
+            sut.AddCharacter("2");
+            sut.AddCharacter("5");
+            sut.AddCharacter("^");
+            sut.AddCharacter("3");
+
+            var result = sut.Evaluate();
+
+            Assert.AreEqual("76.765625", result);
+
         }
 
         [TestMethod]
@@ -93,5 +114,20 @@ namespace Taschenrechner.Business.Test {
 
             Assert.AreEqual("23", result);
         }
+
+        [TestMethod]
+        public void signToggling() {
+            var fake = new Faker();
+            var sut = new Calculator();
+
+            sut.AddCharacter(fake.Random.Number(1, 9).ToString());
+            sut.AddCharacter(fake.Random.Number(1, 9).ToString());
+            sut.ToggleSign();
+
+            Assert.IsTrue(Convert.ToInt32(sut.GetCurrentCalculation()) < 0);
+        }
+
+        [TestMethod]
+        public void
     }
 }
