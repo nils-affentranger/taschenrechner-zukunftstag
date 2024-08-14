@@ -4,7 +4,7 @@ using Taschenrechner.WinForms;
 
 namespace Taschenrechner.Business.Test {
     [TestClass]
-    public class UnitTest1 {
+    public class CalculatorTest {
         [TestMethod]
         public void NumbersTest() {
             var fake = new Faker();
