@@ -15,7 +15,6 @@ namespace Taschenrechner.WinForms {
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button buttonAdd;
-        private Button buttonBack;
         private System.Windows.Forms.Button buttonBackspace;
         private System.Windows.Forms.Button buttonC;
         private System.Windows.Forms.Button buttonCE;
@@ -35,10 +34,7 @@ namespace Taschenrechner.WinForms {
         private System.Windows.Forms.Button buttonPow;
         private System.Windows.Forms.Button buttonRightBrace;
 
-        private Button buttonSettings;
         private System.Windows.Forms.Button buttonSubtract;
-
-        private TabPage calculatorPage;
 
         /// <summary>
         /// Required designer variable.
@@ -48,10 +44,6 @@ namespace Taschenrechner.WinForms {
         private System.Windows.Forms.Label historyBox;
         private System.Windows.Forms.Label inputLabel;
 
-        private Label label1;
-        private Panel panel1;
-        private TabPage settingsPage;
-        private TabControl tabControl1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 
         /// <summary>
@@ -99,16 +91,6 @@ namespace Taschenrechner.WinForms {
             this.buttonC = new System.Windows.Forms.Button();
             this.historyBox = new System.Windows.Forms.Label();
             this.inputLabel = new System.Windows.Forms.Label();
-<<<<<<< Updated upstream
-=======
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.calculatorPage = new System.Windows.Forms.TabPage();
-            this.settingsPage = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.buttonBack = new System.Windows.Forms.Button();
-            this.buttonSettings = new System.Windows.Forms.Button();
->>>>>>> Stashed changes
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -660,98 +642,6 @@ namespace Taschenrechner.WinForms {
             this.inputLabel.TabIndex = 12;
             this.inputLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-<<<<<<< Updated upstream
-=======
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.calculatorPage);
-            this.tabControl1.Controls.Add(this.settingsPage);
-            this.tabControl1.Location = new System.Drawing.Point(-5, -23);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(279, 452);
-            this.tabControl1.TabIndex = 15;
-            // 
-            // calculatorPage
-            // 
-            this.calculatorPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
-            this.calculatorPage.Controls.Add(this.buttonSettings);
-            this.calculatorPage.Controls.Add(this.tableLayoutPanel1);
-            this.calculatorPage.Controls.Add(this.historyBox);
-            this.calculatorPage.Controls.Add(this.inputLabel);
-            this.calculatorPage.Location = new System.Drawing.Point(4, 22);
-            this.calculatorPage.Margin = new System.Windows.Forms.Padding(0);
-            this.calculatorPage.Name = "calculatorPage";
-            this.calculatorPage.Size = new System.Drawing.Size(271, 426);
-            this.calculatorPage.TabIndex = 0;
-            this.calculatorPage.Text = "calculator";
-            this.calculatorPage.Click += new System.EventHandler(this.tabPage1_Click);
-            // 
-            // settingsPage
-            // 
-            this.settingsPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
-            this.settingsPage.Controls.Add(this.label1);
-            this.settingsPage.Controls.Add(this.panel1);
-            this.settingsPage.Location = new System.Drawing.Point(4, 22);
-            this.settingsPage.Name = "settingsPage";
-            this.settingsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.settingsPage.Size = new System.Drawing.Size(271, 426);
-            this.settingsPage.TabIndex = 1;
-            this.settingsPage.Text = "settings";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(50)))), ((int)(((byte)(68)))));
-            this.label1.Font = new System.Drawing.Font("Verdana", 14F);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(214)))), ((int)(((byte)(244)))));
-            this.label1.Location = new System.Drawing.Point(93, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(88, 23);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Settings";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(50)))), ((int)(((byte)(68)))));
-            this.panel1.Controls.Add(this.buttonBack);
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(271, 45);
-            this.panel1.TabIndex = 1;
-            // 
-            // buttonBack
-            // 
-            this.buttonBack.AutoSize = true;
-            this.buttonBack.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.buttonBack.FlatAppearance.BorderSize = 0;
-            this.buttonBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonBack.Image = global::Taschenrechner.WinForms.Properties.Resources.noun_back_button_2514512;
-            this.buttonBack.Location = new System.Drawing.Point(9, 9);
-            this.buttonBack.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonBack.Name = "buttonBack";
-            this.buttonBack.Size = new System.Drawing.Size(27, 27);
-            this.buttonBack.TabIndex = 0;
-            this.buttonBack.UseVisualStyleBackColor = true;
-            this.buttonBack.Click += new System.EventHandler(this.backButton_Click);
-            // 
-            // buttonSettings
-            // 
-            this.buttonSettings.AutoSize = true;
-            this.buttonSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.buttonSettings.FlatAppearance.BorderSize = 0;
-            this.buttonSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSettings.Image = global::Taschenrechner.WinForms.Properties.Resources.settings_btn1;
-            this.buttonSettings.Location = new System.Drawing.Point(14, 63);
-            this.buttonSettings.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonSettings.Name = "buttonSettings";
-            this.buttonSettings.Size = new System.Drawing.Size(26, 26);
-            this.buttonSettings.TabIndex = 15;
-            this.buttonSettings.UseVisualStyleBackColor = true;
-            this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
-            // 
->>>>>>> Stashed changes
             // CalculatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);

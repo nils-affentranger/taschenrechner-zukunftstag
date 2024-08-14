@@ -11,8 +11,7 @@ namespace Taschenrechner.WinForms {
         private readonly List<string> history = new List<string>(6);
         private readonly HashSet<string> Operators = new HashSet<string> { "+", "-", "*", "/", "^" };
         private readonly HashSet<string> Parenthesis = new HashSet<string> { "(", ")" };
-        private readonly HashSet<string> Numbers = new HashSet<string> { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-        private string historyString; 
+        private string historyString;
         private bool lastActionWasEvaluation;
 
         public Calculator() {
@@ -257,7 +256,7 @@ namespace Taschenrechner.WinForms {
         }
 
         private bool IsValidCharacter(string character) {
-            return Numbers.Contains(character) || Operators.Contains(character) || Parenthesis.Contains(character);
+            return !string.IsNullOrEmpty(character);
         }
     }
 }
