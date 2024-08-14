@@ -62,5 +62,19 @@ namespace Taschenrechner.Business.Test {
 
             Assert.AreEqual("23", result);
         }
+
+
+        [TestMethod]
+        public void clearTest() {
+            var fake = new Faker();
+            var sut = new Calculator();
+
+            sut.AddCharacter(fake.Random.Number(1, 9).ToString());
+            sut.AddCharacter(fake.Random.Number(1, 9).ToString());
+            sut.AddCharacter(fake.PickRandom<string>("+", "-", "*", "/", "^"));
+            sut.Clear();
+
+            Assert.AreEqual(string.Empty, sut.GetCurrentCalculation());
+        }
     }
 }
