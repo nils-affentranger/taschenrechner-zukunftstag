@@ -159,13 +159,16 @@ namespace Taschenrechner.WinForms {
         }
 
         public string Evaluate() {
-            string postfix = ConvertToPostfix(currentCalculation);
-            double result = EvaluatePostfix(postfix);
-            Clear();
-            currentCalculation.Add(new Token(result));
-            lastActionWasEvaluation = true;
-            AppendHistory(FormatNumber(result));
-            return FormatNumber(result);
+            if (currentCalculation.Any()) {
+                string postfix = ConvertToPostfix(currentCalculation);
+                double result = EvaluatePostfix(postfix);
+                Clear();
+                currentCalculation.Add(new Token(result));
+                lastActionWasEvaluation = true;
+                AppendHistory(FormatNumber(result));
+                return FormatNumber(result);
+            }
+            else return "";
         }
 
         public string GetCurrentCalculation() {
