@@ -13,7 +13,6 @@ namespace Taschenrechner.WinForms {
 
         protected override void OnKeyPress(KeyPressEventArgs e) {
             base.OnKeyPress(e);
-
             char keyChar = e.KeyChar;
             if (HandleCharacterInput(keyChar)) {
                 e.Handled = true;

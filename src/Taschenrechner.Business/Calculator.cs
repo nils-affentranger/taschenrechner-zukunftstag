@@ -7,7 +7,7 @@ using System.Text;
 namespace Taschenrechner.WinForms {
 
     public class Calculator {
-        private readonly List<Token> currentCalculation;
+        public readonly List<Token> currentCalculation;
         private readonly List<string> history = new List<string>(6);
         private readonly HashSet<string> Operators = new HashSet<string> { "+", "-", "*", "/", "^" };
         private readonly HashSet<string> Parenthesis = new HashSet<string> { "(", ")" };
