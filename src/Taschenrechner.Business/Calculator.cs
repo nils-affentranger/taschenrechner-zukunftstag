@@ -110,6 +110,12 @@ namespace Taschenrechner.WinForms {
             return true;
         }
 
+        public bool ClearHistory() {
+            history.Clear();
+            historyString = string.Empty;
+            return true;
+        }
+
         public bool CE() {
             if (currentCalculation.Any()) {
                 currentCalculation.RemoveAt(currentCalculation.Count - 1);

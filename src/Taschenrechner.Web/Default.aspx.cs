@@ -21,6 +21,7 @@ namespace Taschenrechner.Web {
             }
         }
 
+
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
                 if (Session["Calculator"] == null) {
@@ -160,6 +161,11 @@ namespace Taschenrechner.Web {
         protected void ButtonC_Click(object sender, EventArgs e) {
             calculator.Clear();
             CalcLabel.Text = calculator.GetCurrentCalculation();
+        }
+
+        protected void ClearHistoryButton_Click(object sender, EventArgs e) {
+            _calculator.ClearHistory();
+            HistoryBox.Text = _calculator.HistoryString("<br>");
         }
     }
 }

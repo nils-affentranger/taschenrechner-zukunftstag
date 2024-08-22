@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="Home Page" Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Taschenrechner.Web._Default" %>
+
 <input type="hidden" id="currentCalculationField" runat="server" />
 <body>
     <form id="form1" runat="server">
@@ -6,8 +7,8 @@
             <asp:Panel ID="LabelWrapper" runat="server" CssClass="calc-label-wrapper">
                 <asp:Label ID="CalcLabel" runat="server" CssClass="calc-label"></asp:Label>
             </asp:Panel>
-            <asp:Panel ID="HistoryWrapper" runat="server" CssClass="history-wrapper"> 
-                <asp:Button ID="ClearHistoryButton" runat="server" CssClass="clear-history-button" EnableTheming="False"/>
+            <asp:Panel ID="HistoryWrapper" runat="server" CssClass="history-wrapper">
+                <asp:Button ID="ClearHistoryButton" runat="server" CssClass="clear-history-button" EnableTheming="False" OnClick="ClearHistoryButton_Click" />
                 <asp:Label ID="HistoryBox" runat="server" CssClass="history-box"></asp:Label>
             </asp:Panel>
             <asp:Panel ID="ButtonsWrapper" runat="server" CssClass="buttons-wrapper">
@@ -48,7 +49,7 @@
                             <asp:Button ID="Button8" runat="server" CssClass="calc-button" Text="8" OnClick="Button8_Click" />
                         </td>
                         <td class="auto-style1">
-                            <asp:Button ID="Button9" runat="server" CssClass="calc-button" Text="9" OnClick="Button9_Click"/>
+                            <asp:Button ID="Button9" runat="server" CssClass="calc-button" Text="9" OnClick="Button9_Click" />
                         </td>
                         <td>
                             <asp:Button ID="ButtonMultiply" runat="server" CssClass="calc-button" Text="×" OnClick="ButtonMultiply_Click" />
@@ -135,6 +136,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        box-shadow: inset rgb(0, 0, 0, 0.2) 0 0 2em;
     }
 
     .calc-label {
@@ -154,6 +156,7 @@
         display: flex;
         text-align: right;
         justify-content: flex-end;
+        box-shadow: inset rgb(0, 0, 0, 0.05) 0 0 2em;
     }
 
     .history-box {
@@ -191,20 +194,25 @@
         }
 
     .clear-history-button {
-        height: 30px;
-        width: 40px ;
+        height: 3vh;
+        width: 4vh;
         margin: 1vh;
         padding: 0;
         border-radius: 30%;
         background-color: #494d64;
         border: none;
         display: inline-block;
+        box-shadow: rgb(0, 0, 0, 0.2) 0 0 1em;
     }
 
 
     #ButtonEvaluate {
         background-color: #c6a0f6;
         color: white;
+    }
+
+    #ButtonEvaluate:hover {
+        background-color: #d0aefa;
     }
 
     .calc-button {
@@ -214,25 +222,28 @@
         border: none;
         background-color: #494d64;
         color: #cad3f5;
+        box-shadow: inset rgb(57, 55, 64, 0.25) 0 0 2em;
     }
 
-    .calc-button:hover {
-        background-color: #5b6078;
-    }
+        .calc-button:hover {
+            background-color: #5b6078;
+        }
 
-    .calc-button:active {
-        background-color: #363a4f;
-        scale: 90%;
-    }
+        .calc-button:active {
+            background-color: #363a4f;
+            scale: 90%;
+        }
 
     .auto-style1 {
         width: 62px;
     }
+
     .auto-style2 {
         height: 37px;
     }
+
     .auto-style3 {
         width: 62px;
         height: 37px;
     }
-    </style>
+</style>
