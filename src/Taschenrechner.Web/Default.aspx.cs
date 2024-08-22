@@ -20,23 +20,19 @@ namespace Taschenrechner.Web {
             }
         }
 
-        protected void Page_Load(object sender, EventArgs e)
-{
-    if (!IsPostBack)
-    {
-        if (Session["Calculator"] == null)
-        {
-            Session["Calculator"] = new Calculator();
-        }
-        _calculator = (Calculator)Session["Calculator"];
-    }
-    else
-    {
-        _calculator = (Calculator)Session["Calculator"];
-    }
+        protected void Page_Load(object sender, EventArgs e) {
+            if (!IsPostBack) {
+                if (Session["Calculator"] == null) {
+                    Session["Calculator"] = new Calculator();
+                }
+                _calculator = (Calculator)Session["Calculator"];
+            }
+            else {
+                _calculator = (Calculator)Session["Calculator"];
+            }
 
-    CalcLabel.Text = _calculator.GetCurrentCalculation();
-}
+            CalcLabel.Text = _calculator.GetCurrentCalculation();
+        }
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e) {
         }
@@ -45,13 +41,7 @@ namespace Taschenrechner.Web {
             if (!calculator.AddCharacter(character))
                 return;
 
-            var lastToken = calculator.currentCalculation.LastOrDefault();
-            if (lastToken != null && lastToken.Type == Token.TokenType.Number) {
-                CalcLabel.Text = lastToken.NumberString;
-            }
-            else {
-                CalcLabel.Text = calculator.GetCurrentCalculation();
-            }
+        CalcLabel.Text = calculator.GetCurrentCalculation();
         }
 
         protected void ButtonEvaluate_Click(object sender, EventArgs e) {
