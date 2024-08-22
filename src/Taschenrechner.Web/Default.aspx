@@ -7,7 +7,7 @@
                 <asp:Label ID="CalcLabel" runat="server" CssClass="calc-label"></asp:Label>
             </asp:Panel>
             <asp:Panel ID="HistoryWrapper" runat="server" CssClass="history-wrapper"> 
-                <asp:Label ID="HistoryBox" runat="server" CssClass="history-box" Text="Label"></asp:Label>
+                <asp:Label ID="HistoryBox" runat="server" CssClass="history-box"></asp:Label>
             </asp:Panel>
             <asp:Panel ID="ButtonsWrapper" runat="server" CssClass="buttons-wrapper">
                 <table class="buttons-table" style="width: 100%;">
@@ -140,6 +140,8 @@
         padding-right: 2vh;
         font-size: 170%;
         color: #cad3f5;
+        overflow: hidden;
+        line
     }
 
     .history-wrapper {
@@ -157,9 +159,11 @@
         background: none;
         border: none;
         width: 100%;
-        height: 100%;
+        height: 90%;
         color: #a5adcb;
         padding: 5px 10px;
+        overflow: hidden;
+        line-height: 120%;
     }
 
     .buttons-wrapper {
@@ -196,7 +200,16 @@
         border-radius: 0.6vh;
         border: none;
         background-color: #494d64;
-        color: #cad3f5
+        color: #cad3f5;
+    }
+
+    .calc-button:hover {
+        background-color: #5b6078;
+    }
+
+    .calc-button:active {
+        background-color: #363a4f;
+        scale: 90%;
     }
 
     .auto-style1 {

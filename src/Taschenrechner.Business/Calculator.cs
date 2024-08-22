@@ -80,8 +80,8 @@ namespace Taschenrechner.WinForms {
 
         public void AppendHistory(string result) {
             history.Insert(0, result);
-            if (history.Count > 6) {
-                history.RemoveAt(6);
+            if (history.Count > 8) {
+                history.RemoveAt(8);
             }
             historyString = string.Join("\r\n", history);
         }
