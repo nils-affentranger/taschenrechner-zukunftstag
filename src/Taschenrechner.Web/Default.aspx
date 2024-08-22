@@ -6,19 +6,20 @@
             <asp:Panel ID="LabelWrapper" runat="server" CssClass="calc-label-wrapper">
                 <asp:Label ID="CalcLabel" runat="server" CssClass="calc-label"></asp:Label>
             </asp:Panel>
-            <asp:Panel ID="HistoryWrapper" runat="server" CssClass="history-wrapper">
+            <asp:Panel ID="HistoryWrapper" runat="server" CssClass="history-wrapper"> 
+                <asp:Label ID="HistoryBox" runat="server" CssClass="history-box" Text="Label"></asp:Label>
             </asp:Panel>
             <asp:Panel ID="ButtonsWrapper" runat="server" CssClass="buttons-wrapper">
                 <table class="buttons-table" style="width: 100%;">
                     <tr>
-                        <td>&nbsp;</td>
-                        <td>
+                        <td class="auto-style2"></td>
+                        <td class="auto-style2">
                             <asp:Button ID="ButtonC" runat="server" CssClass="calc-button" Text="C" OnClick="ButtonC_Click" />
                         </td>
-                        <td class="auto-style1">
+                        <td class="auto-style3">
                             <asp:Button ID="ButtonCE" runat="server" CssClass="calc-button" Text="CE" OnClick="ButtonCE_Click" />
                         </td>
-                        <td>
+                        <td class="auto-style2">
                             <asp:Button ID="ButtonBack" runat="server" CssClass="calc-button" Text="←" OnClick="ButtonBack_Click" />
                         </td>
 
@@ -152,6 +153,15 @@
         justify-content: flex-end;
     }
 
+    .history-box {
+        background: none;
+        border: none;
+        width: 100%;
+        height: 100%;
+        color: #a5adcb;
+        padding: 5px 10px;
+    }
+
     .buttons-wrapper {
         height: 48%;
         width: 90%;
@@ -192,4 +202,11 @@
     .auto-style1 {
         width: 62px;
     }
-</style>
+    .auto-style2 {
+        height: 37px;
+    }
+    .auto-style3 {
+        width: 62px;
+        height: 37px;
+    }
+    </style>

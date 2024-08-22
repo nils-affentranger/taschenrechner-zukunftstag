@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Taschenrechner.WinForms;
@@ -32,6 +33,7 @@ namespace Taschenrechner.Web {
             }
 
             CalcLabel.Text = _calculator.GetCurrentCalculation();
+            HistoryBox.Text = _calculator.HistoryString("<br>");
         }
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e) {
@@ -41,12 +43,31 @@ namespace Taschenrechner.Web {
             if (!calculator.AddCharacter(character))
                 return;
 
-        CalcLabel.Text = calculator.GetCurrentCalculation();
+            CalcLabel.Text = calculator.GetCurrentCalculation();
+        }
+
+        private void Backspace() {
+            calculator.Backspace();
+            CalcLabel.Text = calculator.GetCurrentCalculation();
+        }
+
+        private void EvaluateExpression() {
+            try {
+                string result = calculator.Evaluate();
+                CalcLabel.Text = result;
+            }
+            catch (DivideByZeroException) {
+                CalcLabel.Text = "Cannot divide by 0";
+                return;
+            }
+            catch (InvalidOperationException) {
+                CalcLabel.Text = "Invalid Expression";
+                calculator.Clear();
+            }
         }
 
         protected void ButtonEvaluate_Click(object sender, EventArgs e) {
-            calculator.Evaluate();
-            CalcLabel.Text = calculator.GetCurrentCalculation();
+            EvaluateExpression();
         }
 
         protected void Button0_Click(object sender, EventArgs e) {
@@ -106,8 +127,7 @@ namespace Taschenrechner.Web {
         }
 
         protected void ButtonBack_Click(object sender, EventArgs e) {
-            calculator.Backspace();
-            CalcLabel.Text = calculator.GetCurrentCalculation();
+            Backspace();
         }
 
         protected void ButtonCE_Click(object sender, EventArgs e) {

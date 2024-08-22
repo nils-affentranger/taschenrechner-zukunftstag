@@ -19,10 +19,8 @@ namespace Taschenrechner.WinForms {
             currentCalculation = new List<Token>();
         }
 
-        public string HistoryString {
-            get {
-                return string.Join("\r\n", history);
-            }
+        public string HistoryString(string separator) {
+            return string.Join(separator, history);
         }
 
         public bool AddCharacter(string character) {
@@ -159,6 +157,26 @@ namespace Taschenrechner.WinForms {
         }
 
         public string Evaluate() {
+            double EvaluatePostfix(string postfix) {
+                Stack<double> stack = new Stack<double>();
+                string[] tokens = postfix.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (string token in tokens) {
+                    if (double.TryParse(token, NumberStyles.Any, CultureInfo.InvariantCulture, out double number)) {
+                        stack.Push(number);
+                    }
+                    else if (Operators.Contains(token)) {
+                        double right = stack.Pop();
+                        double left = stack.Pop();
+                        if (token == "/" && right == 0) {
+                            throw new DivideByZeroException("Cannot divide by zero");
+                        }
+                        stack.Push(ApplyOperator(token, left, right));
+                    }
+                }
+
+                return stack.Pop();
+            }
             if (currentCalculation.Any()) {
                 string postfix = ConvertToPostfix(currentCalculation);
                 double result = EvaluatePostfix(postfix);

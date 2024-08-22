@@ -37,6 +37,10 @@ namespace Taschenrechner.WinForms {
             }
         }
 
+        private void backButton_Click(object sender, EventArgs e) {
+            tabControl1.SelectedIndex = 0;
+        }
+
         private void Backspace() {
             calculator.Backspace();
             inputLabel.Text = calculator.GetCurrentCalculation();
@@ -129,6 +133,10 @@ namespace Taschenrechner.WinForms {
             AddCharacterToCalculation(")");
         }
 
+        private void buttonSettings_Click(object sender, EventArgs e) {
+            tabControl1.SelectedIndex = 1;
+        }
+
         private void buttonSubtract_Click(object sender, EventArgs e) {
             AddCharacterToCalculation("-");
         }
@@ -151,7 +159,7 @@ namespace Taschenrechner.WinForms {
             try {
                 string result = calculator.Evaluate();
                 inputLabel.Text = result;
-                historyBox.Text = calculator.HistoryString;
+                historyBox.Text = calculator.HistoryString("\r\n");
             }
             catch (Exception) {
                 inputLabel.Text = "Invalid Expression";
@@ -203,21 +211,13 @@ namespace Taschenrechner.WinForms {
                     return false;
             }
         }
-        private void ToggleSign() {
-            calculator.ToggleSign();
-            inputLabel.Text = calculator.GetCurrentCalculation();
-        }
-
         private void tabPage1_Click(object sender, EventArgs e) {
 
         }
 
-        private void buttonSettings_Click(object sender, EventArgs e) {
-            tabControl1.SelectedIndex = 1;
-        }
-
-        private void backButton_Click(object sender, EventArgs e) {
-            tabControl1.SelectedIndex = 0;
+        private void ToggleSign() {
+            calculator.ToggleSign();
+            inputLabel.Text = calculator.GetCurrentCalculation();
         }
     }
 }
