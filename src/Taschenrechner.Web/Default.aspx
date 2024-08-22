@@ -1,12 +1,13 @@
 ﻿<%@ Page Title="Home Page" Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Taschenrechner.Web._Default" %>
 <input type="hidden" id="currentCalculationField" runat="server" />
-<body style="height: 99px">
+<body>
     <form id="form1" runat="server">
         <asp:Panel ID="CalcWindow" runat="server" CssClass="calc-window">
             <asp:Panel ID="LabelWrapper" runat="server" CssClass="calc-label-wrapper">
                 <asp:Label ID="CalcLabel" runat="server" CssClass="calc-label"></asp:Label>
             </asp:Panel>
             <asp:Panel ID="HistoryWrapper" runat="server" CssClass="history-wrapper"> 
+                <asp:Button ID="ClearHistoryButton" runat="server" CssClass="clear-history-button" EnableTheming="False"/>
                 <asp:Label ID="HistoryBox" runat="server" CssClass="history-box"></asp:Label>
             </asp:Panel>
             <asp:Panel ID="ButtonsWrapper" runat="server" CssClass="buttons-wrapper">
@@ -188,6 +189,18 @@
             border: none;
             width: 25%;
         }
+
+    .clear-history-button {
+        height: 30px;
+        width: 40px ;
+        margin: 1vh;
+        padding: 0;
+        border-radius: 30%;
+        background-color: #494d64;
+        border: none;
+        display: inline-block;
+    }
+
 
     #ButtonEvaluate {
         background-color: #c6a0f6;
