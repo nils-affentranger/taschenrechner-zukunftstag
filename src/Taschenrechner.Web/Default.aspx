@@ -17,6 +17,7 @@
             document.documentElement.style.setProperty('--text', '#f4f4f4');
             document.documentElement.style.setProperty('--accent-color', '#c6a0f6');
             document.documentElement.style.setProperty('--accent-color-hover', '#d0aefa');
+            document.documentElement.style.setProperty('--theme-toggle', '#dce0e8')
             document.getElementById('<%= hdnTheme.ClientID %>').value = 'dark';
         }
         function setLightTheme() {
@@ -29,7 +30,8 @@
             document.documentElement.style.setProperty('--button-bg-hover', '#adb4c4')
             document.documentElement.style.setProperty('--text', '#4c4f69');
             document.documentElement.style.setProperty('--accent-color', '#8839ef');
-            document.documentElement.style.setProperty('--accent-color-hover', '#7550cb' );
+            document.documentElement.style.setProperty('--accent-color-hover', '#7550cb');
+            document.documentElement.style.setProperty('--theme-toggle', '#181926')
             document.getElementById('<%= hdnTheme.ClientID %>').value = 'light';
         }
     </script>
@@ -37,7 +39,7 @@
 
 <body>
     <form id="form1" runat="server">
-        <asp:HiddenField ID="hdnTheme" runat="server" Value="light" />
+        <asp:HiddenField ID="hdnTheme" runat="server" Value="dark" />
 
         <asp:Panel ID="CalcWindow" runat="server" CssClass="calc-window">
             <asp:Panel ID="LabelWrapper" runat="server" CssClass="calc-label-wrapper">
@@ -50,29 +52,29 @@
             <asp:Panel ID="ButtonsWrapper" runat="server" CssClass="buttons-wrapper">
                 <table class="buttons-table" style="width: 100%;">
                     <tr>
-                        <td class="auto-style2"></td>
-                        <td class="auto-style2">
+                        <td></td>
+                        <td>
                             <asp:Button ID="ButtonC" runat="server" CssClass="calc-button" Text="C" OnClick="ButtonC_Click" />
                         </td>
-                        <td class="auto-style3">
+                        <td>
                             <asp:Button ID="ButtonCE" runat="server" CssClass="calc-button" Text="CE" OnClick="ButtonCE_Click" />
                         </td>
-                        <td class="auto-style2">
+                        <td>
                             <asp:Button ID="ButtonBack" runat="server" CssClass="calc-button" Text="←" OnClick="ButtonBack_Click" />
                         </td>
 
                     </tr>
                     <tr>
-                        <td class="auto-style2">
+                        <td>
                             <asp:Button ID="ButtonPower" runat="server" CssClass="calc-button" Text="^" OnClick="ButtonPower_Click" />
                         </td>
-                        <td class="auto-style2">
+                        <td>
                             <asp:Button ID="ButtonParenthesisLeft" runat="server" CssClass="calc-button" Text="(" OnClick="ButtonParenthesisLeft_Click" />
                         </td>
-                        <td class="auto-style1">
+                        <td>
                             <asp:Button ID="ButtonParenthesisRight" runat="server" CssClass="calc-button" Text=")" OnClick="ButtonParenthesisRight_Click" />
                         </td>
-                        <td class="auto-style2">
+                        <td>
                             <asp:Button ID="ButtonDivide" runat="server" CssClass="calc-button" Text="÷" OnClick="ButtonDivide_Click" />
                         </td>
 
@@ -84,7 +86,7 @@
                         <td>
                             <asp:Button ID="Button8" runat="server" CssClass="calc-button" Text="8" OnClick="Button8_Click" />
                         </td>
-                        <td class="auto-style1">
+                        <td>
                             <asp:Button ID="Button9" runat="server" CssClass="calc-button" Text="9" OnClick="Button9_Click" />
                         </td>
                         <td>
@@ -93,16 +95,16 @@
 
                     </tr>
                     <tr>
-                        <td class="auto-style3">
+                        <td>
                             <asp:Button ID="Button4" runat="server" CssClass="calc-button" Text="4" OnClick="Button4_Click" />
                         </td>
-                        <td class="auto-style3">
+                        <td>
                             <asp:Button ID="Button5" runat="server" CssClass="calc-button" Text="5" OnClick="Button5_Click" />
                         </td>
-                        <td class="auto-style1">
+                        <td>
                             <asp:Button ID="Button6" runat="server" CssClass="calc-button" Text="6" OnClick="Button6_Click" />
                         </td>
-                        <td class="auto-style3">
+                        <td>
                             <asp:Button ID="ButtonMinus" runat="server" CssClass="calc-button" Text="-" OnClick="ButtonMinus_Click" />
                         </td>
 
@@ -114,7 +116,7 @@
                         <td>
                             <asp:Button ID="Button2" runat="server" CssClass="calc-button" Text="2" OnClick="Button2_Click" />
                         </td>
-                        <td class="auto-style1">
+                        <td>
                             <asp:Button ID="Button3" runat="server" CssClass="calc-button" Text="3" OnClick="Button3_Click" />
                         </td>
                         <td>
@@ -129,7 +131,7 @@
                         <td>
                             <asp:Button ID="Button0" runat="server" CssClass="calc-button" Text="0" OnClick="Button0_Click" />
                         </td>
-                        <td class="auto-style1">
+                        <td>
                             <asp:Button ID="ButtonDecimal" runat="server" CssClass="calc-button" Text="." OnClick="ButtonDecimal_Click" />
                         </td>
                         <td>
@@ -149,15 +151,16 @@
 <style>
     :root {
         --bg: #181926;
-        --calc-bg: #f0f0f0;
+        --calc-bg: #24273a;
         --calc-label: #494d64;
         --subtext: #5c5f77;
         --history-wrapper: #363a4f;
-        --button-bg: #e0e0e0;
+        --button-bg: #494d64;
         --button-bg-hover: #595e7d;
-        --text: #333333;
-        --accent-color: #6b46c1;
+        --text: #f4f4f4;
+        --accent-color: #c6a0f6;
         --accent-color-hover: #d0aefa;
+        --theme-toggle: #dce0e8;
     }
 
     body {
@@ -284,12 +287,11 @@
         }
 
         .calc-button:active {
-            background-color: #363a4f;
             scale: 90%;
         }
 
     .theme-toggle {
-        background-color: #eff1f5;
+        background-color: var(--theme-toggle);
         position: absolute;
         width: 40px;
         height: 40px;
@@ -297,6 +299,10 @@
         left: 2vw;
         border-radius: 100%;
         border: none;
+        transition: 0.3s ease;
+    }
+    .theme-toggle:hover {
+        scale: 200%;
     }
 
     .auto-style1 {
