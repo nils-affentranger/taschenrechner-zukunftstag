@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="Home Page" Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Taschenrechner.Web._Default" %>
+<!DOCTYPE html>
 
 <input type="hidden" id="currentCalculationField" runat="server" />
 <body>
@@ -205,15 +206,29 @@
         box-shadow: rgb(0, 0, 0, 0.2) 0 0 1em;
     }
 
+        .clear-history-button:hover {
+            transition: 0.1s ease-out;
+            scale: 95%;
+            box-shadow: rgb(0, 0, 0, 0.2) 0 0 0.7em;
+            background-color: #4d5169
+        }
+
+        .clear-history-button:active {
+            transition: 0.1s ease-out;
+            scale: 95%;
+            box-shadow: rgb(0, 0, 0, 0.2) 0 0 0.5em;
+            background-color: #42465b;
+        }
+
 
     #ButtonEvaluate {
         background-color: #c6a0f6;
         color: white;
     }
 
-    #ButtonEvaluate:hover {
-        background-color: #d0aefa;
-    }
+        #ButtonEvaluate:hover {
+            background-color: #d0aefa;
+        }
 
     .calc-button {
         width: 100%;
@@ -223,6 +238,7 @@
         background-color: #494d64;
         color: #cad3f5;
         box-shadow: inset rgb(57, 55, 64, 0.25) 0 0 2em;
+
     }
 
         .calc-button:hover {
