@@ -27,9 +27,13 @@ namespace Taschenrechner.Web {
                 if (Session["Calculator"] == null) {
                     Session["Calculator"] = new Calculator();
                 }
+                ViewState["IsDarkTheme"] = false;
                 _calculator = (Calculator)Session["Calculator"];
             }
             else {
+                bool isDarkTheme = Convert.ToBoolean(ViewState["IsDarkTheme"]);
+                string script = isDarkTheme ? "setDarkTheme();" : "setLightTheme();";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "InitTheme", script, true);
                 _calculator = (Calculator)Session["Calculator"];
             }
 
@@ -37,7 +41,18 @@ namespace Taschenrechner.Web {
             HistoryBox.Text = _calculator.HistoryString("<br>");
         }
 
-        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e) {
+        protected void ThemeToggle_Click(object sender, EventArgs e) {
+            // Toggle a theme flag in session or viewstate
+            bool isDarkTheme = Convert.ToBoolean(ViewState["IsDarkTheme"] ?? false);
+            isDarkTheme = !isDarkTheme;
+            ViewState["IsDarkTheme"] = isDarkTheme;
+
+            // Add a client-side script to update CSS variables
+            string script = isDarkTheme ? "setDarkTheme();" : "setLightTheme();";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "ThemeScript", script, true);
+        }
+
+    protected void GridView1_SelectedIndexChanged(object sender, EventArgs e) {
         }
 
         private void AddCharacterToCalculation(string character) {

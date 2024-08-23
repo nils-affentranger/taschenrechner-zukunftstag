@@ -31,6 +31,15 @@ namespace Taschenrechner.Web {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// hdnTheme control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnTheme;
+
+        /// <summary>
         /// CalcWindow control.
         /// </summary>
         /// <remarks>
@@ -299,5 +308,14 @@ namespace Taschenrechner.Web {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonEvaluate;
+
+        /// <summary>
+        /// ThemeToggle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ThemeToggle;
     }
 }
