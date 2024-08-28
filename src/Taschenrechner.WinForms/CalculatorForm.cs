@@ -7,13 +7,11 @@ namespace Taschenrechner.WinForms {
         private readonly Calculator calculator;
 
         public CalculatorForm() {
-            calculator.CalculationChanged -= Calculator_CalculationChanged;
-            calculator.HistoryChanged -= Calculator_HistoryChanged;
-            calculator.CalculationChanged += Calculator_CalculationChanged;
-            calculator.HistoryChanged += Calculator_HistoryChanged;
-
             InitializeComponent();
             calculator = new Calculator();
+
+            calculator.CalculationChanged += Calculator_CalculationChanged;
+            calculator.HistoryChanged += Calculator_HistoryChanged;
         }
 
         protected override void OnKeyPress(KeyPressEventArgs e) {
@@ -31,16 +29,6 @@ namespace Taschenrechner.WinForms {
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
-        private void AddCharacterToCalculation(string character) {
-            calculator.AddCharacter(character);
-            inputLabel.Text = calculator.GetCurrentCalculation();
-        }
-
-        private void AddDecimalPoint() {
-            if (calculator.AddDecimalPoint()) {
-                inputLabel.Text = calculator.GetCurrentCalculation();
-            }
-        }
 
         private void backButton_Click(object sender, EventArgs e) {
             tabControl1.SelectedIndex = 0;
@@ -48,50 +36,49 @@ namespace Taschenrechner.WinForms {
 
         private void Backspace() {
             calculator.Backspace();
-            inputLabel.Text = calculator.GetCurrentCalculation();
         }
 
         private void button0_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("0");
+            calculator.AddCharacter("0");
         }
 
         private void button1_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("1");
+            calculator.AddCharacter("1");
         }
 
         private void button2_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("2");
+            calculator.AddCharacter("2");
         }
 
         private void button3_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("3");
+            calculator.AddCharacter("3");
         }
 
         private void button4_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("4");
+            calculator.AddCharacter("4");
         }
 
         private void button5_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("5");
+            calculator.AddCharacter("5");
         }
         private void button6_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("6");
+            calculator.AddCharacter("6");
         }
 
         private void button7_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("7");
+            calculator.AddCharacter("7");
         }
 
         private void button8_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("8");
+            calculator.AddCharacter("8");
         }
 
         private void button9_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("9");
+            calculator.AddCharacter("9");
         }
 
         private void buttonAdd_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("+");
+            calculator.AddCharacter("+");
         }
 
         private void buttonBackspace_Click(object sender, EventArgs e) {
@@ -107,35 +94,35 @@ namespace Taschenrechner.WinForms {
         }
 
         private void buttonDecimal_Click(object sender, EventArgs e) {
-            AddDecimalPoint();
+            calculator.AddDecimalPoint();
         }
 
         private void buttonDivide_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("/");
+            calculator.AddCharacter("/");
         }
 
         private void buttonEvaluate_Click(object sender, EventArgs e) {
-            EvaluateExpression();
+            calculator.Evaluate();
         }
 
         private void buttonLeftBrace_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("(");
+            calculator.AddCharacter("(");
         }
 
         private void buttonMultiply_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("*");
+            calculator.AddCharacter("*");
         }
 
         private void buttonPlusMinus_Click(object sender, EventArgs e) {
-            ToggleSign();
+            calculator.ToggleSign();
         }
 
         private void buttonPower_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("^");
+            calculator.AddCharacter("^");
         }
 
         private void buttonRightBrace_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation(")");
+            calculator.AddCharacter(")");
         }
 
         private void buttonSettings_Click(object sender, EventArgs e) {
@@ -143,38 +130,20 @@ namespace Taschenrechner.WinForms {
         }
 
         private void buttonSubtract_Click(object sender, EventArgs e) {
-            AddCharacterToCalculation("-");
-        }
-
-        private void CalculatorForm_Load(object sender, EventArgs e) {
-
+            calculator.AddCharacter("-");
         }
 
         private void CE() {
             calculator.CE();
-            inputLabel.Text = calculator.GetCurrentCalculation();
         }
 
         private void ClearCalculation() {
             calculator.Clear();
-            inputLabel.Text = "";
-        }
-
-        private void EvaluateExpression() {
-            try {
-                string result = calculator.Evaluate();
-                inputLabel.Text = result;
-                historyBox.Text = calculator.HistoryString("\r\n");
-            }
-            catch (Exception) {
-                inputLabel.Text = "Invalid Expression";
-                calculator.Clear();
-            }
         }
 
         private bool HandleCharacterInput(char keyChar) {
             if (char.IsDigit(keyChar)) {
-                AddCharacterToCalculation(keyChar.ToString());
+                calculator.AddCharacter(keyChar.ToString());
                 return true;
             }
 
@@ -186,11 +155,11 @@ namespace Taschenrechner.WinForms {
                 case '(':
                 case ')':
                 case '.':
-                    AddCharacterToCalculation(keyChar.ToString());
+                    calculator.AddCharacter(keyChar.ToString());
                     return true;
 
                 case '=':
-                    EvaluateExpression();
+                    calculator.Evaluate();
                     return true;
 
                 default:
@@ -201,7 +170,7 @@ namespace Taschenrechner.WinForms {
         private bool HandleSpecialKey(Keys key) {
             switch (key) {
                 case Keys.Enter:
-                    EvaluateExpression();
+                    calculator.Evaluate();
                     return true;
 
                 case Keys.Delete:
@@ -216,13 +185,13 @@ namespace Taschenrechner.WinForms {
                     return false;
             }
         }
-        private void tabPage1_Click(object sender, EventArgs e) {
 
+        private void Calculator_CalculationChanged(object sender, EventArgs e) {
+            inputLabel.Text = calculator.currentCalculationString;
         }
 
-        private void ToggleSign() {
-            calculator.ToggleSign();
-            inputLabel.Text = calculator.GetCurrentCalculation();
+        private void Calculator_HistoryChanged(object sender, EventArgs e) {
+            historyBox.Text = calculator.HistoryString("\r\n");
         }
     }
 }

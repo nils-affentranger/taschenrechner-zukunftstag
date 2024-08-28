@@ -93,11 +93,11 @@ namespace Taschenrechner.WinForms {
             this.inputLabel = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.calculatorPage = new System.Windows.Forms.TabPage();
+            this.button10 = new System.Windows.Forms.Button();
             this.settingsPage = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonBack = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.calculatorPage.SuspendLayout();
@@ -638,7 +638,7 @@ namespace Taschenrechner.WinForms {
             this.historyBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(173)))), ((int)(((byte)(200)))));
             this.historyBox.Location = new System.Drawing.Point(14, 65);
             this.historyBox.Name = "historyBox";
-            this.historyBox.Size = new System.Drawing.Size(243, 99);
+            this.historyBox.Size = new System.Drawing.Size(243, 129);
             this.historyBox.TabIndex = 14;
             this.historyBox.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
@@ -676,7 +676,21 @@ namespace Taschenrechner.WinForms {
             this.calculatorPage.Size = new System.Drawing.Size(271, 426);
             this.calculatorPage.TabIndex = 0;
             this.calculatorPage.Text = "calculator";
-            this.calculatorPage.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // button10
+            // 
+            this.button10.AutoSize = true;
+            this.button10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button10.FlatAppearance.BorderSize = 0;
+            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button10.Image = global::Taschenrechner.WinForms.Properties.Resources.settings_btn1;
+            this.button10.Location = new System.Drawing.Point(14, 63);
+            this.button10.Margin = new System.Windows.Forms.Padding(0);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(26, 26);
+            this.button10.TabIndex = 15;
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.buttonSettings_Click);
             // 
             // settingsPage
             // 
@@ -727,21 +741,6 @@ namespace Taschenrechner.WinForms {
             this.buttonBack.UseVisualStyleBackColor = true;
             this.buttonBack.Click += new System.EventHandler(this.backButton_Click);
             // 
-            // button10
-            // 
-            this.button10.AutoSize = true;
-            this.button10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button10.FlatAppearance.BorderSize = 0;
-            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button10.Image = global::Taschenrechner.WinForms.Properties.Resources.settings_btn1;
-            this.button10.Location = new System.Drawing.Point(14, 63);
-            this.button10.Margin = new System.Windows.Forms.Padding(0);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(26, 26);
-            this.button10.TabIndex = 15;
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.buttonSettings_Click);
-            // 
             // CalculatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -754,7 +753,6 @@ namespace Taschenrechner.WinForms {
             this.KeyPreview = true;
             this.Name = "CalculatorForm";
             this.Text = "Calculator";
-            this.Load += new System.EventHandler(this.CalculatorForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tabControl1.ResumeLayout(false);

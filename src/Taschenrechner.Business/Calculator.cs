@@ -9,7 +9,7 @@ namespace Taschenrechner.WinForms {
     public class Calculator {
         public string currentCalculationString;
         private readonly List<Token> currentCalculation;
-        private readonly List<string> history = new List<string>(6);
+        private readonly List<string> history = new List<string>(9);
         private readonly HashSet<string> Numbers = new HashSet<string> { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
         private readonly HashSet<string> Operators = new HashSet<string> { "+", "-", "*", "/", "^" };
         private readonly HashSet<string> Parenthesis = new HashSet<string> { "(", ")" };
@@ -88,8 +88,8 @@ namespace Taschenrechner.WinForms {
 
         public void AppendHistory(string result) {
             history.Insert(0, result);
-            if (history.Count > 8) {
-                history.RemoveAt(8);
+            if (history.Count > 9) {
+                history.RemoveAt(9);
             }
             historyString = string.Join("\r\n", history);
             OnHistoryChanged();
