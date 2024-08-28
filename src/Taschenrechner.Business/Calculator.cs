@@ -15,6 +15,9 @@ namespace Taschenrechner.WinForms {
         private string historyString;
         private bool lastActionWasEvaluation;
 
+        public event EventHandler CalculationChanged;
+        public event EventHandler HistoryChanged;
+
         public Calculator() {
             currentCalculation = new List<Token>();
         }
@@ -41,6 +44,7 @@ namespace Taschenrechner.WinForms {
                     return false;
                 }
                 currentCalculation.Add(new Token(character, true));
+                OnCalculationChanged();
                 return true;
             }
 
@@ -49,6 +53,7 @@ namespace Taschenrechner.WinForms {
                     currentCalculation.Add(new Token("*", true));
                 }
                 currentCalculation.Add(new Token(character, true, true));
+                OnCalculationChanged();
                 return true;
             }
 
@@ -59,6 +64,7 @@ namespace Taschenrechner.WinForms {
                 currentCalculation.Add(new Token(character));
             }
 
+            OnCalculationChanged();
             return true;
         }
 
@@ -68,11 +74,13 @@ namespace Taschenrechner.WinForms {
                 if (!lastToken.NumberString.Contains(".")) {
                     var newNumberString = lastToken.NumberString + ".";
                     currentCalculation[currentCalculation.Count - 1] = new Token(newNumberString);
+                    OnCalculationChanged();
                     return true;
                 }
             }
             else {
                 currentCalculation.Add(new Token("0."));
+                OnCalculationChanged();
                 return true;
             }
             return false;
@@ -84,6 +92,7 @@ namespace Taschenrechner.WinForms {
                 history.RemoveAt(8);
             }
             historyString = string.Join("\r\n", history);
+            OnHistoryChanged();
         }
 
         public bool Backspace() {
@@ -107,18 +116,21 @@ namespace Taschenrechner.WinForms {
                 currentCalculation.RemoveAt(currentCalculation.Count - 1);
             }
 
+            OnCalculationChanged();
             return true;
         }
 
         public bool ClearHistory() {
             history.Clear();
             historyString = string.Empty;
+            OnHistoryChanged();
             return true;
         }
 
         public bool CE() {
             if (currentCalculation.Any()) {
                 currentCalculation.RemoveAt(currentCalculation.Count - 1);
+                OnCalculationChanged();
                 return true;
             }
             else { return false; }
@@ -126,6 +138,7 @@ namespace Taschenrechner.WinForms {
 
         public void Clear() {
             currentCalculation.Clear();
+            OnCalculationChanged();
         }
 
         public string ConvertToPostfix(List<Token> infixTokens) {
@@ -189,8 +202,10 @@ namespace Taschenrechner.WinForms {
                 Clear();
                 currentCalculation.Add(new Token(result));
                 lastActionWasEvaluation = true;
-                AppendHistory(FormatNumber(result));
-                return FormatNumber(result);
+                string formattedResult = FormatNumber(result);
+                AppendHistory(formattedResult);
+                OnCalculationChanged();
+                return formattedResult;
             }
             else return "";
         }
@@ -216,10 +231,20 @@ namespace Taschenrechner.WinForms {
             if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Number) {
                 var lastNumber = currentCalculation[currentCalculation.Count - 1].Number;
                 currentCalculation[currentCalculation.Count - 1] = new Token(-lastNumber);
+                OnCalculationChanged();
                 return true;
             }
             return false;
         }
+
+        protected virtual void OnCalculationChanged() {
+            CalculationChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnHistoryChanged() {
+            HistoryChanged?.Invoke(this, EventArgs.Empty);
+        }
+
 
         private static int GetDecimalPlaces(double number) {
             string str = number.ToString("G", CultureInfo.InvariantCulture);
