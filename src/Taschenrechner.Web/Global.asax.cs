@@ -10,5 +10,8 @@ using System.Web.SessionState;
 namespace Taschenrechner.Web {
 
     public class Global : HttpApplication {
+
+
+
     }
 }

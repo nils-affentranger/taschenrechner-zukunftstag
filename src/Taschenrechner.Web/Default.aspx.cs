@@ -120,23 +120,37 @@ namespace Taschenrechner.Web {
             calculator.ClearHistory();
         }
 
-        protected void Page_Load(object sender, EventArgs e) {
+        protected void Page_Init(object sender, EventArgs e) {
             if (!IsPostBack) {
-                if (Session["Calculator"] == null) {
-                    Session["Calculator"] = new Calculator();
-                }
+                calculator.CalculationChanged += Calculator_CalculationChanged;
+                calculator.HistoryChanged += Calculator_HistoryChanged;
+            }
+        }
+
+        private void Calculator_CalculationChanged1(object sender, EventArgs e) {
+            throw new NotImplementedException();
+        }
+
+        protected void Page_Load(object sender, EventArgs e) {
+
+            if (Session["Calculator"] == null) {
+                Session["Calculator"] = new Calculator();
+            }
+
+            _calculator = (Calculator)Session["Calculator"];
+
+            _calculator.CalculationChanged -= Calculator_CalculationChanged;
+            _calculator.HistoryChanged -= Calculator_HistoryChanged;
+            _calculator.CalculationChanged += Calculator_CalculationChanged;
+            _calculator.HistoryChanged += Calculator_HistoryChanged;
+
+            if (!IsPostBack) {
                 ViewState["IsDarkTheme"] = false;
-                _calculator = (Calculator)Session["Calculator"];
-                _calculator.CalculationChanged += Calculator_CalculationChanged;
-                _calculator.HistoryChanged += Calculator_HistoryChanged;
             }
             else {
                 bool isDarkTheme = Convert.ToBoolean(ViewState["IsDarkTheme"]);
                 string script = isDarkTheme ? "setDarkTheme();" : "setLightTheme();";
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "InitTheme", script, true);
-                _calculator = (Calculator)Session["Calculator"];
-                _calculator.CalculationChanged += Calculator_CalculationChanged;
-                _calculator.HistoryChanged += Calculator_HistoryChanged;
             }
         }
 
