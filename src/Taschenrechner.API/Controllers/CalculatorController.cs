@@ -32,6 +32,20 @@ namespace Taschenrechner.API.Controllers {
         }
 
         [HttpPost]
+        [Route("api/calculator/clearentry")]
+        public IHttpActionResult ClearEntry() {
+            _calculator.CE();
+            return Ok(new { currentCalculation = _calculator.currentCalculationString });
+        }
+
+        [HttpPost]
+        [Route("api/calculator/backspace")]
+        public IHttpActionResult BackSpace() {
+            _calculator.Backspace();
+            return Ok(new { currentCalculation = _calculator.currentCalculationString });
+        }
+
+        [HttpPost]
         [Route("api/calculator/clearhistory")]
         public IHttpActionResult ClearHistory() {
             _calculator.ClearHistory();
