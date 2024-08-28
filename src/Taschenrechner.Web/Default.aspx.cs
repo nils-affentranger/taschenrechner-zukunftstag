@@ -36,6 +36,7 @@ namespace Taschenrechner.Web {
             AddCharacterToCalculation("2");
         }
 
+
         protected void Button3_Click(object sender, EventArgs e) {
             AddCharacterToCalculation("3");
         }
@@ -65,17 +66,19 @@ namespace Taschenrechner.Web {
         }
 
         protected void ButtonBack_Click(object sender, EventArgs e) {
-            Backspace();
+            calculator.Backspace();
+        }
+
+        protected void ButtonC_Click(object sender, EventArgs e) {
+            calculator.Clear();
         }
 
         protected void ButtonCE_Click(object sender, EventArgs e) {
             calculator.CE();
-            CalcLabel.Text = calculator.GetCurrentCalculation();
         }
 
         protected void ButtonDecimal_Click(object sender, EventArgs e) {
             calculator.AddDecimalPoint();
-            CalcLabel.Text = calculator.GetCurrentCalculation();
         }
 
         protected void ButtonDivide_Click(object sender, EventArgs e) {
@@ -83,7 +86,7 @@ namespace Taschenrechner.Web {
         }
 
         protected void ButtonEvaluate_Click(object sender, EventArgs e) {
-            EvaluateExpression();
+            calculator.Evaluate();
         }
 
         protected void ButtonMinus_Click(object sender, EventArgs e) {
@@ -112,13 +115,7 @@ namespace Taschenrechner.Web {
 
         protected void ButtonToggleSign_Click(object sender, EventArgs e) {
             calculator.ToggleSign();
-            CalcLabel.Text = calculator.GetCurrentCalculation();
         }
-
-        protected void ButtonC_Click(object sender, EventArgs e) {
-            calculator.Clear();
-        }
-
         protected void ClearHistoryButton_Click(object sender, EventArgs e) {
             calculator.ClearHistory();
         }
@@ -141,21 +138,6 @@ namespace Taschenrechner.Web {
                 _calculator.CalculationChanged += Calculator_CalculationChanged;
                 _calculator.HistoryChanged += Calculator_HistoryChanged;
             }
-
-            UpdateDisplay();
-        }
-
-        private void Calculator_CalculationChanged(object sender, EventArgs e) {
-            CalcLabel.Text = calculator.GetCurrentCalculation();
-        }
-
-        private void Calculator_HistoryChanged(object sender, EventArgs e) {
-            HistoryBox.Text = calculator.HistoryString("<br>");
-        }
-
-        private void UpdateDisplay() {
-            CalcLabel.Text = calculator.GetCurrentCalculation();
-            HistoryBox.Text = calculator.HistoryString("<br>");
         }
 
         protected void ThemeToggle_Click(object sender, EventArgs e) {
@@ -166,25 +148,17 @@ namespace Taschenrechner.Web {
             string script = isDarkTheme ? "setDarkTheme();" : "setLightTheme();";
             ScriptManager.RegisterStartupScript(this, this.GetType(), "ThemeScript", script, true);
         }
+
         private void AddCharacterToCalculation(string character) {
             calculator.AddCharacter(character);
         }
 
-        private void Backspace() {
-            calculator.Backspace();
+        private void Calculator_CalculationChanged(object sender, EventArgs e) {
+            CalcLabel.Text = _calculator.currentCalculationString;
         }
 
-        private void EvaluateExpression() {
-            try {
-                string result = calculator.Evaluate();
-            }
-            catch (DivideByZeroException) {
-                CalcLabel.Text = "Cannot divide by 0";
-            }
-            catch (InvalidOperationException) {
-                CalcLabel.Text = "Invalid Expression";
-                calculator.Clear();
-            }
+        private void Calculator_HistoryChanged(object sender, EventArgs e) {
+            HistoryBox.Text = _calculator.HistoryString("<br>");
         }
     }
 }

@@ -7,25 +7,21 @@ using System.Text;
 namespace Taschenrechner.WinForms {
 
     public class Calculator {
-        public readonly List<Token> currentCalculation;
+        public string currentCalculationString;
+        private readonly List<Token> currentCalculation;
         private readonly List<string> history = new List<string>(6);
+        private readonly HashSet<string> Numbers = new HashSet<string> { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
         private readonly HashSet<string> Operators = new HashSet<string> { "+", "-", "*", "/", "^" };
         private readonly HashSet<string> Parenthesis = new HashSet<string> { "(", ")" };
-        private readonly HashSet<string> Numbers = new HashSet<string> { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
         private string historyString;
         private bool lastActionWasEvaluation;
-
-        public event EventHandler CalculationChanged;
-        public event EventHandler HistoryChanged;
 
         public Calculator() {
             currentCalculation = new List<Token>();
         }
 
-        public string HistoryString(string separator) {
-            return string.Join(separator, history);
-        }
-
+        public event EventHandler CalculationChanged;
+        public event EventHandler HistoryChanged;
         public bool AddCharacter(string character) {
             if (!IsValidCharacter(character)) {
                 return false;
@@ -44,6 +40,7 @@ namespace Taschenrechner.WinForms {
                     return false;
                 }
                 currentCalculation.Add(new Token(character, true));
+                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -53,6 +50,7 @@ namespace Taschenrechner.WinForms {
                     currentCalculation.Add(new Token("*", true));
                 }
                 currentCalculation.Add(new Token(character, true, true));
+                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -63,7 +61,7 @@ namespace Taschenrechner.WinForms {
             else {
                 currentCalculation.Add(new Token(character));
             }
-
+            GetCurrentCalculation();
             OnCalculationChanged();
             return true;
         }
@@ -74,12 +72,14 @@ namespace Taschenrechner.WinForms {
                 if (!lastToken.NumberString.Contains(".")) {
                     var newNumberString = lastToken.NumberString + ".";
                     currentCalculation[currentCalculation.Count - 1] = new Token(newNumberString);
+                    GetCurrentCalculation();
                     OnCalculationChanged();
                     return true;
                 }
             }
             else {
                 currentCalculation.Add(new Token("0."));
+                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -120,16 +120,10 @@ namespace Taschenrechner.WinForms {
             return true;
         }
 
-        public bool ClearHistory() {
-            history.Clear();
-            historyString = string.Empty;
-            OnHistoryChanged();
-            return true;
-        }
-
         public bool CE() {
             if (currentCalculation.Any()) {
                 currentCalculation.RemoveAt(currentCalculation.Count - 1);
+                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -139,6 +133,13 @@ namespace Taschenrechner.WinForms {
         public void Clear() {
             currentCalculation.Clear();
             OnCalculationChanged();
+        }
+
+        public bool ClearHistory() {
+            history.Clear();
+            historyString = string.Empty;
+            OnHistoryChanged();
+            return true;
         }
 
         public string ConvertToPostfix(List<Token> infixTokens) {
@@ -175,42 +176,30 @@ namespace Taschenrechner.WinForms {
             return output.ToString().Trim();
         }
 
-        public string Evaluate() {
-            double EvaluatePostfix(string postfix) {
-                Stack<double> stack = new Stack<double>();
-                string[] tokens = postfix.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-                foreach (string token in tokens) {
-                    if (double.TryParse(token, NumberStyles.Any, CultureInfo.InvariantCulture, out double number)) {
-                        stack.Push(number);
-                    }
-                    else if (Operators.Contains(token)) {
-                        double right = stack.Pop();
-                        double left = stack.Pop();
-                        if (token == "/" && right == 0) {
-                            throw new DivideByZeroException("Cannot divide by zero");
-                        }
-                        stack.Push(ApplyOperator(token, left, right));
-                    }
-                }
-
-                return stack.Pop();
-            }
+        public void Evaluate() {
             if (currentCalculation.Any()) {
-                string postfix = ConvertToPostfix(currentCalculation);
-                double result = EvaluatePostfix(postfix);
-                Clear();
-                currentCalculation.Add(new Token(result));
-                lastActionWasEvaluation = true;
-                string formattedResult = FormatNumber(result);
-                AppendHistory(formattedResult);
-                OnCalculationChanged();
-                return formattedResult;
+                try {
+                    string postfix = ConvertToPostfix(currentCalculation);
+                    double result = EvaluatePostfix(postfix);
+                    Clear();
+                    currentCalculation.Add(new Token(result));
+                    lastActionWasEvaluation = true;
+                    string formattedResult = FormatNumber(result);
+                    AppendHistory(formattedResult);
+                    currentCalculationString = formattedResult;
+                    OnCalculationChanged();
+                }
+                catch (DivideByZeroException) {
+                    currentCalculationString = "Cannot divide by 0";
+                }
+                catch (InvalidOperationException) {
+                    currentCalculationString = "Invalid Expression";
+                }
             }
-            else return "";
+            else currentCalculationString = "";
         }
 
-        public string GetCurrentCalculation() {
+        public void GetCurrentCalculation() {
             StringBuilder sb = new StringBuilder();
             foreach (var token in currentCalculation) {
                 switch (token.Type) {
@@ -224,13 +213,17 @@ namespace Taschenrechner.WinForms {
                         throw new ArgumentOutOfRangeException();
                 }
             }
-            return sb.ToString();
+            currentCalculationString = sb.ToString();
         }
 
+        public string HistoryString(string separator) {
+            return string.Join(separator, history);
+        }
         public bool ToggleSign() {
             if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Number) {
                 var lastNumber = currentCalculation[currentCalculation.Count - 1].Number;
                 currentCalculation[currentCalculation.Count - 1] = new Token(-lastNumber);
+                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -277,7 +270,7 @@ namespace Taschenrechner.WinForms {
             }
         }
 
-        private double EvaluatePostfix(string postfix) {
+        double EvaluatePostfix(string postfix) {
             Stack<double> stack = new Stack<double>();
             string[] tokens = postfix.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -288,10 +281,12 @@ namespace Taschenrechner.WinForms {
                 else if (Operators.Contains(token)) {
                     double right = stack.Pop();
                     double left = stack.Pop();
+                    if (token == "/" && right == 0) {
+                        throw new DivideByZeroException("Cannot divide by zero");
+                    }
                     stack.Push(ApplyOperator(token, left, right));
                 }
             }
-
             return stack.Pop();
         }
 
