@@ -40,7 +40,6 @@ namespace Taschenrechner.WinForms {
                     return false;
                 }
                 currentCalculation.Add(new Token(character, true));
-                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -50,7 +49,6 @@ namespace Taschenrechner.WinForms {
                     currentCalculation.Add(new Token("*", true));
                 }
                 currentCalculation.Add(new Token(character, true, true));
-                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -61,7 +59,6 @@ namespace Taschenrechner.WinForms {
             else {
                 currentCalculation.Add(new Token(character));
             }
-            GetCurrentCalculation();
             OnCalculationChanged();
             return true;
         }
@@ -72,14 +69,12 @@ namespace Taschenrechner.WinForms {
                 if (!lastToken.NumberString.Contains(".")) {
                     var newNumberString = lastToken.NumberString + ".";
                     currentCalculation[currentCalculation.Count - 1] = new Token(newNumberString);
-                    GetCurrentCalculation();
                     OnCalculationChanged();
                     return true;
                 }
             }
             else {
                 currentCalculation.Add(new Token("0."));
-                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -115,7 +110,6 @@ namespace Taschenrechner.WinForms {
             else {
                 currentCalculation.RemoveAt(currentCalculation.Count - 1);
             }
-
             OnCalculationChanged();
             return true;
         }
@@ -123,7 +117,6 @@ namespace Taschenrechner.WinForms {
         public bool CE() {
             if (currentCalculation.Any()) {
                 currentCalculation.RemoveAt(currentCalculation.Count - 1);
-                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -223,7 +216,6 @@ namespace Taschenrechner.WinForms {
             if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Number) {
                 var lastNumber = currentCalculation[currentCalculation.Count - 1].Number;
                 currentCalculation[currentCalculation.Count - 1] = new Token(-lastNumber);
-                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -231,6 +223,7 @@ namespace Taschenrechner.WinForms {
         }
 
         protected virtual void OnCalculationChanged() {
+            GetCurrentCalculation();
             CalculationChanged?.Invoke(this, EventArgs.Empty);
         }
 
