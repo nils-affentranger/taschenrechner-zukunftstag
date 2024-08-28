@@ -7,6 +7,11 @@ namespace Taschenrechner.WinForms {
         private readonly Calculator calculator;
 
         public CalculatorForm() {
+            calculator.CalculationChanged -= Calculator_CalculationChanged;
+            calculator.HistoryChanged -= Calculator_HistoryChanged;
+            calculator.CalculationChanged += Calculator_CalculationChanged;
+            calculator.HistoryChanged += Calculator_HistoryChanged;
+
             InitializeComponent();
             calculator = new Calculator();
         }

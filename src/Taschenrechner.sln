@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taschenrechner.Business", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taschenrechner.Business.Test", "Taschenrechner.Business.Test\Taschenrechner.Business.Test.csproj", "{D43726DE-16A6-4254-A47A-599BBC8470AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taschenrechner.Web", "Taschenrechner.Web\Taschenrechner.Web.csproj", "{CCD63C42-E468-4C38-B0FA-DB4311605C1E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taschenrechner.WebForms", "Taschenrechner.Web\Taschenrechner.WebForms.csproj", "{CCD63C42-E468-4C38-B0FA-DB4311605C1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

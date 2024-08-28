@@ -17,8 +17,6 @@ namespace Taschenrechner.Web {
             get {
                 if (_calculator == null) {
                     _calculator = new Calculator();
-                    _calculator.CalculationChanged += Calculator_CalculationChanged;
-                    _calculator.HistoryChanged += Calculator_HistoryChanged;
                 }
                 return _calculator;
             }
