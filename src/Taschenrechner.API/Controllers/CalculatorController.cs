@@ -112,14 +112,5 @@ namespace Taschenrechner.API.Controllers {
             SaveSession();
             return new CurrentCalculationResponse(calculator.currentCalculationString);
         }
-
-        [HttpPost]
-        [Route("api/calculator/backspace")]
-        public CurrentCalculationResponse Backspace() {
-            LoadSession();
-                calculator = new Calculator();
-            SaveSession();
-            return new CurrentCalculationResponse(calculator.currentCalculationString);
-        }
     }
 }
