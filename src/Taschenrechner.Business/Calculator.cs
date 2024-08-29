@@ -7,13 +7,13 @@ using System.Text;
 namespace Taschenrechner.WinForms {
 
     public class Calculator {
-        public string currentCalculationString;
+        public string currentCalculationString = "";
         private readonly List<Token> currentCalculation;
         private readonly List<string> history = new List<string>(9);
         private readonly HashSet<string> Numbers = new HashSet<string> { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
         private readonly HashSet<string> Operators = new HashSet<string> { "+", "-", "*", "/", "^" };
         private readonly HashSet<string> Parenthesis = new HashSet<string> { "(", ")" };
-        private string historyString;
+        private string historyString = "";
         private bool lastActionWasEvaluation;
 
         public Calculator() {
@@ -36,11 +36,13 @@ namespace Taschenrechner.WinForms {
             var lastToken = currentCalculation.LastOrDefault();
 
             if (Operators.Contains(character)) {
-                if (lastToken == null || lastToken.Type == Token.TokenType.Operator) {
+                if (lastToken == null) {
                     return false;
                 }
+                if (lastToken.Type == Token.TokenType.Operator) {
+                   currentCalculation.RemoveAt(currentCalculation.Count - 1);
+                }
                 currentCalculation.Add(new Token(character, true));
-                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -50,7 +52,6 @@ namespace Taschenrechner.WinForms {
                     currentCalculation.Add(new Token("*", true));
                 }
                 currentCalculation.Add(new Token(character, true, true));
-                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -61,7 +62,6 @@ namespace Taschenrechner.WinForms {
             else {
                 currentCalculation.Add(new Token(character));
             }
-            GetCurrentCalculation();
             OnCalculationChanged();
             return true;
         }
@@ -72,14 +72,12 @@ namespace Taschenrechner.WinForms {
                 if (!lastToken.NumberString.Contains(".")) {
                     var newNumberString = lastToken.NumberString + ".";
                     currentCalculation[currentCalculation.Count - 1] = new Token(newNumberString);
-                    GetCurrentCalculation();
                     OnCalculationChanged();
                     return true;
                 }
             }
             else {
                 currentCalculation.Add(new Token("0."));
-                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -115,7 +113,6 @@ namespace Taschenrechner.WinForms {
             else {
                 currentCalculation.RemoveAt(currentCalculation.Count - 1);
             }
-
             OnCalculationChanged();
             return true;
         }
@@ -123,7 +120,6 @@ namespace Taschenrechner.WinForms {
         public bool CE() {
             if (currentCalculation.Any()) {
                 currentCalculation.RemoveAt(currentCalculation.Count - 1);
-                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -223,7 +219,6 @@ namespace Taschenrechner.WinForms {
             if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Number) {
                 var lastNumber = currentCalculation[currentCalculation.Count - 1].Number;
                 currentCalculation[currentCalculation.Count - 1] = new Token(-lastNumber);
-                GetCurrentCalculation();
                 OnCalculationChanged();
                 return true;
             }
@@ -231,6 +226,7 @@ namespace Taschenrechner.WinForms {
         }
 
         protected virtual void OnCalculationChanged() {
+            GetCurrentCalculation();
             CalculationChanged?.Invoke(this, EventArgs.Empty);
         }
 
