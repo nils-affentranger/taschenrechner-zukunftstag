@@ -36,8 +36,11 @@ namespace Taschenrechner.WinForms {
             var lastToken = currentCalculation.LastOrDefault();
 
             if (Operators.Contains(character)) {
-                if (lastToken == null || lastToken.Type == Token.TokenType.Operator) {
+                if (lastToken == null) {
                     return false;
+                }
+                if (lastToken.Type == Token.TokenType.Operator) {
+                   currentCalculation.RemoveAt(currentCalculation.Count - 1);
                 }
                 currentCalculation.Add(new Token(character, true));
                 OnCalculationChanged();
