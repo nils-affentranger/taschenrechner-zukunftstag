@@ -61,6 +61,7 @@ namespace Taschenrechner.WinForms {
         private void button5_Click(object sender, EventArgs e) {
             calculator.AddCharacter("5");
         }
+
         private void button6_Click(object sender, EventArgs e) {
             calculator.AddCharacter("6");
         }

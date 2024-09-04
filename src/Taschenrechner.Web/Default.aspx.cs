@@ -1,11 +1,5 @@
-﻿using Microsoft.Ajax.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Services.Description;
+﻿using System;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Taschenrechner.WinForms;
 
 namespace Taschenrechner.Web {
@@ -33,7 +27,6 @@ namespace Taschenrechner.Web {
         protected void Button2_Click(object sender, EventArgs e) {
             AddCharacterToCalculation("2");
         }
-
 
         protected void Button3_Click(object sender, EventArgs e) {
             AddCharacterToCalculation("3");
@@ -114,6 +107,7 @@ namespace Taschenrechner.Web {
         protected void ButtonToggleSign_Click(object sender, EventArgs e) {
             calculator.ToggleSign();
         }
+
         protected void ClearHistoryButton_Click(object sender, EventArgs e) {
             calculator.ClearHistory();
         }
@@ -130,7 +124,6 @@ namespace Taschenrechner.Web {
         }
 
         protected void Page_Load(object sender, EventArgs e) {
-
             if (Session["Calculator"] == null) {
                 Session["Calculator"] = new Calculator();
             }

@@ -1,13 +1,11 @@
 ﻿using System.Web;
 using System.Web.Http;
-using System.Web.Management;
 using Taschenrechner.API.Models;
 using Taschenrechner.WinForms;
 
 namespace Taschenrechner.API.Controllers {
 
     public class CalculatorController : ApiController {
-
         private Calculator calculator = new Calculator();
 
         private void LoadSession() {
@@ -41,6 +39,15 @@ namespace Taschenrechner.API.Controllers {
         public CurrentCalculationResponse Evaluate() {
             LoadSession();
             calculator.Evaluate();
+            SaveSession();
+            return new CurrentCalculationResponse(calculator.currentCalculationString);
+        }
+
+        [HttpPost]
+        [Route("api/calculator/evaluatepretty")]
+        public CurrentCalculationResponse EvaluatePretty() {
+            LoadSession();
+            calculator.EvaluatePretty();
             SaveSession();
             return new CurrentCalculationResponse(calculator.currentCalculationString);
         }
@@ -90,9 +97,9 @@ namespace Taschenrechner.API.Controllers {
 
         [HttpGet]
         [Route("api/calculator/gethistory")]
-        public HistoryResponse GetHistory() {
+        public HistoryResponse GetHistory(HistorySeparator separator) {
             LoadSession();
-            return new HistoryResponse(calculator.HistoryString(", "));
+            return new HistoryResponse(calculator.HistoryString(separator.Separator));
         }
 
         [HttpPost]

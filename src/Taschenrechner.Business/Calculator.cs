@@ -21,9 +21,11 @@ namespace Taschenrechner.WinForms {
         }
 
         public event EventHandler CalculationChanged;
+
         public event EventHandler HistoryChanged;
+
         public bool AddCharacter(string character) {
-            if (!IsValidCharacter(character)) {
+            if (!IsValidCharacter(character) ||( !currentCalculation.Any() && character == "0")) {
                 return false;
             }
 
@@ -40,7 +42,7 @@ namespace Taschenrechner.WinForms {
                     return false;
                 }
                 if (lastToken.Type == Token.TokenType.Operator) {
-                   currentCalculation.RemoveAt(currentCalculation.Count - 1);
+                    currentCalculation.RemoveAt(currentCalculation.Count - 1);
                 }
                 currentCalculation.Add(new Token(character, true));
                 OnCalculationChanged();
@@ -195,6 +197,29 @@ namespace Taschenrechner.WinForms {
             else currentCalculationString = "";
         }
 
+        public void EvaluatePretty() {
+            if (currentCalculation.Any()) {
+                try {
+                    string postfix = ConvertToPostfix(currentCalculation);
+                    double result = EvaluatePostfix(postfix);
+                    Clear();
+                    currentCalculation.Add(new Token(result));
+                    lastActionWasEvaluation = true;
+                    string formattedResult = FormatNumber(result);
+                    AppendHistory(formattedResult);
+                    currentCalculationString = formattedResult;
+                    CalculationChanged?.Invoke(this, EventArgs.Empty);
+                }
+                catch (DivideByZeroException) {
+                    currentCalculationString = "Cannot divide by 0";
+                }
+                catch (InvalidOperationException) {
+                    currentCalculationString = "Invalid Expression";
+                }
+            }
+            else currentCalculationString = "";
+        }
+
         public void GetCurrentCalculation() {
             StringBuilder sb = new StringBuilder();
             foreach (var token in currentCalculation) {
@@ -215,6 +240,7 @@ namespace Taschenrechner.WinForms {
         public string HistoryString(string separator) {
             return string.Join(separator, history);
         }
+
         public bool ToggleSign() {
             if (currentCalculation.Count > 0 && currentCalculation[currentCalculation.Count - 1].Type == Token.TokenType.Number) {
                 var lastNumber = currentCalculation[currentCalculation.Count - 1].Number;
@@ -233,7 +259,6 @@ namespace Taschenrechner.WinForms {
         protected virtual void OnHistoryChanged() {
             HistoryChanged?.Invoke(this, EventArgs.Empty);
         }
-
 
         private static int GetDecimalPlaces(double number) {
             string str = number.ToString("G", CultureInfo.InvariantCulture);
@@ -266,7 +291,7 @@ namespace Taschenrechner.WinForms {
             }
         }
 
-        double EvaluatePostfix(string postfix) {
+        private double EvaluatePostfix(string postfix) {
             Stack<double> stack = new Stack<double>();
             string[] tokens = postfix.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 

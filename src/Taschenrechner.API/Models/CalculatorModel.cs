@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Taschenrechner.WinForms;
+﻿namespace Taschenrechner.API.Models {
 
-namespace Taschenrechner.API.Models {
     public class CharacterInput {
         public string Character { get; set; }
     }
@@ -15,6 +10,10 @@ namespace Taschenrechner.API.Models {
         public CurrentCalculationResponse(string response) {
             Response = response;
         }
+    }
+
+    public class HistorySeparator {
+        public string Separator { get; set; }
     }
 
     public class HistoryResponse {

@@ -1,5 +1,4 @@
 using Bogus;
-using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Taschenrechner.WinForms;
@@ -51,7 +50,6 @@ namespace Taschenrechner.Business.Test {
             var result = sut.Evaluate();
 
             Assert.AreEqual("76.765625", result);
-
         }
 
         [TestMethod]
@@ -114,6 +112,7 @@ namespace Taschenrechner.Business.Test {
 
             Assert.IsTrue(sut.AddCharacter(fake.Random.Number(0, 9).ToString()));
         }
+
         [TestMethod]
         public void orderOfOperationsTest() {
             var sut = new Calculator();
