@@ -1,1 +1,19 @@
-<p>button-grid works!</p>
+<div style="
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 45%;
+    margin: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    grid-gap: 2px;
+">
+    <div></div><app-button (click)="clear()">C</app-button><app-button (click)="CE()">CE</app-button><app-button (click)="backspace()">&larr;</app-button>
+    <app-button (click)="addCharacter('^')">^</app-button><app-button (click)="addCharacter('(')">(</app-button><app-button (click)="addCharacter(')')">)</app-button><app-button (click)="addCharacter('/')">&div;</app-button>
+    <app-button (click)="addCharacter('7')">7</app-button><app-button (click)="addCharacter('8')">8</app-button><app-button (click)="addCharacter('9')">9</app-button><app-button (click)="addCharacter('*')">&times;</app-button>
+    <app-button (click)="addCharacter('4')">4</app-button><app-button (click)="addCharacter('5')">5</app-button><app-button (click)="addCharacter('6')">6</app-button><app-button (click)="addCharacter('-')">-</app-button>
+    <app-button (click)="addCharacter('1')">1</app-button><app-button (click)="addCharacter('2')">2</app-button><app-button (click)="addCharacter('3')">3</app-button><app-button (click)="addCharacter('+')">+</app-button>
+    <app-button (click)="toggleSign()">&pm;</app-button><app-button (click)="addCharacter('0')">0</app-button><app-button (click)="addDecimalPoint()">.</app-button><app-button (click)="evaluate()">=</app-button>
+</div>
