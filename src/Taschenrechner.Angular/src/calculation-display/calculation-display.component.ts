@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, effect, inject, OnInit} from '@angular/core';
+import {CalculatorService} from "../app/calculator.service";
 
 @Component({
   selector: 'app-calculation-display',
@@ -8,5 +9,14 @@ import { Component } from '@angular/core';
   styleUrl: './calculation-display.component.scss'
 })
 export class CalculationDisplayComponent {
+
+  currentCalculation: string = '';
+
+  private calculatorService = inject(CalculatorService)
+
+  constructor() {
+    effect(() => {
+      this.currentCalculation = this.calculatorService.result();});
+  }
 
 }
