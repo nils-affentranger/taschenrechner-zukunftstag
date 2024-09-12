@@ -1,7 +1,7 @@
 import {Component, HostListener, inject} from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {CalculatorService} from "../../app/calculator.service";
 
 @Component({
   selector: 'app-button-grid',
@@ -11,6 +11,8 @@ import {Observable} from "rxjs";
   styleUrl: './button-grid.component.scss'
 })
 export class ButtonGridComponent {
+
+  calculatorService = inject(CalculatorService);
 
   http = inject(HttpClient)
 
@@ -87,7 +89,6 @@ export class ButtonGridComponent {
     this.addCharacter(character);
   }
 
-  result: string = '0';
 
   addCharacter(character: string) {
     this.http.post<{Response: string }>(
@@ -96,8 +97,7 @@ export class ButtonGridComponent {
       { withCredentials: true }
     ).subscribe({
         next: (response) => {
-
-          console.log("Response:", response);
+          this.calculatorService.setResult(response.Response);
         },
         error: (err) => {
           console.log("Error:", err);
@@ -112,7 +112,7 @@ export class ButtonGridComponent {
       { withCredentials: true }
     ).subscribe({
       next: (response) => {
-        console.log("Response:", response);
+        this.calculatorService.setResult(response.Response);
       },
       error: (err) => {
         console.log("Error:", err);
@@ -128,7 +128,7 @@ export class ButtonGridComponent {
       { withCredentials: true }
     ).subscribe({
       next: (response) => {
-        console.log("Response:", response);
+        this.calculatorService.setResult(response.Response);
       },
       error: (err) => {
         console.log("Error:", err);
@@ -144,7 +144,7 @@ export class ButtonGridComponent {
       { withCredentials: true }
     ).subscribe({
       next: (response) => {
-        console.log("Response:", response);
+        this.calculatorService.setResult(response.Response);
       },
       error: (err) => {
         console.log("Error:", err);
@@ -159,7 +159,7 @@ export class ButtonGridComponent {
       { withCredentials: true }
     ).subscribe({
       next: (response) => {
-        console.log("Response:", response);
+        this.calculatorService.setResult(response.Response);
       },
       error: (err) => {
         console.log("Error:", err);
@@ -174,7 +174,7 @@ export class ButtonGridComponent {
       { withCredentials: true }
     ).subscribe({
       next: (response) => {
-        console.log("Response:", response);
+        this.calculatorService.setResult(response.Response);
       },
       error: (err) => {
         console.log("Error:", err);
@@ -189,7 +189,7 @@ export class ButtonGridComponent {
       { withCredentials: true }
     ).subscribe({
       next: (response) => {
-        console.log("Response:", response);
+        this.calculatorService.setResult(response.Response);
       },
       error: (err) => {
         console.log("Error:", err);
