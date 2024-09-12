@@ -1,5 +1,5 @@
 import {Component, effect, inject, OnInit} from '@angular/core';
-import {CalculatorService} from "../app/calculator.service";
+import {CalculatorService} from "../calculator.service";
 
 @Component({
   selector: 'app-calculation-display',
