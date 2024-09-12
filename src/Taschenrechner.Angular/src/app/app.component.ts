@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { CalculationDisplayComponent } from './calculation-display/calculation-display.component';
-import { ButtonGridComponent } from './buttons/button-grid/button-grid.component';
+import { CalculationDisplayComponent } from '../calculation-display/calculation-display.component';
+import { ButtonGridComponent } from '../buttons/button-grid/button-grid.component';
 
 @Component({
   selector: 'app-root',

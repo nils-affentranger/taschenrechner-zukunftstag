@@ -1,7 +1,7 @@
 import {Component, HostListener, inject} from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
 import {HttpClient} from "@angular/common/http";
-import {CalculatorService} from "../../calculator.service";
+import {CalculatorService} from "../../app/calculator.service";
 
 @Component({
   selector: 'app-button-grid',
@@ -59,9 +59,6 @@ export class ButtonGridComponent {
       case '*':
         character = '*';
         break;
-      case '^':
-        character = '^';
-        break;
       case '/':
         character = '/';
         break;
@@ -72,7 +69,7 @@ export class ButtonGridComponent {
         character = ')';
         break;
       case '.':
-        this.addDecimalPoint();
+        this.toggleSign();
         return;
       case '=':
         this.evaluate();
