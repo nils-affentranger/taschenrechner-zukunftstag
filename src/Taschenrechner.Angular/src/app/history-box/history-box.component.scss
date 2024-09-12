@@ -1,0 +1,11 @@
+.history-box {
+  background-color: white;
+  flex-grow: 1;        /* Allow it to grow and fill available space */
+  margin: 5px 0;       /* Vertical margin */
+  border-radius: 8px;
+  display: flex;       /* Use flex to align any content inside */
+  justify-content: center;
+  align-items: center; /* Center the content vertically and horizontally */
+  width: 100%;         /* Ensure it takes up the full width */
+  box-sizing: border-box;
+}

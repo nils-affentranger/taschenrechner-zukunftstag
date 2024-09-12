@@ -1,0 +1,11 @@
+.grid-container {
+  color: #f4d0fc;
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative; /* Changed from absolute to relative for better flow */
+  height: 45%;
+  margin: 10px 0 0 0; /* Ensure consistent margin between elements */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-gap: 2px;
+}
