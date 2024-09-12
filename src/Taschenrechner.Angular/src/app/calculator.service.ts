@@ -4,10 +4,10 @@ import { Injectable, signal, WritableSignal } from '@angular/core';
   providedIn: 'root'
 })
 export class CalculatorService {
-  result: WritableSignal<string> = signal('0');
+  result: WritableSignal<string> = signal('');
 
   setResult(value: string): void {
-    this.result.set(value || '0');
+    this.result.set(value);
   }
 
   getResult(): string {
