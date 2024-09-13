@@ -137,7 +137,6 @@ export class ButtonGridComponent {
         console.log("Error:", err);
       }
     })
-    console.log("added decimal point")
   }
 
   clear() {
@@ -155,7 +154,7 @@ export class ButtonGridComponent {
     })
   }
 
-  CE() {
+  ClearEntry() {
     this.http.post<{Response: string}>(
       'http://localhost:3085/api/calculator/ce',
       {},
