@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Http;
+using System.Web.Http.Results;
 using Taschenrechner.API.Models;
 using Taschenrechner.WinForms;
 
@@ -93,6 +94,15 @@ namespace Taschenrechner.API.Controllers {
         public CurrentCalculationResponse GetCalculation() {
             LoadSession();
             return new CurrentCalculationResponse(calculator.currentCalculationString);
+        }
+
+        [HttpPost]
+        [Route("api/calculator/changemaxhistorylength")]
+        public IHttpActionResult ChangeMaxHistoryLength(NumberInput request) {
+            LoadSession();
+            calculator.SetMaxHistoryLength(request.Number);
+            SaveSession();
+            return Ok();
         }
 
         [HttpPost]

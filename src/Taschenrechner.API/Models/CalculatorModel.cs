@@ -23,4 +23,8 @@
             Response = response;
         }
     }
+
+    public class NumberInput {
+        public int Number { get; set; }
+    }
 }

@@ -14,6 +14,7 @@ namespace Taschenrechner.WinForms {
         private readonly HashSet<string> Operators = new HashSet<string> { "+", "-", "*", "/", "^" };
         private readonly HashSet<string> Parenthesis = new HashSet<string> { "(", ")" };
         private string historyString = "";
+        private int maxHistoryLength = 10;
         private bool lastActionWasEvaluation;
 
         public Calculator() {
@@ -88,8 +89,8 @@ namespace Taschenrechner.WinForms {
 
         public void AppendHistory(string result) {
             history.Insert(0, result);
-            if (history.Count > 9) {
-                history.RemoveAt(9);
+            if (history.Count > maxHistoryLength) {
+                history.RemoveAt(maxHistoryLength);
             }
             historyString = string.Join("\r\n", history);
             OnHistoryChanged();
@@ -239,6 +240,10 @@ namespace Taschenrechner.WinForms {
 
         public string HistoryString(string separator) {
             return string.Join(separator, history);
+        }
+
+        public void SetMaxHistoryLength(int max) {
+            maxHistoryLength = max;
         }
 
         public bool ToggleSign() {
