@@ -7,4 +7,9 @@
 
 ng-scrollbar {
   --scrollbar-offset	: 1;
+  --scrollbar-border-radius: 5px;
+}
+
+ app-clear-history-button {
+   position: fixed;
 }

@@ -8,6 +8,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
 } :hover {
     background-color: #a16ab0;
 } :active {

@@ -1,4 +1,4 @@
-import {Component, effect, inject, OnInit} from '@angular/core';
+import {Component, effect, HostListener, inject, OnInit} from '@angular/core';
 import {CalculatorService} from "../calculator.service";
 
 @Component({
@@ -18,5 +18,4 @@ export class CalculationDisplayComponent {
     effect(() => {
       this.currentCalculation = this.calculatorService.result();});
   }
-
 }

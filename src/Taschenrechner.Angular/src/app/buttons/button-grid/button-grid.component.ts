@@ -1,6 +1,5 @@
 import {Component, HostListener, inject, OnInit} from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {CalculatorService} from "../../calculator.service";
 
 @Component({
@@ -14,12 +13,10 @@ export class ButtonGridComponent implements OnInit{
 
   calculatorService = inject(CalculatorService);
 
-  http = inject(HttpClient)
 
   ngOnInit() {
-    this.getHistory();
-    this.setMaxHistoryLength();
-    ;
+    this.calculatorService.getHistory();
+    this.calculatorService.setMaxHistoryLength();
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -78,161 +75,23 @@ export class ButtonGridComponent implements OnInit{
         character = ')';
         break;
       case '.':
-        this.addDecimalPoint();
+        this.calculatorService.addDecimalPoint();
         return;
       case '=':
-        this.evaluate();
+        this.calculatorService.evaluate();
         return;
       case 'Enter':
-        this.evaluate();
+        this.calculatorService.evaluate();
         return;
       case 'Backspace':
-        this.backspace();
+        this.calculatorService.backspace();
         return;
       case 'Escape':
-        this.clear();
+        this.calculatorService.clear();
         return;
       default:
         return;
     }
-    this.addCharacter(character);
-  }
-
-
-  addCharacter(character: string) {
-    this.http.post<{Response: string }>(
-      'http://localhost:3085/api/calculator/addcharacter',
-      { Character: character },
-      { withCredentials: true }
-    ).subscribe({
-        next: (response) => {
-          this.calculatorService.setResult(response.Response);
-        },
-        error: (err) => {
-          console.log("Error:", err);
-        }
-    });
-  }
-
-  evaluate() {
-    this.http.post<{Response: string }>(
-      'http://localhost:3085/api/calculator/evaluate',
-      {},
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.calculatorService.setResult(response.Response);
-        this.getHistory();
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    }
-    )
-  }
-
-  addDecimalPoint() {
-    this.http.post<{ Response: string}>(
-      'http://localhost:3085/api/calculator/adddecimalpoint',
-      {},
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.calculatorService.setResult(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    })
-  }
-
-  clear() {
-    this.http.post<{Response: string}>(
-      'http://localhost:3085/api/calculator/clear',
-      {},
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.calculatorService.setResult(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    })
-  }
-
-  ClearEntry() {
-    this.http.post<{Response: string}>(
-      'http://localhost:3085/api/calculator/ce',
-      {},
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.calculatorService.setResult(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    })
-  }
-
-  backspace() {
-    this.http.post<{Response: string}>(
-      'http://localhost:3085/api/calculator/backspace',
-      {},
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.calculatorService.setResult(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    })
-  }
-
-  toggleSign() {
-    this.http.post<{Response: string}>(
-      'http://localhost:3085/api/calculator/togglesign',
-      {},
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.calculatorService.setResult(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    })
-  }
-
-  getHistory() {
-    this.http.post<{Response: string }>(
-      'http://localhost:3085/api/calculator/gethistory',
-      { Separator: "\n" },
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.calculatorService.setHistory(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    });
-  }
-
-  setMaxHistoryLength() {
-    this.http.post<{ Response: string }>(
-      'http://localhost:3085/api/calculator/changemaxhistorylength',
-      {Character: 100},
-      {withCredentials: true}
-    ).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    });
+    this.calculatorService.addCharacter(character);
   }
 }
