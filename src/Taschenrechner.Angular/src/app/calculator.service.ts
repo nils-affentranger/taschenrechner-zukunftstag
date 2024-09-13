@@ -5,12 +5,14 @@ import { Injectable, signal, WritableSignal } from '@angular/core';
 })
 export class CalculatorService {
   result: WritableSignal<string> = signal('0');
+  history: WritableSignal<string> = signal('');
 
   setResult(value: string): void {
     this.result.set(value || '0');
   }
 
-  getResult(): string {
-    return this.result();
+  setHistory(value: string): void {
+    this.history.set(value);
   }
+
 }

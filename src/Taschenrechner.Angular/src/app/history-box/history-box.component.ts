@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, effect, inject} from '@angular/core';
+import { CalculatorService } from "../calculator.service";
 
 @Component({
   selector: 'app-history-box',
@@ -8,5 +9,14 @@ import { Component } from '@angular/core';
   styleUrl: './history-box.component.scss'
 })
 export class HistoryBoxComponent {
+
+  history: string = '';
+
+  private calculatorService = inject(CalculatorService)
+
+  constructor() {
+    effect(() => {
+      this.history = this.calculatorService.history();});
+  }
 
 }

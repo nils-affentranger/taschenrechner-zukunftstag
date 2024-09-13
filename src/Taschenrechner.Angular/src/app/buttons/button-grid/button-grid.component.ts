@@ -1,6 +1,6 @@
-import {Component, HostListener, inject} from '@angular/core';
+import {Component, HostListener, inject, OnInit} from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {CalculatorService} from "../../calculator.service";
 
 @Component({
@@ -10,11 +10,16 @@ import {CalculatorService} from "../../calculator.service";
   templateUrl: './button-grid.component.html',
   styleUrl: './button-grid.component.scss'
 })
-export class ButtonGridComponent {
+export class ButtonGridComponent implements OnInit{
 
   calculatorService = inject(CalculatorService);
 
   http = inject(HttpClient)
+
+  ngOnInit() {
+    this.getHistory()
+    this.calculatorService.result();
+  }
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -116,6 +121,7 @@ export class ButtonGridComponent {
     ).subscribe({
       next: (response) => {
         this.calculatorService.setResult(response.Response);
+        this.getHistory();
       },
       error: (err) => {
         console.log("Error:", err);
@@ -197,5 +203,20 @@ export class ButtonGridComponent {
         console.log("Error:", err);
       }
     })
+  }
+
+  getHistory() {
+    this.http.post<{Response: string }>(
+      'http://localhost:3085/api/calculator/gethistory',
+      { Separator: "\n" },
+      { withCredentials: true }
+    ).subscribe({
+      next: (response) => {
+        this.calculatorService.setHistory(response.Response);
+      },
+      error: (err) => {
+        console.log("Error:", err);
+      }
+    });
   }
 }

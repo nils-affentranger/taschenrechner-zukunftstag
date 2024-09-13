@@ -95,7 +95,7 @@ namespace Taschenrechner.API.Controllers {
             return new CurrentCalculationResponse(calculator.currentCalculationString);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/calculator/gethistory")]
         public HistoryResponse GetHistory(HistorySeparator separator) {
             LoadSession();
