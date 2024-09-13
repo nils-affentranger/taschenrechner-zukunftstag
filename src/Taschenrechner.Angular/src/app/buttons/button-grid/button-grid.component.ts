@@ -17,8 +17,9 @@ export class ButtonGridComponent implements OnInit{
   http = inject(HttpClient)
 
   ngOnInit() {
-    this.getHistory()
-    this.calculatorService.result();
+    this.getHistory();
+    this.setMaxHistoryLength();
+    ;
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -213,6 +214,21 @@ export class ButtonGridComponent implements OnInit{
     ).subscribe({
       next: (response) => {
         this.calculatorService.setHistory(response.Response);
+      },
+      error: (err) => {
+        console.log("Error:", err);
+      }
+    });
+  }
+
+  setMaxHistoryLength() {
+    this.http.post<{ Response: string }>(
+      'http://localhost:3085/api/calculator/changemaxhistorylength',
+      {Character: 100},
+      {withCredentials: true}
+    ).subscribe({
+      next: (response) => {
+        console.log(response);
       },
       error: (err) => {
         console.log("Error:", err);

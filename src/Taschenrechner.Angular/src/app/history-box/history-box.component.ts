@@ -1,10 +1,11 @@
 import {Component, effect, inject} from '@angular/core';
 import { CalculatorService } from "../calculator.service";
+import {NgScrollbarModule} from "ngx-scrollbar";
 
 @Component({
   selector: 'app-history-box',
   standalone: true,
-  imports: [],
+  imports: [NgScrollbarModule],
   templateUrl: './history-box.component.html',
   styleUrl: './history-box.component.scss'
 })

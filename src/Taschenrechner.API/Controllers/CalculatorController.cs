@@ -98,11 +98,11 @@ namespace Taschenrechner.API.Controllers {
 
         [HttpPost]
         [Route("api/calculator/changemaxhistorylength")]
-        public IHttpActionResult ChangeMaxHistoryLength(NumberInput request) {
+        public IHttpActionResult ChangeMaxHistoryLength(CharacterInput request) {
             LoadSession();
-            calculator.SetMaxHistoryLength(request.Number);
+            calculator.SetMaxHistoryLength(request.Character);
             SaveSession();
-            return Ok();
+            return Ok($"succesfully set max history length to {request.Character}");
         }
 
         [HttpPost]

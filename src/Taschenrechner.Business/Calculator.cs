@@ -242,8 +242,8 @@ namespace Taschenrechner.WinForms {
             return string.Join(separator, history);
         }
 
-        public void SetMaxHistoryLength(int max) {
-            maxHistoryLength = max;
+        public void SetMaxHistoryLength(string max) {
+            maxHistoryLength = int.Parse(max);
         }
 
         public bool ToggleSign() {
