@@ -21,4 +21,8 @@ export class HistoryBoxComponent {
       this.history = this.calculatorService.history();});
   }
 
+  onClick() {
+    this.calculatorService.clearHistory();
+  }
+
 }

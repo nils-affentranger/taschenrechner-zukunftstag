@@ -155,5 +155,20 @@ export class CalculatorService {
     });
   }
 
+  clearHistory() {
+    this.http.post<{ Response: string }>(
+      'http://localhost:3085/api/calculator/clearhistory',
+      {},
+      {withCredentials: true}
+    ).subscribe({
+      next: (response) => {
+        console.log(response.Response);
+        this.setHistory(response.Response);
+      },
+      error: (err) => {
+        console.log("Error:", err);
+      }
+    })
+  }
 
 }

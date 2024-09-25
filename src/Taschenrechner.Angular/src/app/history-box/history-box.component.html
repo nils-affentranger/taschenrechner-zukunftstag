@@ -1,4 +1,4 @@
-<app-clear-history-button></app-clear-history-button>
+<app-clear-history-button (click)="onClick()"></app-clear-history-button>
 <ng-scrollbar>
-    <div class="history-box" [innerHTML]="history"></div>
+    <div class="history-box" [innerHTML]="history" (click)="onClick()"></div>
 </ng-scrollbar>
