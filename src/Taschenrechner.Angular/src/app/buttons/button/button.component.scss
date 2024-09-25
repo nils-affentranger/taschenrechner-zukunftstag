@@ -9,6 +9,7 @@ button {
   justify-content: center;
   align-items: center;
   user-select: none;
+  min-width: 0;
 } :hover {
     background-color: #a16ab0;
 } :active {
