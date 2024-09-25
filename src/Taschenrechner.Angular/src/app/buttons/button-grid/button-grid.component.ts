@@ -9,15 +9,9 @@ import {CalculatorService} from "../../calculator.service";
   templateUrl: './button-grid.component.html',
   styleUrl: './button-grid.component.scss'
 })
-export class ButtonGridComponent implements OnInit{
+export class ButtonGridComponent{
 
   calculatorService = inject(CalculatorService);
-
-
-  ngOnInit() {
-    this.calculatorService.getHistory();
-    this.calculatorService.setMaxHistoryLength();
-  }
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {

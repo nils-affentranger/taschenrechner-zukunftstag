@@ -82,7 +82,7 @@ export class CalculatorService {
 
   ClearEntry() {
     this.http.post<{Response: string}>(
-      '/api/calculator/ce',
+      '/api/calculator/clearentry',
       {},
       { withCredentials: true }
     ).subscribe({
@@ -133,6 +133,20 @@ export class CalculatorService {
     ).subscribe({
       next: (response) => {
         this.setHistory(response.Response);
+      },
+      error: (err) => {
+        console.log("Error:", err);
+      }
+    });
+  }
+
+  getCalculation() {
+    this.http.get<{Response: string}>(
+      '/api/calculator/getcalculation',
+      { withCredentials: true }
+    ).subscribe({
+      next: (response) => {
+        this.setResult(response.Response);
       },
       error: (err) => {
         console.log("Error:", err);
