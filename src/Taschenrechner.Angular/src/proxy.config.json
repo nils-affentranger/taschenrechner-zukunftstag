@@ -1,0 +1,7 @@
+{
+  "/api/calculator/*": {
+    "target": "http://localhost:3085",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

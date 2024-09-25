@@ -20,7 +20,7 @@ export class CalculatorService {
 
   addCharacter(character: string) {
     this.http.post<{Response: string }>(
-      'http://localhost:3085/api/calculator/addcharacter',
+      '/api/calculator/addcharacter',
       { Character: character },
       { withCredentials: true }
     ).subscribe({
@@ -35,7 +35,7 @@ export class CalculatorService {
 
   evaluate() {
     this.http.post<{Response: string }>(
-      'http://localhost:3085/api/calculator/evaluate',
+      '/api/calculator/evaluate',
       {},
       { withCredentials: true }
     ).subscribe({
@@ -52,7 +52,7 @@ export class CalculatorService {
 
   addDecimalPoint() {
     this.http.post<{ Response: string}>(
-      'http://localhost:3085/api/calculator/adddecimalpoint',
+      '/api/calculator/adddecimalpoint',
       {},
       { withCredentials: true }
     ).subscribe({
@@ -67,7 +67,7 @@ export class CalculatorService {
 
   clear() {
     this.http.post<{Response: string}>(
-      'http://localhost:3085/api/calculator/clear',
+      '/api/calculator/clear',
       {},
       { withCredentials: true }
     ).subscribe({
@@ -82,7 +82,7 @@ export class CalculatorService {
 
   ClearEntry() {
     this.http.post<{Response: string}>(
-      'http://localhost:3085/api/calculator/ce',
+      '/api/calculator/ce',
       {},
       { withCredentials: true }
     ).subscribe({
@@ -97,7 +97,7 @@ export class CalculatorService {
 
   backspace() {
     this.http.post<{Response: string}>(
-      'http://localhost:3085/api/calculator/backspace',
+      '/api/calculator/backspace',
       {},
       { withCredentials: true }
     ).subscribe({
@@ -112,7 +112,7 @@ export class CalculatorService {
 
   toggleSign() {
     this.http.post<{Response: string}>(
-      'http://localhost:3085/api/calculator/togglesign',
+      '/api/calculator/togglesign',
       {},
       { withCredentials: true }
     ).subscribe({
@@ -127,7 +127,7 @@ export class CalculatorService {
 
   getHistory() {
     this.http.post<{Response: string }>(
-      'http://localhost:3085/api/calculator/gethistory',
+      '/api/calculator/gethistory',
       { Separator: "<br>" },
       { withCredentials: true }
     ).subscribe({
@@ -142,7 +142,7 @@ export class CalculatorService {
 
   setMaxHistoryLength() {
     this.http.post<{ Response: string }>(
-      'http://localhost:3085/api/calculator/changemaxhistorylength',
+      '/api/calculator/changemaxhistorylength',
       {Character: 100},
       {withCredentials: true}
     ).subscribe({
@@ -157,7 +157,7 @@ export class CalculatorService {
 
   clearHistory() {
     this.http.post<{ Response: string }>(
-      'http://localhost:3085/api/calculator/clearhistory',
+      '/api/calculator/clearhistory',
       {},
       {withCredentials: true}
     ).subscribe({
