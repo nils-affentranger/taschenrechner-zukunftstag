@@ -1,5 +1,4 @@
-import {Component, inject} from '@angular/core';
-import {CalculatorService} from "../../calculator.service";
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-clear-history-button',

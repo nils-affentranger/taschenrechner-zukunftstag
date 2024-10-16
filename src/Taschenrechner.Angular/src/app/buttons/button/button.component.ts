@@ -1,4 +1,4 @@
-import {Component, ElementRef, Host, HostBinding, Input, ViewChild, viewChild} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -8,7 +8,5 @@ import {Component, ElementRef, Host, HostBinding, Input, ViewChild, viewChild} f
   styleUrl: './button.component.scss'
 })
 export class ButtonComponent {
-
-
 
 }

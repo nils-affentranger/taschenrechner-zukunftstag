@@ -18,11 +18,12 @@ export class HistoryBoxComponent {
 
   constructor() {
     effect(() => {
-      this.history = this.calculatorService.history();});
+      this.history = this.calculatorService.history().join("<br>");});
   }
 
   onClick() {
     this.calculatorService.clearHistory();
+    console.log('History cleared');
   }
 
 }

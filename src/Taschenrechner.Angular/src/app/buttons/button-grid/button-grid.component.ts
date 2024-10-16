@@ -1,4 +1,4 @@
-import {Component, HostListener, inject, OnInit} from '@angular/core';
+import {Component, HostListener, inject } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
 import {CalculatorService} from "../../calculator.service";
 
@@ -75,13 +75,23 @@ export class ButtonGridComponent{
         this.calculatorService.evaluate();
         return;
       case 'Enter':
+        event.preventDefault()
         this.calculatorService.evaluate();
         return;
       case 'Backspace':
-        this.calculatorService.backspace();
+        if (event.ctrlKey) {
+          this.calculatorService.clearEntry();
+        } else {
+          this.calculatorService.backspace();
+        }
         return;
       case 'Escape':
         this.calculatorService.clear();
+        return;
+      case 'H':
+        if (event.ctrlKey && event.shiftKey) {
+          this.calculatorService.clearHistory();
+        }
         return;
       default:
         return;

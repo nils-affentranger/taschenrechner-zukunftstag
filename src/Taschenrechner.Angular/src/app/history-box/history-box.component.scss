@@ -1,15 +1,12 @@
 .history-box {
   min-height: 0;
-  overflow-y: auto;
-  padding: 5px 9px;
+  padding: 5px 6px;
   text-align: right;
 }
 
-ng-scrollbar {
-  --scrollbar-offset	: 1;
-  --scrollbar-border-radius: 5px;
-}
-
- app-clear-history-button {
-   position: fixed;
+app-clear-history-button {
+  position: fixed;
+  z-index: 1000;
+  width: 20px;
+  height: 20px;
 }
