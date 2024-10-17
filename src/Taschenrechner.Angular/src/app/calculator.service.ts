@@ -1,21 +1,27 @@
 import { effect, Injectable, signal, WritableSignal } from '@angular/core';
-import { evaluate } from 'mathjs';
+import { create, all, BigNumber } from 'mathjs';
+
+const math = create(all)
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class CalculatorService {
 
+  // Types
   private numbers = "0123456789";
   private operators = "+-*/^";
   private parentheses = "()";
 
   private lastActionWasEvaluation = false;
 
+  // Get the current state from the browser
   currentCalculation: WritableSignal<string> = signal(localStorage.getItem('currentCalculation') || '');
   history: WritableSignal<string[]> = signal(JSON.parse(localStorage.getItem('history') || '[]'));
 
   constructor() {
+    // Save the current state in the browser
     effect(() => {
       localStorage.setItem('currentCalculation', this.currentCalculation());
     });
@@ -24,6 +30,7 @@ export class CalculatorService {
       localStorage.setItem('history', JSON.stringify(this.history()));
     });
 
+    // Enables keyboard input
     window.addEventListener('storage', (event) => {
       if (event.key === 'currentCalculation') {
         this.currentCalculation.set(event.newValue || '');
@@ -31,8 +38,15 @@ export class CalculatorService {
         this.history.set(JSON.parse(event.newValue || '[]'));
       }
     });
+
+    // Configure math.js for more precise results
+    math.config({
+      number: "BigNumber",
+      precision: 13,
+    });
   }
 
+  // Determines the character's type - Helpful for validating inputs
   determineType(character: string): 'number' | 'operator' | 'parenthesis' | 'undefined' {
     if (this.numbers.includes(character)) {
       return 'number';
@@ -59,11 +73,12 @@ export class CalculatorService {
 
     const type = this.determineType(char);
 
-    if (this.lastActionWasEvaluation && (type === 'number' || type === 'parenthesis')) {
+    if (this.lastActionWasEvaluation && (type === 'number')) {
       this.clear();
       calc = '';
     }
 
+    // Operators
     if (type === 'operator') {
       if (lastChar === '.') return;
       if (calc === '') {
@@ -74,6 +89,11 @@ export class CalculatorService {
         this.backspace();
         calc = this.currentCalculation();
       }
+    }
+
+    // Parentheses
+    if (char === '(' && lastChar === '.') {
+      return;
     }
 
     if (char === '(' && calc && !this.operators.includes(lastChar) && !this.parentheses.includes(lastChar)) {
@@ -92,18 +112,30 @@ export class CalculatorService {
 
 
   evaluate() {
-    if (this.currentCalculation() !== '0' && this.currentCalculation() !== '' && this.currentCalculation() !== 'Division durch 0 nicht möglich') {
+    if (this.currentCalculation() !== '0' && this.currentCalculation() !== '') {
       let error = false;
       try {
-        let result = evaluate(this.currentCalculation());
+        let result = math.evaluate(this.currentCalculation());
         this.currentCalculation.set(result.toString());
       } catch (e) {
+        const displayBackground = document.getElementById('display-background')!;
+        // lässt den
+        displayBackground.classList.add('error');
+        setTimeout(() => {
+          displayBackground.classList.remove('error');
+        } , 50);
         console.error(e);
         error = true;
         return;
       } finally {
         if (!error && !['NaN', 'Infinity'].includes(this.currentCalculation())) {
-          this.history.update(history => [this.currentCalculation(), ...history]);
+          this.history.update(history => {
+            const newHistory = [this.currentCalculation(), ...history];
+            if (newHistory.length > 10) {
+              newHistory.pop();
+            }
+            return newHistory
+          });
           this.lastActionWasEvaluation = true;
         }
       }
@@ -111,7 +143,8 @@ export class CalculatorService {
   }
 
   addDecimalPoint() {
-    if (this.currentCalculation() === '' || this.operators.includes(this.currentCalculation().slice(-1))) {
+    const lastChar = this.currentCalculation().slice(-1);
+    if (this.currentCalculation() === '' || this.operators.includes(lastChar) || this.parentheses.includes(lastChar)) {
       this.currentCalculation.set(this.currentCalculation() + '0.');
     } else {
       const lastNumber = this.currentCalculation().split(/[+\-*\/^()]/).pop();
