@@ -1,5 +1,5 @@
 import { effect, Injectable, signal, WritableSignal } from '@angular/core';
-import { create, all, BigNumber } from 'mathjs';
+import { create, all } from 'mathjs';
 
 const math = create(all)
 
@@ -62,8 +62,9 @@ export class CalculatorService {
 
   addCharacter(char: string): void {
     let calc = this.currentCalculation();
-    const lastChar = calc.slice(-1);
+    let lastChar = calc.slice(-1);
 
+    // Reset calculation if invalid
     if (['NaN', 'Infinity'].includes(calc)) {
       this.clear();
       calc = '';
@@ -78,35 +79,43 @@ export class CalculatorService {
       calc = '';
     }
 
+    // Numbers
+    if (type === 'number') {
+      calc += char;
+    }
+
     // Operators
     if (type === 'operator') {
-      if (lastChar === '.') return;
-      if (calc === '') {
-        this.currentCalculation.set('0' + char);
-        return;
-      }
+      if (lastChar === '.' || lastChar === '(') return;
       if (this.operators.includes(lastChar)) {
-        this.backspace();
-        calc = this.currentCalculation();
+        calc = calc.slice(0, -1);
       }
+      if (calc === '') {
+        calc += '0';
+      }
+      calc += char
     }
 
     // Parentheses
-    if (char === '(' && lastChar === '.') {
-      return;
+    if (char === '(') {
+      if (lastChar === '.') {
+        return;
+      }
+      if (this.numbers.includes(lastChar) && calc) {
+        calc += '*';
+      }
+      calc += char
     }
 
-    if (char === '(' && calc && !this.operators.includes(lastChar) && !this.parentheses.includes(lastChar)) {
-      calc += '*';
-    }
-
-    if (char === ')') {
+    if (char === ')' && lastChar !== '(') {
       const openCount = (calc.match(/\(/g) || []).length;
       const closeCount = (calc.match(/\)/g) || []).length;
       if (closeCount >= openCount) return;
+      calc +=  ')'
     }
 
-    this.currentCalculation.set(calc + char);
+    // Set currentCalculation to modified calc
+    this.currentCalculation.set(calc);
     this.lastActionWasEvaluation = false;
   }
 
@@ -119,7 +128,7 @@ export class CalculatorService {
         this.currentCalculation.set(result.toString());
       } catch (e) {
         const displayBackground = document.getElementById('display-background')!;
-        // lässt den
+        // Flashes calculation-display and logs error
         displayBackground.classList.add('error');
         setTimeout(() => {
           displayBackground.classList.remove('error');
