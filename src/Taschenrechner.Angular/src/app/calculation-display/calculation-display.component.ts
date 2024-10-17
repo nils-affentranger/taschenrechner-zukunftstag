@@ -15,7 +15,7 @@ export class CalculationDisplayComponent {
 
   private calculatorService = inject(CalculatorService)
 
-  currentCalculation: string = '';
+  currentCalculation = '';
 
   constructor() {
     effect(() => {

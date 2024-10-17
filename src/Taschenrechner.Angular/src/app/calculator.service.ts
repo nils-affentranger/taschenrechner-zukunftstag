@@ -64,56 +64,13 @@ export class CalculatorService {
     let calc = this.currentCalculation();
     let lastChar = calc.slice(-1);
 
-    // Reset calculation if invalid
-    if (['NaN', 'Infinity'].includes(calc)) {
+    // If last action was evaluation, clear calculation
+    if (this.lastActionWasEvaluation) {
       this.clear();
       calc = '';
     }
 
-    if (calc === '' && char === '0') return;
-
-    const type = this.determineType(char);
-
-    if (this.lastActionWasEvaluation && (type === 'number')) {
-      this.clear();
-      calc = '';
-    }
-
-    // Numbers
-    if (type === 'number') {
-      calc += char;
-    }
-
-    // Operators
-    if (type === 'operator') {
-      if (lastChar === '.' || lastChar === '(') return;
-      if (this.operators.includes(lastChar)) {
-        calc = calc.slice(0, -1);
-      }
-      if (calc === '') {
-        calc += '0';
-      }
-      calc += char
-    }
-
-    // Parentheses
-    if (char === '(') {
-      if (lastChar === '.') {
-        return;
-      }
-      if (this.numbers.includes(lastChar) && calc) {
-        calc += '*';
-      }
-      calc += char
-    }
-
-    if (char === ')' && lastChar !== '(') {
-      const openCount = (calc.match(/\(/g) || []).length;
-      const closeCount = (calc.match(/\)/g) || []).length;
-      if (closeCount >= openCount) return;
-      calc +=  ')'
-    }
-
+    calc += char;
     // Set currentCalculation to modified calc
     this.currentCalculation.set(calc);
     this.lastActionWasEvaluation = false;
