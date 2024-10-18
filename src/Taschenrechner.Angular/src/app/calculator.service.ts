@@ -7,12 +7,12 @@ const math = create(all);
   providedIn: 'root',
 })
 export class CalculatorService {
+  private lastActionWasEvaluation = false;
+
   // Types
   private numbers = '0123456789';
   private operators = '+-*/^';
   private parentheses = '()';
-
-  private lastActionWasEvaluation = false;
 
   // Get the current state from the browser
   currentCalculation: WritableSignal<string> = signal(
@@ -32,7 +32,6 @@ export class CalculatorService {
       localStorage.setItem('history', JSON.stringify(this.history()));
     });
 
-    // Enables keyboard input
     window.addEventListener('storage', (event) => {
       if (event.key === 'currentCalculation') {
         this.currentCalculation.set(event.newValue || '');
@@ -48,7 +47,7 @@ export class CalculatorService {
     });
   }
 
-  // Determines the character's type - Helpful for validating inputs
+  // Determine a character's type - Helpful for validating inputs
   determineType(
     character: string,
   ): 'number' | 'operator' | 'parenthesis' | 'undefined' {
@@ -182,7 +181,7 @@ export class CalculatorService {
 
       if (lastNumber.startsWith('-')) {
         this.currentCalculation.set(
-          // Remove the minus sign      ∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨
+          // Save the calculation without the minus sign
           calculation.slice(0, index) + lastNumber.slice(1),
         );
       } else {
