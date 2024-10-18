@@ -5,15 +5,18 @@ button {
   font-size: 14px;
   width: 100%;
   height: 100%;
+  min-width: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   user-select: none;
-  min-width: 0;
-} :hover {
-    background-color: #a16ab0;
-  } :active {
-    background-color: #965ea4;
-    } :focus {
-        outline: none;
-      }
+}
+:hover {
+  background-color: #b46ac5;
+}
+:active {
+  background-color: #b46ac5;
+}
+:focus {
+  outline: none;
+}

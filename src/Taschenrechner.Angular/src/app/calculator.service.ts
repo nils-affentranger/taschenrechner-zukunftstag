@@ -1,24 +1,26 @@
 import { effect, Injectable, signal, WritableSignal } from '@angular/core';
 import { create, all } from 'mathjs';
 
-const math = create(all)
+const math = create(all);
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class CalculatorService {
-
   // Types
-  private numbers = "0123456789";
-  private operators = "+-*/^";
-  private parentheses = "()";
+  private numbers = '0123456789';
+  private operators = '+-*/^';
+  private parentheses = '()';
 
   private lastActionWasEvaluation = false;
 
   // Get the current state from the browser
-  currentCalculation: WritableSignal<string> = signal(localStorage.getItem('currentCalculation') || '');
-  history: WritableSignal<string[]> = signal(JSON.parse(localStorage.getItem('history') || '[]'));
+  currentCalculation: WritableSignal<string> = signal(
+    localStorage.getItem('currentCalculation') || '',
+  );
+  history: WritableSignal<string[]> = signal(
+    JSON.parse(localStorage.getItem('history') || '[]'),
+  );
 
   constructor() {
     // Save the current state in the browser
@@ -41,13 +43,15 @@ export class CalculatorService {
 
     // Configure math.js for more precise results
     math.config({
-      number: "BigNumber",
+      number: 'BigNumber',
       precision: 13,
     });
   }
 
   // Determines the character's type - Helpful for validating inputs
-  determineType(character: string): 'number' | 'operator' | 'parenthesis' | 'undefined' {
+  determineType(
+    character: string,
+  ): 'number' | 'operator' | 'parenthesis' | 'undefined' {
     if (this.numbers.includes(character)) {
       return 'number';
     } else if (this.operators.includes(character)) {
@@ -70,37 +74,46 @@ export class CalculatorService {
       calc = '';
     }
 
+    // Add input character to calc
     calc += char;
+
     // Set currentCalculation to modified calc
     this.currentCalculation.set(calc);
     this.lastActionWasEvaluation = false;
   }
 
-
   evaluate() {
-    if (this.currentCalculation() !== '0' && this.currentCalculation() !== '') {
+    // Only evaluate when there is something to evaluate
+    if (this.currentCalculation() !== '') {
       let error = false;
       try {
         let result = math.evaluate(this.currentCalculation());
         this.currentCalculation.set(result.toString());
       } catch (e) {
-        const displayBackground = document.getElementById('display-background')!;
-        // Flashes calculation-display and logs error
+        // Flash calculation-display red
+        const displayBackground =
+          document.getElementById('display-background')!;
         displayBackground.classList.add('error');
         setTimeout(() => {
           displayBackground.classList.remove('error');
-        } , 50);
+        }, 50);
+        // Log error
         console.error(e);
         error = true;
         return;
       } finally {
-        if (!error && !['NaN', 'Infinity'].includes(this.currentCalculation())) {
-          this.history.update(history => {
+        // Add result to history, only when there were no errors
+        if (
+          !error &&
+          !['NaN', 'Infinity'].includes(this.currentCalculation())
+        ) {
+          this.history.update((history) => {
             const newHistory = [this.currentCalculation(), ...history];
+            // Prevent history from exceeding 10 items
             if (newHistory.length > 10) {
               newHistory.pop();
             }
-            return newHistory
+            return newHistory;
           });
           this.lastActionWasEvaluation = true;
         }
@@ -109,14 +122,13 @@ export class CalculatorService {
   }
 
   addDecimalPoint() {
-    const lastChar = this.currentCalculation().slice(-1);
-    if (this.currentCalculation() === '' || this.operators.includes(lastChar) || this.parentheses.includes(lastChar)) {
-      this.currentCalculation.set(this.currentCalculation() + '0.');
-    } else {
-      const lastNumber = this.currentCalculation().split(/[+\-*\/^()]/).pop();
-      if (lastNumber && !lastNumber.includes('.')) {
-        this.currentCalculation.set(this.currentCalculation() + '.');
-      }
+    // Get the last number (e.g. 10.1)
+    const lastNumber = this.currentCalculation()
+      .split(/[+\-*\/^()]/)
+      .pop();
+    // Only add decimal point if the number doesn't include one already.
+    if (lastNumber && !lastNumber.includes('.')) {
+      this.currentCalculation.set(this.currentCalculation() + '.');
     }
   }
 
@@ -125,22 +137,29 @@ export class CalculatorService {
   }
 
   clearEntry() {
+    // If last evaluation resulted in errors, clear calculation
     if (['NaN', 'Infinity'].includes(this.currentCalculation())) {
       this.clear();
       return;
     }
+    // If the last character is an operator, delete it
+    if (
+      this.operators.includes(this.currentCalculation().slice(-1)) ||
+      this.parentheses.includes(this.currentCalculation().slice(-1))
+    ) {
+      this.backspace();
+    }
+    // Repeat backspace() until the character isn't a number
     while (this.numbers.includes(this.currentCalculation().slice(-1))) {
       this.backspace();
       if (this.currentCalculation() === '') {
         break;
       }
     }
-    if (this.operators.includes(this.currentCalculation().slice(-1)) || this.parentheses.includes(this.currentCalculation().slice(-1))) {
-      this.backspace();
-    }
   }
 
   backspace() {
+    // If last evaluation resulted in errors, clear calculation
     if (['NaN', 'Infinity'].includes(this.currentCalculation())) {
       this.clear();
       return;
@@ -152,9 +171,8 @@ export class CalculatorService {
 
   toggleSign() {
     let calculation = this.currentCalculation();
-    if (calculation === '') return;
 
-    // Findet die letzte Nummer in der Rechnung
+    // Get last number in the calculation
     const lastNumberRegex = /(-?\d+(?:\.\d+)?)$/;
     const match = calculation.match(lastNumberRegex);
 
@@ -164,11 +182,12 @@ export class CalculatorService {
 
       if (lastNumber.startsWith('-')) {
         this.currentCalculation.set(
-          calculation.slice(0, index) + lastNumber.slice(1)
+          // Remove the minus sign      ∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨
+          calculation.slice(0, index) + lastNumber.slice(1),
         );
       } else {
         this.currentCalculation.set(
-          calculation.slice(0, index) + '-' + lastNumber
+          calculation.slice(0, index) + '-' + lastNumber,
         );
       }
     }
@@ -177,5 +196,4 @@ export class CalculatorService {
   clearHistory() {
     this.history.set([]);
   }
-
 }

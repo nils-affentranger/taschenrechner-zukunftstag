@@ -1,15 +1,13 @@
-import {HostListener, inject, Injectable} from '@angular/core';
-import {CalculatorService} from "./calculator.service";
+import { Injectable } from '@angular/core';
+import { CalculatorService } from './calculator.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class KeyboardService {
-
-
   constructor(private calculatorService: CalculatorService) {}
 
-    handleKeyboardEvent(event: KeyboardEvent) {
+  handleKeyboardEvent(event: KeyboardEvent) {
     let character = '';
     switch (event.key) {
       case '0':
@@ -43,7 +41,7 @@ export class KeyboardService {
         character = '9';
         break;
       case '+':
-        character = '+'
+        character = '+';
         break;
       case '-':
         character = '-';
@@ -70,7 +68,7 @@ export class KeyboardService {
         this.calculatorService.evaluate();
         return;
       case 'Enter':
-        event.preventDefault()
+        event.preventDefault();
         this.calculatorService.evaluate();
         return;
       case 'Backspace':

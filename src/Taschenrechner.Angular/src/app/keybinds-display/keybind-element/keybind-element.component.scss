@@ -1,13 +1,13 @@
 .element {
+  background-color: rgba(211, 108, 255, 0.17);
   font-family: "JetBrains Mono", monospace;
   font-weight: 150;
-  background-color: rgba(211, 108, 255, 0.17);
-  border-radius: 8px;
   margin-bottom: 4px;
+  border-radius: 8px;
 }
 
 .keys {
   display: inline-block;
-  margin: 0;
   width: 55%;
+  margin: 0;
 }

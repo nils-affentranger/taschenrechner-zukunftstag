@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './clear-history-button.component.html',
-  styleUrl: './clear-history-button.component.scss'
+  styleUrl: './clear-history-button.component.scss',
 })
-export class ClearHistoryButtonComponent {
-
-}
+export class ClearHistoryButtonComponent {}

@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './key.component.html',
-  styleUrl: './key.component.scss'
+  styleUrl: './key.component.scss',
 })
-export class KeyComponent {
-
-}
+export class KeyComponent {}
