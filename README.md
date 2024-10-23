@@ -3,9 +3,9 @@
 ## 📋 Voraussetzungen
 
 Bevor du startest, stelle sicher, dass du Folgendes auf deinem Computer installiert hast:
-- [Visual Studio Code](https://code.visualstudio.com/)
-- [Node.js](https://nodejs.org/en/download/prebuilt-binaries)
-- [Git](https://gitforwindows.org/)
+- <a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a>
+- <a href="https://nodejs.org/en/download/prebuilt-binaries/">Node.js</a>
+- <a href="https://gitforwindows.org/">Git</a>
 
 Falls du diese Programme noch nicht installiert hast, frag bitte um Hilfe.
 
