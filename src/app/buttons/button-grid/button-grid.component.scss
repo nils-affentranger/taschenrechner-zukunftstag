@@ -1,0 +1,29 @@
+.grid-container {
+  color: #f4d0fc;
+  font-family: Arial, Helvetica, sans-serif;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2px;
+  height: 100%;
+}
+
+// Abgerundete Ecken
+::ng-deep .cell-1x2 > button {
+  border-top-left-radius: 8px;
+}
+
+::ng-deep .cell-2x1 > button {
+  border-top-left-radius: 8px;
+}
+
+::ng-deep .cell-4x1 > button {
+  border-top-right-radius: 8px;
+}
+
+::ng-deep .cell-1x6 > button {
+  border-bottom-left-radius: 8px;
+}
+
+::ng-deep .cell-4x6 > button {
+  border-bottom-right-radius: 8px;
+}

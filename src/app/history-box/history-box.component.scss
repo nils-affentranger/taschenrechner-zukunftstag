@@ -1,0 +1,12 @@
+.history-box {
+  text-align: right;
+  min-height: 0;
+  padding: 5px 6px;
+}
+
+app-clear-history-button {
+  position: fixed;
+  z-index: 1000;
+  width: 20px;
+  height: 20px;
+}

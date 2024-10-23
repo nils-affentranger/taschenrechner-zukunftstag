@@ -1,0 +1,197 @@
+import { effect, Injectable, signal, WritableSignal } from '@angular/core';
+import { create, all } from 'mathjs';
+
+const math = create(all);
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CalculatorService {
+  private lastActionWasEvaluation = false;
+
+  // Typen
+  private numbers = '0123456789';
+  private operators = '+-*/^';
+  private parentheses = '()';
+
+  // Den aktuellen Zustand aus dem Browser abrufen
+  currentCalculation: WritableSignal<string> = signal(
+    localStorage.getItem('currentCalculation') || '',
+  );
+  history: WritableSignal<string[]> = signal(
+    JSON.parse(localStorage.getItem('history') || '[]'),
+  );
+
+  constructor() {
+    // Den aktuellen Zustand im Browser speichern
+    effect(() => {
+      localStorage.setItem('currentCalculation', this.currentCalculation());
+    });
+
+    effect(() => {
+      localStorage.setItem('history', JSON.stringify(this.history()));
+    });
+
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'currentCalculation') {
+        this.currentCalculation.set(event.newValue || '');
+      } else if (event.key === 'history') {
+        this.history.set(JSON.parse(event.newValue || '[]'));
+      }
+    });
+
+    // math.js für präzisere Ergebnisse konfigurieren
+    math.config({
+      number: 'BigNumber',
+      precision: 13,
+    });
+  }
+
+  // den Typ eines Zeichens bestimmen - Hilfreich zur Validierung von Eingaben
+  determineType(
+    character: string,
+  ): 'number' | 'operator' | 'parenthesis' | 'undefined' {
+    if (this.numbers.includes(character)) {
+      return 'number';
+    } else if (this.operators.includes(character)) {
+      return 'operator';
+    } else if (this.parentheses.includes(character)) {
+      return 'parenthesis';
+    } else {
+      console.error(`Unknown character: ${character}`);
+      return 'undefined';
+    }
+  }
+
+  addCharacter(char: string): void {
+    let calc = this.currentCalculation();
+    let lastChar = calc.slice(-1);
+
+    // Wenn die letzte Aktion eine Auswertung war, Rechnung löschen
+    if (this.lastActionWasEvaluation) {
+      this.clear();
+      calc = '';
+    }
+
+    // Füge den Input zu calc hinzu
+    calc += char;
+
+    // Setze currentCalculation auf modifizierte calc
+    this.currentCalculation.set(calc);
+    this.lastActionWasEvaluation = false;
+  }
+
+  evaluate() {
+    // Nur auswerten, wenn es etwas auszuwerten gibt
+    if (this.currentCalculation() !== '') {
+      let error = false;
+      try {
+        let result = math.evaluate(this.currentCalculation());
+        this.currentCalculation.set(result.toString());
+      } catch (e) {
+        // Calculation-display rot erblitzen lassen
+        const displayBackground =
+          document.getElementById('display-background')!;
+        displayBackground.classList.add('error');
+        setTimeout(() => {
+          displayBackground.classList.remove('error');
+        }, 50);
+        console.error(e);
+        error = true;
+        return;
+      } finally {
+        // Das Resultat nur dem Verlauf hinzufügen, wenn es keine Fehler gab
+        if (
+          !error &&
+          !['NaN', 'Infinity'].includes(this.currentCalculation())
+        ) {
+          this.history.update((history) => {
+            const newHistory = [this.currentCalculation(), ...history];
+            // Verhindern, dass die Länge des Verlaufes nicht 10 Zeilen überschreitet
+            if (newHistory.length > 10) {
+              newHistory.pop();
+            }
+            return newHistory;
+          });
+          this.lastActionWasEvaluation = true;
+        }
+      }
+    }
+  }
+
+  addDecimalPoint() {
+    // Die letzte nummer in der Rechnung holen (e.g. 10.1)
+    const lastNumber = this.currentCalculation()
+      .split(/[+\-*\/^()]/)
+      .pop();
+    // Nur einen Dezimalpunkt hinzufügen, wenn die letzte Zahl noch keinen enthält.
+    if (lastNumber && !lastNumber.includes('.')) {
+      this.currentCalculation.set(this.currentCalculation() + '.');
+    }
+  }
+
+  clear() {
+    this.currentCalculation.set('');
+  }
+
+  clearEntry() {
+    // Wenn die letzte Auswertung zu Fehlern führte, Berechnung löschen
+    if (['NaN', 'Infinity'].includes(this.currentCalculation())) {
+      this.clear();
+      return;
+    }
+    // Wenn das letzte Zeichen ein Operator ist, diesen löschen
+    if (
+      this.operators.includes(this.currentCalculation().slice(-1)) ||
+      this.parentheses.includes(this.currentCalculation().slice(-1))
+    ) {
+      this.backspace();
+    }
+    // backspace() wiederholen, bis das letzte zeichen nicht mehr eine Zahl ist
+    while (this.numbers.includes(this.currentCalculation().slice(-1))) {
+      this.backspace();
+      if (this.currentCalculation() === '') {
+        break;
+      }
+    }
+  }
+
+  backspace() {
+    // Wenn die letzte Auswertung zu Fehlern führte, Berechnung löschen
+    if (['NaN', 'Infinity'].includes(this.currentCalculation())) {
+      this.clear();
+      return;
+    }
+    if (this.currentCalculation) {
+      this.currentCalculation.set(this.currentCalculation().slice(0, -1));
+    }
+  }
+
+  toggleSign() {
+    let calculation = this.currentCalculation();
+
+    // Die letzte nummer in der Rechnung holen (e.g. 10.1)
+    const lastNumberRegex = /(-?\d+(?:\.\d+)?)$/;
+    const match = calculation.match(lastNumberRegex);
+
+    if (match) {
+      const lastNumber = match[0];
+      const index = match.index!;
+
+      if (lastNumber.startsWith('-')) {
+        this.currentCalculation.set(
+          // Die Rechnung ohne Minuszeichen speichern
+          calculation.slice(0, index) + lastNumber.slice(1),
+        );
+      } else {
+        this.currentCalculation.set(
+          calculation.slice(0, index) + '-' + lastNumber,
+        );
+      }
+    }
+  }
+
+  clearHistory() {
+    this.history.set([]);
+  }
+}
