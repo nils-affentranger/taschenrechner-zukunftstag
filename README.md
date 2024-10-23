@@ -14,8 +14,9 @@ Falls du diese Programme noch nicht installiert hast, frag bitte um Hilfe.
 Folge diesen Schritten, um das Projekt einzurichten:
 
 ### 1. Projekt herunterladen
-Öffne die Kommandozeile (CMD) und führe folgenden Befehl aus:
+Öffne die Kommandozeile (CMD) und führe folgende Befehle aus:
 ```bash
+cd C:\Zukunftstag
 git clone https://github.com/nils-affentranger/taschenrechner-zukunftstag
 ```
 
@@ -23,6 +24,7 @@ git clone https://github.com/nils-affentranger/taschenrechner-zukunftstag
 - Starte Visual Studio Code
 - Klicke oben links auf "File"
 - Wähle "Open Workspace from File"
+- Gehe zu `C:\Zukunftstag\taschenrechner-zukunftstag`
 - Suche und wähle die Datei `taschenrechner-zukunftstag.code-workspace`
 
 ### 3. Terminal öffnen
@@ -44,16 +46,16 @@ ng s
 > 💡 `ng s` ist die Kurzform für `ng serve`
 
 ### 6. Taschenrechner öffnen
-Öffne deinen Webbrowser und gehe zu:
+Öffne Chrome und gehe zu:
 ```
 http://localhost:4200
 ```
 
 ## 🎉 Geschafft!
-Der Taschenrechner sollte jetzt in deinem Browser erscheinen. Viel Spass beim Rechnen!
+Der Taschenrechner sollte jetzt in deinem Browser erscheinen.
 
 ## ❓ Hilfe
-Falls etwas nicht funktioniert, wende dich an deine Betreuungsperson. Sie hilft dir gerne weiter!
+Falls etwas nicht funktioniert, melde dich. Wir helfen dir gerne weiter!
 
 ---
-Entwickelt für den Zukunftstag bei Exanic 2024 ✨
+Entwickelt für den Zukunftstag bei Exanic - 2024 ✨
