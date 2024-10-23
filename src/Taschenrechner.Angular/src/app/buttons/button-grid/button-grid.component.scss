@@ -5,9 +5,9 @@
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 2px;
   height: 100%;
-  margin-bottom: 10px;
 }
 
+// Rounded corners
 ::ng-deep .cell-1x2 > button {
   border-top-left-radius: 8px;
 }

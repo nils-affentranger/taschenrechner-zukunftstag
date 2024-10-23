@@ -1,17 +1,17 @@
-.display-background {
+#display-background {
+  background-color: #853c91;
   color: #f4d0fc;
-  font-family: Arial, Helvetica, sans-serif;
-  background-image: linear-gradient(
-      85.2deg,
-      rgb(111, 51, 126) 7.5%,
-      rgb(139, 62, 148) 88.7%);
+  font: 400 29px Arial, Helvetica, sans-serif;
+  text-align: right;
+  word-wrap: break-word;
   padding: 5px 9px;
   border-radius: 8px;
-  text-align: right;
-  font-weight: 400;
-  font-size: 29px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: background-color 0.8s ease-out;
 }
 
-ng-scrollbar {
-  overflow-x: scroll;
+#display-background.error {
+  background-color: #913c5a;
+  transition: background-color 50ms ease;
 }

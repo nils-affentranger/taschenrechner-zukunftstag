@@ -1,24 +1,23 @@
-import {Component, effect, HostListener, inject, OnInit} from '@angular/core';
-import {CalculatorService} from "../calculator.service";
-import {NgScrollbar} from "ngx-scrollbar";
+import { Component, effect, inject } from '@angular/core';
+import { CalculatorService } from '../calculator.service';
+import { NgScrollbar } from 'ngx-scrollbar';
 
 @Component({
   selector: 'app-calculation-display',
   standalone: true,
-  imports: [
-    NgScrollbar
-  ],
+  imports: [NgScrollbar],
   templateUrl: './calculation-display.component.html',
-  styleUrl: './calculation-display.component.scss'
+  styleUrl: './calculation-display.component.scss',
 })
 export class CalculationDisplayComponent {
+  private calculatorService = inject(CalculatorService);
 
-  currentCalculation: string = '';
+  currentCalculation = '';
 
-  private calculatorService = inject(CalculatorService)
-
+  // Subscribe to currentCalculation signal
   constructor() {
     effect(() => {
-      this.currentCalculation = this.calculatorService.result();});
+      this.currentCalculation = this.calculatorService.currentCalculation();
+    });
   }
 }

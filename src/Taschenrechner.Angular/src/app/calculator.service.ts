@@ -1,188 +1,198 @@
-import {inject, Injectable, signal, WritableSignal} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { effect, Injectable, signal, WritableSignal } from '@angular/core';
+import { create, all } from 'mathjs';
+
+const math = create(all);
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CalculatorService {
-  result: WritableSignal<string> = signal('0');
-  history: WritableSignal<string> = signal('');
+  private lastActionWasEvaluation = false;
 
-  http = inject(HttpClient)
+  // Types
+  private numbers = '0123456789';
+  private operators = '+-*/^';
+  private parentheses = '()';
 
-  setResult(value: string): void {
-    this.result.set(value || '0');
-  }
+  // Get the current state from the browser
+  currentCalculation: WritableSignal<string> = signal(
+    localStorage.getItem('currentCalculation') || '',
+  );
+  history: WritableSignal<string[]> = signal(
+    JSON.parse(localStorage.getItem('history') || '[]'),
+  );
 
-  setHistory(value: string): void {
-    this.history.set(value);
-  }
+  constructor() {
+    // Save the current state in the browser
+    effect(() => {
+      localStorage.setItem('currentCalculation', this.currentCalculation());
+    });
 
-  addCharacter(character: string) {
-    this.http.post<{Response: string }>(
-      '/api/calculator/addcharacter',
-      { Character: character },
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.setResult(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
+    effect(() => {
+      localStorage.setItem('history', JSON.stringify(this.history()));
+    });
+
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'currentCalculation') {
+        this.currentCalculation.set(event.newValue || '');
+      } else if (event.key === 'history') {
+        this.history.set(JSON.parse(event.newValue || '[]'));
       }
     });
+
+    // Configure math.js for more precise results
+    math.config({
+      number: 'BigNumber',
+      precision: 13,
+    });
+  }
+
+  // Determine a character's type - Helpful for validating inputs
+  determineType(
+    character: string,
+  ): 'number' | 'operator' | 'parenthesis' | 'undefined' {
+    if (this.numbers.includes(character)) {
+      return 'number';
+    } else if (this.operators.includes(character)) {
+      return 'operator';
+    } else if (this.parentheses.includes(character)) {
+      return 'parenthesis';
+    } else {
+      console.error(`Unknown character: ${character}`);
+      return 'undefined';
+    }
+  }
+
+  addCharacter(char: string): void {
+    let calc = this.currentCalculation();
+    let lastChar = calc.slice(-1);
+
+    // If last action was evaluation, clear calculation
+    if (this.lastActionWasEvaluation) {
+      this.clear();
+      calc = '';
+    }
+
+    // Add input character to calc
+    calc += char;
+
+    // Set currentCalculation to modified calc
+    this.currentCalculation.set(calc);
+    this.lastActionWasEvaluation = false;
   }
 
   evaluate() {
-    this.http.post<{Response: string }>(
-      '/api/calculator/evaluate',
-      {},
-      { withCredentials: true }
-    ).subscribe({
-        next: (response) => {
-          this.setResult(response.Response);
-          this.getHistory();
-        },
-        error: (err) => {
-          console.log("Error:", err);
+    // Only evaluate when there is something to evaluate
+    if (this.currentCalculation() !== '') {
+      let error = false;
+      try {
+        let result = math.evaluate(this.currentCalculation());
+        this.currentCalculation.set(result.toString());
+      } catch (e) {
+        // Flash calculation-display red
+        const displayBackground =
+          document.getElementById('display-background')!;
+        displayBackground.classList.add('error');
+        setTimeout(() => {
+          displayBackground.classList.remove('error');
+        }, 50);
+        // Log error
+        console.error(e);
+        error = true;
+        return;
+      } finally {
+        // Add result to history, only when there were no errors
+        if (
+          !error &&
+          !['NaN', 'Infinity'].includes(this.currentCalculation())
+        ) {
+          this.history.update((history) => {
+            const newHistory = [this.currentCalculation(), ...history];
+            // Prevent history from exceeding 10 items
+            if (newHistory.length > 10) {
+              newHistory.pop();
+            }
+            return newHistory;
+          });
+          this.lastActionWasEvaluation = true;
         }
       }
-    )
+    }
   }
 
   addDecimalPoint() {
-    this.http.post<{ Response: string}>(
-      '/api/calculator/adddecimalpoint',
-      {},
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.setResult(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    })
+    // Get the last number (e.g. 10.1)
+    const lastNumber = this.currentCalculation()
+      .split(/[+\-*\/^()]/)
+      .pop();
+    // Only add decimal point if the number doesn't include one already.
+    if (lastNumber && !lastNumber.includes('.')) {
+      this.currentCalculation.set(this.currentCalculation() + '.');
+    }
   }
 
   clear() {
-    this.http.post<{Response: string}>(
-      '/api/calculator/clear',
-      {},
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.setResult(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    })
+    this.currentCalculation.set('');
   }
 
-  ClearEntry() {
-    this.http.post<{Response: string}>(
-      '/api/calculator/clearentry',
-      {},
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.setResult(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
+  clearEntry() {
+    // If last evaluation resulted in errors, clear calculation
+    if (['NaN', 'Infinity'].includes(this.currentCalculation())) {
+      this.clear();
+      return;
+    }
+    // If the last character is an operator, delete it
+    if (
+      this.operators.includes(this.currentCalculation().slice(-1)) ||
+      this.parentheses.includes(this.currentCalculation().slice(-1))
+    ) {
+      this.backspace();
+    }
+    // Repeat backspace() until the character isn't a number
+    while (this.numbers.includes(this.currentCalculation().slice(-1))) {
+      this.backspace();
+      if (this.currentCalculation() === '') {
+        break;
       }
-    })
+    }
   }
 
   backspace() {
-    this.http.post<{Response: string}>(
-      '/api/calculator/backspace',
-      {},
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.setResult(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    })
+    // If last evaluation resulted in errors, clear calculation
+    if (['NaN', 'Infinity'].includes(this.currentCalculation())) {
+      this.clear();
+      return;
+    }
+    if (this.currentCalculation) {
+      this.currentCalculation.set(this.currentCalculation().slice(0, -1));
+    }
   }
 
   toggleSign() {
-    this.http.post<{Response: string}>(
-      '/api/calculator/togglesign',
-      {},
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.setResult(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    })
-  }
+    let calculation = this.currentCalculation();
 
-  getHistory() {
-    this.http.post<{Response: string }>(
-      '/api/calculator/gethistory',
-      { Separator: "<br>" },
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.setHistory(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    });
-  }
+    // Get last number in the calculation
+    const lastNumberRegex = /(-?\d+(?:\.\d+)?)$/;
+    const match = calculation.match(lastNumberRegex);
 
-  getCalculation() {
-    this.http.get<{Response: string}>(
-      '/api/calculator/getcalculation',
-      { withCredentials: true }
-    ).subscribe({
-      next: (response) => {
-        this.setResult(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    });
-  }
+    if (match) {
+      const lastNumber = match[0];
+      const index = match.index!;
 
-  setMaxHistoryLength() {
-    this.http.post<{ Response: string }>(
-      '/api/calculator/changemaxhistorylength',
-      {Character: 100},
-      {withCredentials: true}
-    ).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
+      if (lastNumber.startsWith('-')) {
+        this.currentCalculation.set(
+          // Save the calculation without the minus sign
+          calculation.slice(0, index) + lastNumber.slice(1),
+        );
+      } else {
+        this.currentCalculation.set(
+          calculation.slice(0, index) + '-' + lastNumber,
+        );
       }
-    });
+    }
   }
 
   clearHistory() {
-    this.http.post<{ Response: string }>(
-      '/api/calculator/clearhistory',
-      {},
-      {withCredentials: true}
-    ).subscribe({
-      next: (response) => {
-        console.log(response.Response);
-        this.setHistory(response.Response);
-      },
-      error: (err) => {
-        console.log("Error:", err);
-      }
-    })
+    this.history.set([]);
   }
-
 }
