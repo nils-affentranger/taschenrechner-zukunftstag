@@ -2,6 +2,7 @@
  "cells": [
   {
    "cell_type": "markdown",
+   "id": "bfb27da4",
    "metadata": {},
    "source": [
     "# Taschenrechner - Zukunftstag Exanic 2024\n",
@@ -17,6 +18,7 @@
   },
   {
    "cell_type": "markdown",
+   "id": "ea45f005",
    "metadata": {},
    "source": [
     "## 🚀 Installation und Start\n",
@@ -25,6 +27,7 @@
   },
   {
    "cell_type": "markdown",
+   "id": "82c27d2e",
    "metadata": {},
    "source": [
     "### 1. Projekt herunterladen\n",
@@ -34,6 +37,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
+   "id": "4a8d1ecc",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -43,6 +47,7 @@
   },
   {
    "cell_type": "markdown",
+   "id": "81ad05f9",
    "metadata": {},
    "source": [
     "### 2. Open the Project in Visual Studio Code\n",
@@ -55,6 +60,7 @@
   },
   {
    "cell_type": "markdown",
+   "id": "6e904181",
    "metadata": {},
    "source": [
     "### 3. Open Terminal in Visual Studio Code\n",
@@ -63,6 +69,7 @@
   },
   {
    "cell_type": "markdown",
+   "id": "b47eb61e",
    "metadata": {},
    "source": [
     "### 4. Install Dependencies\n",
@@ -72,6 +79,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
+   "id": "4600f7e2",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -80,6 +88,7 @@
   },
   {
    "cell_type": "markdown",
+   "id": "e3efd71a",
    "metadata": {},
    "source": [
     "> 💡 This step may take a few minutes, don’t worry!"
@@ -87,6 +96,7 @@
   },
   {
    "cell_type": "markdown",
+   "id": "9838a21a",
    "metadata": {},
    "source": [
     "### 5. Start the Project\n",
@@ -96,6 +106,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
+   "id": "12c22882",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -104,6 +115,7 @@
   },
   {
    "cell_type": "markdown",
+   "id": "815ccbb4",
    "metadata": {},
    "source": [
     "### 6. Open the Calculator\n",
@@ -112,6 +124,7 @@
   },
   {
    "cell_type": "markdown",
+   "id": "c9625497",
    "metadata": {},
    "source": [
     "## 🎉 Finished!\n",
@@ -123,6 +136,7 @@
   },
   {
    "cell_type": "markdown",
+   "id": "9a0ad6cf",
    "metadata": {},
    "source": [
     "---\n",
@@ -133,13 +147,21 @@
  ],
  "metadata": {
   "kernelspec": {
-   "display_name": "Python 3",
+   "display_name": "Python 3 (ipykernel)",
    "language": "python",
    "name": "python3"
   },
   "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
    "name": "python",
-   "version": "3.12.7"
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.5"
   }
  },
  "nbformat": 4,

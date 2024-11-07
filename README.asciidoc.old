@@ -1,0 +1,36 @@
++*In[ ]:*+
+[source, ipython3]
+----
+!mkdir -p /Zukunftstag
+!cd /Zukunftstag && git clone https://github.com/nils-affentranger/taschenrechner-zukunftstag
+----
+
+
+
+
+
+
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+!cd /Zukunftstag/taschenrechner-zukunftstag && npm install
+----
+
+
+
+
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+!cd /Zukunftstag/taschenrechner-zukunftstag && ng serve
+----
+
+
+
+
+
+
