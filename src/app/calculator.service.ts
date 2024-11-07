@@ -22,6 +22,7 @@ export class CalculatorService {
     JSON.parse(localStorage.getItem('history') || '[]'),
   );
 
+  // #region constructor
   constructor() {
     // Den aktuellen Zustand im Browser speichern
     effect(() => {
@@ -46,22 +47,7 @@ export class CalculatorService {
       precision: 13,
     });
   }
-
-  // den Typ eines Zeichens bestimmen - Hilfreich zur Validierung von Eingaben
-  determineType(
-    character: string,
-  ): 'number' | 'operator' | 'parenthesis' | 'undefined' {
-    if (this.numbers.includes(character)) {
-      return 'number';
-    } else if (this.operators.includes(character)) {
-      return 'operator';
-    } else if (this.parentheses.includes(character)) {
-      return 'parenthesis';
-    } else {
-      console.error(`Unknown character: ${character}`);
-      return 'undefined';
-    }
-  }
+  // #endregion
 
   addCharacter(char: string): void {
     let calc = this.currentCalculation();
@@ -73,10 +59,10 @@ export class CalculatorService {
       calc = '';
     }
 
-    // Füge den Input zu calc hinzu
+    // Füge das Zeichen zu calc hinzu
     calc += char;
 
-    // Setze currentCalculation auf modifizierte calc
+    // Setze currentCalculation auf modifizierte calc variable
     this.currentCalculation.set(calc);
     this.lastActionWasEvaluation = false;
   }
@@ -84,27 +70,12 @@ export class CalculatorService {
   evaluate() {
     // Nur auswerten, wenn es etwas auszuwerten gibt
     if (this.currentCalculation() !== '') {
-      let error = false;
       try {
         let result = math.evaluate(this.currentCalculation());
         this.currentCalculation.set(result.toString());
-      } catch (e) {
-        // Calculation-display rot erblitzen lassen
-        const displayBackground =
-          document.getElementById('display-background')!;
-        displayBackground.classList.add('error');
-        setTimeout(() => {
-          displayBackground.classList.remove('error');
-        }, 50);
-        console.error(e);
-        error = true;
-        return;
-      } finally {
+
         // Das Resultat nur dem Verlauf hinzufügen, wenn es keine Fehler gab
-        if (
-          !error &&
-          !['NaN', 'Infinity'].includes(this.currentCalculation())
-        ) {
+        if (!['NaN', 'Infinity'].includes(this.currentCalculation())) {
           this.history.update((history) => {
             const newHistory = [this.currentCalculation(), ...history];
             // Verhindern, dass die Länge des Verlaufes nicht 10 Zeilen überschreitet
@@ -115,6 +86,15 @@ export class CalculatorService {
           });
           this.lastActionWasEvaluation = true;
         }
+      } catch (e) {
+        // Calculation-display rot erblitzen lassen
+        const displayBackground =
+          document.getElementById('display-background')!;
+        displayBackground.classList.add('error');
+        setTimeout(() => {
+          displayBackground.classList.remove('error');
+        }, 50);
+        console.error(e);
       }
     }
   }
@@ -124,6 +104,7 @@ export class CalculatorService {
     const lastNumber = this.currentCalculation()
       .split(/[+\-*\/^()]/)
       .pop();
+
     // Nur einen Dezimalpunkt hinzufügen, wenn die letzte Zahl noch keinen enthält.
     if (lastNumber && !lastNumber.includes('.')) {
       this.currentCalculation.set(this.currentCalculation() + '.');
@@ -140,6 +121,7 @@ export class CalculatorService {
       this.clear();
       return;
     }
+
     // Wenn das letzte Zeichen ein Operator ist, diesen löschen
     if (
       this.operators.includes(this.currentCalculation().slice(-1)) ||
@@ -147,6 +129,7 @@ export class CalculatorService {
     ) {
       this.backspace();
     }
+
     // backspace() wiederholen, bis das letzte zeichen nicht mehr eine Zahl ist
     while (this.numbers.includes(this.currentCalculation().slice(-1))) {
       this.backspace();

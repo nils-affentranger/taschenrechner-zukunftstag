@@ -7,8 +7,6 @@ Bevor du startest, stelle sicher, dass du Folgendes auf deinem Computer installi
 - [Node.js](https://nodejs.org/en/download/prebuilt-binaries/)
 - [Git](https://gitforwindows.org/)
 
-Falls du diese Programme noch nicht installiert hast, frage bitte um Hilfe.
-
 ## 🚀 Installation und Start
 
 Folge diesen Schritten, um das Projekt einzurichten:
@@ -58,4 +56,4 @@ Der Taschenrechner sollte jetzt in deinem Browser erscheinen.
 Falls etwas nicht funktioniert, melde dich. Wir helfen dir gerne weiter!
 
 ---
-Entwickelt für den Zukunftstag bei Exanic - 2024 ✨
+Entwickelt für den Zukunftstag bei Exanic - 2024
