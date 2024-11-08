@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CalculatorService } from '../../calculator.service';
 
 @Component({
   selector: 'app-clear-history-button',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
   templateUrl: './clear-history-button.component.html',
   styleUrl: './clear-history-button.component.scss',
 })
-export class ClearHistoryButtonComponent {}
+export class ClearHistoryButtonComponent {
+
+  private calculatorService = inject(CalculatorService);
+
+  onClick() {
+    this.calculatorService.clearHistory();
+    console.log('History cleared');
+  }
+}

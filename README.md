@@ -1,61 +1,17 @@
 # Taschenrechner - Zukunftstag Exanic 2024
 
-## 📋 Voraussetzungen
+### Challenge 1
 
-Bevor du startest, stelle sicher, dass du Folgendes auf deinem Computer installiert hast:
-- [Visual Studio Code](https://code.visualstudio.com/)
-- [Node.js](https://nodejs.org/en/download/prebuilt-binaries/)
-- [Git](https://gitforwindows.org/)
+> 💡 Links kannst du öffnen, in dem du ctrl gedrückt hälst und auf den Link klickst
 
-Falls du diese Programme noch nicht installiert hast, frage bitte um Hilfe.
+Datei: [button-grid.html](./src/app/buttons/button-grid/button-grid.component.html)
 
-## 🚀 Installation und Start
+Bei der zweituntersten Reihe von Knöpfen fehlt der Text (1, 2, 3, +).
 
-Folge diesen Schritten, um das Projekt einzurichten:
+### Challenge 2
 
-### 1. Projekt herunterladen
-Öffne die Kommandozeile (CMD) und führe folgende Befehle aus:
-```bash
-cd C:\Zukunftstag
-git clone https://github.com/nils-affentranger/taschenrechner-zukunftstag
-```
+Der Plus Knopf macht noch nichts. Finde heraus, wie du diesen Knopf so programmierst, dass der Rechnung ein plus hinzugefügt wird, wenn der Knopf geklickt wird.
 
-### 2. Projekt in Visual Studio Code öffnen
-- Starte Visual Studio Code
-- Klicke oben links auf "File"
-- Wähle "Open Workspace from File"
-- Gehe zu `C:\Zukunftstag\taschenrechner-zukunftstag`
-- Suche und wähle die Datei `taschenrechner-zukunftstag.code-workspace`
+### Challenge 3
 
-### 3. Terminal öffnen
-- Klicke oben auf "Terminal"
-- Wähle "New Terminal"
-
-### 4. Abhängigkeiten installieren
-Im geöffneten Terminal diesen Befehl eingeben:
-```bash
-npm install
-```
-> 💡 Dieser Schritt kann eine Weile dauern - keine Sorge!
-
-### 5. Projekt starten
-Nach der Installation diesen Befehl ausführen:
-```bash
-ng s
-```
-> 💡 `ng s` ist die Kurzform für `ng serve`
-
-### 6. Taschenrechner öffnen
-Öffne Chrome und gehe zu:
-```
-http://localhost:4200
-```
-
-## 🎉 Geschafft!
-Der Taschenrechner sollte jetzt in deinem Browser erscheinen.
-
-## ❓ Hilfe
-Falls etwas nicht funktioniert, melde dich. Wir helfen dir gerne weiter!
-
----
-Entwickelt für den Zukunftstag bei Exanic - 2024 ✨
+Die Knöpfe sehen noch nicht schön aus. Setze den hintergrund der Knöpfe auf #a25bb3 und passe dier textfarbe so an, dass 

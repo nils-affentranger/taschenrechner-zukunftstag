@@ -20,9 +20,4 @@ export class HistoryBoxComponent {
       this.history = this.calculatorService.history().join('<br>');
     });
   }
-
-  onClick() {
-    this.calculatorService.clearHistory();
-    console.log('History cleared');
-  }
 }

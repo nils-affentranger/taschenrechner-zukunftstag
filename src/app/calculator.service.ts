@@ -33,15 +33,7 @@ export class CalculatorService {
       localStorage.setItem('history', JSON.stringify(this.history()));
     });
 
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'currentCalculation') {
-        this.currentCalculation.set(event.newValue || '');
-      } else if (event.key === 'history') {
-        this.history.set(JSON.parse(event.newValue || '[]'));
-      }
-    });
-
-    // math.js für präzisere Ergebnisse konfigurieren
+    // math.js (math.evaluate() Funktion) für präzisere Ergebnisse konfigurieren
     math.config({
       number: 'BigNumber',
       precision: 13,
@@ -59,6 +51,10 @@ export class CalculatorService {
       calc = '';
     }
 
+    // Verhindern, dass am Anfang der Rechnung ein Operator hinzugefügt wird
+
+    // Weitere Ideen?
+
     // Füge das Zeichen zu calc hinzu
     calc += char;
 
@@ -73,6 +69,8 @@ export class CalculatorService {
       try {
         let result = math.evaluate(this.currentCalculation());
         this.currentCalculation.set(result.toString());
+
+        // Geteilt durch 0 besser handhaben
 
         // Das Resultat nur dem Verlauf hinzufügen, wenn es keine Fehler gab
         if (!['NaN', 'Infinity'].includes(this.currentCalculation())) {
@@ -100,7 +98,7 @@ export class CalculatorService {
   }
 
   addDecimalPoint() {
-    // Die letzte nummer in der Rechnung holen (e.g. 10.1)
+    // Die letzte nummer in der Rechnung holen (Bsp. 10.1)
     const lastNumber = this.currentCalculation()
       .split(/[+\-*\/^()]/)
       .pop();
@@ -116,12 +114,6 @@ export class CalculatorService {
   }
 
   clearEntry() {
-    // Wenn die letzte Auswertung zu Fehlern führte, Berechnung löschen
-    if (['NaN', 'Infinity'].includes(this.currentCalculation())) {
-      this.clear();
-      return;
-    }
-
     // Wenn das letzte Zeichen ein Operator ist, diesen löschen
     if (
       this.operators.includes(this.currentCalculation().slice(-1)) ||
@@ -133,7 +125,7 @@ export class CalculatorService {
     // backspace() wiederholen, bis das letzte zeichen nicht mehr eine Zahl ist
     while (this.numbers.includes(this.currentCalculation().slice(-1))) {
       this.backspace();
-      if (this.currentCalculation() === '') {
+      if (this.currentCalculation().slice(-1) === '') {
         break;
       }
     }

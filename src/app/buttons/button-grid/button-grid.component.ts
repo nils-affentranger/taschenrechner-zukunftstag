@@ -10,5 +10,5 @@ import { CalculatorService } from '../../calculator.service';
   styleUrl: './button-grid.component.scss',
 })
 export class ButtonGridComponent {
-  calculatorService = inject(CalculatorService);
+  calc = inject(CalculatorService);
 }
