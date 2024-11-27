@@ -1,12 +1,23 @@
 import { effect, Injectable, signal, WritableSignal } from '@angular/core';
 import { create, all } from 'mathjs';
+import { last } from 'rxjs';
 
 const math = create(all);
+var originalDivide = math.divide;
+math.import({
+  divide: function (a: number, b: number) {
+    if (math.isZero(b)) {
+      throw new Error('Cannot devide by zero');
+    }
+    return originalDivide(a, b);
+  }
+}, {override: true})
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalculatorService {
+
   private lastActionWasEvaluation = false;
 
   // Typen
@@ -41,9 +52,29 @@ export class CalculatorService {
   }
   // #endregion
 
+  determineType(
+    character: string,
+  ): 'number' | 'operator' | 'parenthesis' | 'undefined' {
+    if (this.numbers.includes(character)) {
+      return 'number';
+    } else if (this.operators.includes(character)) {
+      return 'operator';
+    } else if (this.parentheses.includes(character)) {
+      return 'parenthesis';
+    } else {
+      console.error(`Unknown character: ${character}`);
+      return 'undefined';
+    }
+  }
+
   addCharacter(char: string): void {
     let calc = this.currentCalculation();
-    let lastChar = calc.slice(-1);
+    const lastChar = calc.slice(-1);
+    const type = this.determineType(char);
+
+    if (calc == '' && type == 'operator') {
+      return;
+    }
 
     // Wenn die letzte Aktion eine Auswertung war, Rechnung löschen
     if (this.lastActionWasEvaluation) {
@@ -85,6 +116,11 @@ export class CalculatorService {
           this.lastActionWasEvaluation = true;
         }
       } catch (e) {
+        let message = 'Cannot divide by zero';
+        if (e instanceof Error && e.message === 'Cannot devide by zero')
+        {
+          this.currentCalculation.set(message);
+        } 
         // Calculation-display rot erblitzen lassen
         const displayBackground =
           document.getElementById('display-background')!;

@@ -1,31 +1,31 @@
 <div class="grid-container">
-  <div></div> <!-- Leere Zelle -->
+  <div></div>
   <app-button (click)="calc.clear()" class="cell-2x1">C</app-button>
   <app-button (click)="calc.clearEntry()">CE</app-button>
-  <app-button (click)="calc.backspace()" class="cell-4x1">&larr;</app-button>
+  <app-button (click)="calc.backspace()" class="cell-4x1">←</app-button>
 
   <app-button (click)="calc.addCharacter('^')" class="cell-1x2">^</app-button>
   <app-button (click)="calc.addCharacter('(')">(</app-button>
   <app-button (click)="calc.addCharacter(')')">)</app-button>
-  <app-button (click)="calc.addCharacter('/')">&div;</app-button>
+  <app-button (click)="calc.addCharacter('/')">÷</app-button>
 
   <app-button (click)="calc.addCharacter('7')">7</app-button>
   <app-button (click)="calc.addCharacter('8')">8</app-button>
   <app-button (click)="calc.addCharacter('9')">9</app-button>
-  <app-button (click)="calc.addCharacter('*')">&times;</app-button>
+  <app-button (click)="calc.addCharacter('*')">×</app-button>
 
   <app-button (click)="calc.addCharacter('4')">4</app-button>
   <app-button (click)="calc.addCharacter('5')">5</app-button>
   <app-button (click)="calc.addCharacter('6')">6</app-button>
-  <app-button (click)="calc.addCharacter('-')">&minus;</app-button>
+  <app-button (click)="calc.addCharacter('-')">−</app-button>
    
-  <!-- Hier fehlt der Text -->
-  <app-button (click)="calc.addCharacter('1')"></app-button>
-  <app-button (click)="calc.addCharacter('2')"></app-button>
-  <app-button (click)="calc.addCharacter('3')"></app-button>
+  <!-- Challenge 1 - Knöpfe haben keinen Text -->
+  <app-button (click)="calc.addCharacter('1')">1</app-button>
+  <app-button (click)="calc.addCharacter('2')">2</app-button>
+  <app-button (click)="calc.addCharacter('3')">3</app-button>
 
-  <!-- Plus-Knopf hinzufügen -->
-  <app-button></app-button>
+  <!-- Challenge 2 - Plus Knopf -->
+  <app-button (click)="calc.addCharacter('+')">+</app-button>
 
   <app-button (click)="calc.toggleSign()" class="cell-1x6">&pm;</app-button>
   <app-button (click)="calc.addCharacter('0')">0</app-button>
