@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  angular-app:
+    build: .
+    ports:
+      - "4230:4200"
+    container_name: taschenrechner-angular
