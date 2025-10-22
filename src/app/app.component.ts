@@ -1,5 +1,5 @@
 import { Component, HostListener, inject } from "@angular/core";
-import { CommonModule } from "@angular/common";
+
 import { CalculationDisplayComponent } from "./calculation-display/calculation-display.component";
 import { HistoryBoxComponent } from "./history-box/history-box.component";
 import { ButtonGridComponent } from "./buttons/button-grid/button-grid.component";
@@ -9,12 +9,11 @@ import { KeyboardService } from "./keyboard.service";
 @Component({
   selector: "app-root",
   imports: [
-    CommonModule,
     CalculationDisplayComponent,
     ButtonGridComponent,
     HistoryBoxComponent,
-    KeybindsDisplayComponent,
-  ],
+    KeybindsDisplayComponent
+],
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
 })
