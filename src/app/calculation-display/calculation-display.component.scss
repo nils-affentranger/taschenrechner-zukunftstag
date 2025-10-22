@@ -1,7 +1,6 @@
 #display-background {
-  background-color: #853c91;
+  background-color: #b234c5;
   color: #f4d0fc;
-  font: 400 29px Arial, Helvetica, sans-serif;
   text-align: right;
   word-wrap: break-word;
   padding: 5px 9px;
@@ -9,9 +8,11 @@
   overflow-y: auto;
   overflow-x: hidden;
   transition: background-color 0.8s ease-out;
+  font-weight: 500;
+  font-size: 24px;
 }
 
 #display-background.error {
-  background-color: #913c5a;
+  background-color: #c43f6e;
   transition: background-color 50ms ease;
 }
