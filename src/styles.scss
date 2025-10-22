@@ -1,6 +1,12 @@
-html {
-  background-image: url(./assets/tobias-oetiker-xpX6NpnzWDc-unsplash.jpg);
-  background-size: cover;
-  color: #f4d0fc;
-  font-family: Arial, Helvetica, sans-serif;
+body {
+  background: #c95edb;
+  background: linear-gradient(
+    35deg,
+    rgba(201, 94, 219, 1) 0%,
+    rgb(179, 60, 206) 50%,
+    rgb(165, 68, 157) 100%
+  );
+  font-family: "Arial", Helvetica, sans-serif;
+  margin: 0;
+  height: 100vh;
 }
