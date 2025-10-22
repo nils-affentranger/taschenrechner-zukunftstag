@@ -1,18 +1,15 @@
-import { Component, effect, inject } from '@angular/core';
-import { CalculatorService } from '../calculator.service';
-import { NgScrollbar } from 'ngx-scrollbar';
+import { Component, effect, inject } from "@angular/core";
+import { CalculatorService } from "../calculator.service";
 
 @Component({
-  selector: 'app-calculation-display',
-  standalone: true,
-  imports: [NgScrollbar],
-  templateUrl: './calculation-display.component.html',
-  styleUrl: './calculation-display.component.scss',
+  selector: "app-calculation-display",
+  templateUrl: "./calculation-display.component.html",
+  styleUrl: "./calculation-display.component.scss",
 })
 export class CalculationDisplayComponent {
   private calculatorService = inject(CalculatorService);
 
-  currentCalculation = '';
+  currentCalculation = "";
 
   constructor() {
     effect(() => {

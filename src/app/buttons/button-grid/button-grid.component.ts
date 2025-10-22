@@ -3,11 +3,10 @@ import { ButtonComponent } from '../button/button.component';
 import { CalculatorService } from '../../calculator.service';
 
 @Component({
-  selector: 'app-button-grid',
-  standalone: true,
-  imports: [ButtonComponent],
-  templateUrl: './button-grid.component.html',
-  styleUrl: './button-grid.component.scss',
+    selector: 'app-button-grid',
+    imports: [ButtonComponent],
+    templateUrl: './button-grid.component.html',
+    styleUrl: './button-grid.component.scss'
 })
 export class ButtonGridComponent {
   calc = inject(CalculatorService);

@@ -8,7 +8,6 @@ import { KeyboardService } from "./keyboard.service";
 
 @Component({
   selector: "app-root",
-  standalone: true,
   imports: [
     CommonModule,
     CalculationDisplayComponent,
