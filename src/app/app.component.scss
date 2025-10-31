@@ -1,10 +1,6 @@
 .calculator {
-  background: linear-gradient(
-    35deg,
-    rgb(129, 24, 153) 7.5%,
-    rgb(139, 16, 148) 88.7%
-  );
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.247);
+  background: linear-gradient(35deg, #811899 7.5%, #8b1094 88.7%);
+  box-shadow: 0 0 30px #a446b9;
   display: flex;
   flex-direction: column;
   gap: 10px;

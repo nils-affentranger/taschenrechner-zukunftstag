@@ -9,10 +9,11 @@ button {
   align-items: center;
   user-select: none;
   background-color: #be4ecf;
-  color: white;
+  color: #dc68ee;
 }
 :hover {
   background-color: #d05fe9;
+  cursor: pointer;
 }
 :active {
   background-color: #da73f1;

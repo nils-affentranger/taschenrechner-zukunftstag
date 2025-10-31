@@ -35,7 +35,6 @@ export class CalculatorService {
     JSON.parse(localStorage.getItem("history") || "[]")
   );
 
-  // #region constructor
   constructor() {
     // Den aktuellen Zustand im Browser speichern
     effect(() => {
@@ -52,7 +51,6 @@ export class CalculatorService {
       precision: 13,
     });
   }
-  // #endregion
 
   determineType(
     character: string
@@ -74,17 +72,13 @@ export class CalculatorService {
     const lastChar = calc.slice(-1);
     const type = this.determineType(char);
 
-    if ((calc == "" || this.lastActionWasEvaluation) && type == "operator") {
-      return;
-    }
-
     // Wenn die letzte Aktion eine Auswertung war, Rechnung löschen
     if (this.lastActionWasEvaluation) {
       this.clear();
       calc = "";
     }
 
-    // Verhindern, dass am Anfang der Rechnung ein Operator hinzugefügt wird
+    // TODO: Verhindern, dass am Anfang der Rechnung ein Operator hinzugefügt wird
 
     // Weitere Ideen?
 
@@ -106,10 +100,13 @@ export class CalculatorService {
         // Geteilt durch 0 besser handhaben
 
         // Das Resultat nur dem Verlauf hinzufügen, wenn es keine Fehler gab
-        if (!["NaN", "Infinity"].includes(this.currentCalculation())) {
+        if (
+          !["NaN", "Infinity"].includes(this.currentCalculation()) &&
+          this.currentCalculation() !== this.history()[0]
+        ) {
           this.history.update((history) => {
             const newHistory = [this.currentCalculation(), ...history];
-            // Verhindern, dass die Länge des Verlaufes nicht 10 Zeilen überschreitet
+            // Verhindern, dass die Länge des Verlaufs nicht 10 Zeilen überschreitet
             if (newHistory.length > 10) {
               newHistory.pop();
             }
