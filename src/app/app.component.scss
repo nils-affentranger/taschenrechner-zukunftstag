@@ -1,9 +1,6 @@
-.background {
-  background-image: linear-gradient(
-    85.2deg,
-    rgb(74, 35, 83) 7.5%,
-    rgb(107, 53, 112) 88.7%
-  );
+.calculator {
+  background: linear-gradient(35deg, #811899 7.5%, #8b1094 88.7%);
+  box-shadow: 0 0 30px #a446b9;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -40,7 +37,7 @@
 }
 
 app-history-box {
-  background-color: #a25bb3;
+  background-color: #d065ebb9;
   flex-grow: 1;
   min-height: 0;
   margin: 0;
@@ -50,7 +47,6 @@ app-history-box {
 
 app-button-grid {
   color: #f4d0fc;
-  font-family: Arial, Helvetica, sans-serif;
   flex-shrink: 0;
   height: 40%;
 }

@@ -1,63 +1,86 @@
-import { effect, Injectable, signal, WritableSignal } from '@angular/core';
-import { create, all } from 'mathjs';
+import { effect, Injectable, signal, WritableSignal } from "@angular/core";
+import { create, all } from "mathjs";
+import { last } from "rxjs";
 
 const math = create(all);
+var originalDivide = math.divide;
+math.import(
+  {
+    divide: function (a: number, b: number) {
+      if (math.isZero(b)) {
+        throw new Error("Cannot devide by zero");
+      }
+      return originalDivide(a, b);
+    },
+  },
+  { override: true }
+);
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CalculatorService {
   private lastActionWasEvaluation = false;
 
   // Typen
-  private numbers = '0123456789';
-  private operators = '+-*/^';
-  private parentheses = '()';
+  private numbers = "0123456789";
+  private operators = "+-*/^";
+  private parentheses = "()";
 
   // Den aktuellen Zustand aus dem Browser abrufen
   currentCalculation: WritableSignal<string> = signal(
-    localStorage.getItem('currentCalculation') || '',
+    localStorage.getItem("currentCalculation") || ""
   );
   history: WritableSignal<string[]> = signal(
-    JSON.parse(localStorage.getItem('history') || '[]'),
+    JSON.parse(localStorage.getItem("history") || "[]")
   );
 
-  // #region constructor
   constructor() {
     // Den aktuellen Zustand im Browser speichern
     effect(() => {
-      localStorage.setItem('currentCalculation', this.currentCalculation());
+      localStorage.setItem("currentCalculation", this.currentCalculation());
     });
 
     effect(() => {
-      localStorage.setItem('history', JSON.stringify(this.history()));
+      localStorage.setItem("history", JSON.stringify(this.history()));
     });
 
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'currentCalculation') {
-        this.currentCalculation.set(event.newValue || '');
-      } else if (event.key === 'history') {
-        this.history.set(JSON.parse(event.newValue || '[]'));
-      }
-    });
-
-    // math.js für präzisere Ergebnisse konfigurieren
+    // math.js (math.evaluate() Funktion) für präzisere Ergebnisse konfigurieren
     math.config({
-      number: 'BigNumber',
+      number: "BigNumber",
       precision: 13,
     });
   }
-  // #endregion
+
+  determineType(
+    character: string
+  ): "number" | "operator" | "parenthesis" | "undefined" {
+    if (this.numbers.includes(character)) {
+      return "number";
+    } else if (this.operators.includes(character)) {
+      return "operator";
+    } else if (this.parentheses.includes(character)) {
+      return "parenthesis";
+    } else {
+      console.error(`Unknown character: ${character}`);
+      return "undefined";
+    }
+  }
 
   addCharacter(char: string): void {
     let calc = this.currentCalculation();
-    let lastChar = calc.slice(-1);
+    const lastChar = calc.slice(-1);
+    const type = this.determineType(char);
 
     // Wenn die letzte Aktion eine Auswertung war, Rechnung löschen
     if (this.lastActionWasEvaluation) {
       this.clear();
-      calc = '';
+      calc = "";
     }
+
+    // TODO: Verhindern, dass am Anfang der Rechnung ein Operator hinzugefügt wird
+
+    // Weitere Ideen?
 
     // Füge das Zeichen zu calc hinzu
     calc += char;
@@ -69,16 +92,21 @@ export class CalculatorService {
 
   evaluate() {
     // Nur auswerten, wenn es etwas auszuwerten gibt
-    if (this.currentCalculation() !== '') {
+    if (this.currentCalculation() !== "") {
       try {
         let result = math.evaluate(this.currentCalculation());
         this.currentCalculation.set(result.toString());
 
+        // Geteilt durch 0 besser handhaben
+
         // Das Resultat nur dem Verlauf hinzufügen, wenn es keine Fehler gab
-        if (!['NaN', 'Infinity'].includes(this.currentCalculation())) {
+        if (
+          !["NaN", "Infinity"].includes(this.currentCalculation()) &&
+          this.currentCalculation() !== this.history()[0]
+        ) {
           this.history.update((history) => {
             const newHistory = [this.currentCalculation(), ...history];
-            // Verhindern, dass die Länge des Verlaufes nicht 10 Zeilen überschreitet
+            // Verhindern, dass die Länge des Verlaufs nicht 10 Zeilen überschreitet
             if (newHistory.length > 10) {
               newHistory.pop();
             }
@@ -87,12 +115,16 @@ export class CalculatorService {
           this.lastActionWasEvaluation = true;
         }
       } catch (e) {
+        let message = "Cannot divide by zero";
+        if (e instanceof Error && e.message === "Cannot devide by zero") {
+          this.currentCalculation.set(message);
+        }
         // Calculation-display rot erblitzen lassen
         const displayBackground =
-          document.getElementById('display-background')!;
-        displayBackground.classList.add('error');
+          document.getElementById("display-background")!;
+        displayBackground.classList.add("error");
         setTimeout(() => {
-          displayBackground.classList.remove('error');
+          displayBackground.classList.remove("error");
         }, 50);
         console.error(e);
       }
@@ -100,28 +132,22 @@ export class CalculatorService {
   }
 
   addDecimalPoint() {
-    // Die letzte nummer in der Rechnung holen (e.g. 10.1)
+    // Die letzte nummer in der Rechnung holen (Bsp. 10.1)
     const lastNumber = this.currentCalculation()
       .split(/[+\-*\/^()]/)
       .pop();
 
     // Nur einen Dezimalpunkt hinzufügen, wenn die letzte Zahl noch keinen enthält.
-    if (lastNumber && !lastNumber.includes('.')) {
-      this.currentCalculation.set(this.currentCalculation() + '.');
+    if (lastNumber && !lastNumber.includes(".")) {
+      this.currentCalculation.set(this.currentCalculation() + ".");
     }
   }
 
   clear() {
-    this.currentCalculation.set('');
+    this.currentCalculation.set("");
   }
 
   clearEntry() {
-    // Wenn die letzte Auswertung zu Fehlern führte, Berechnung löschen
-    if (['NaN', 'Infinity'].includes(this.currentCalculation())) {
-      this.clear();
-      return;
-    }
-
     // Wenn das letzte Zeichen ein Operator ist, diesen löschen
     if (
       this.operators.includes(this.currentCalculation().slice(-1)) ||
@@ -133,7 +159,7 @@ export class CalculatorService {
     // backspace() wiederholen, bis das letzte zeichen nicht mehr eine Zahl ist
     while (this.numbers.includes(this.currentCalculation().slice(-1))) {
       this.backspace();
-      if (this.currentCalculation() === '') {
+      if (this.currentCalculation().slice(-1) === "") {
         break;
       }
     }
@@ -141,7 +167,7 @@ export class CalculatorService {
 
   backspace() {
     // Wenn die letzte Auswertung zu Fehlern führte, Berechnung löschen
-    if (['NaN', 'Infinity'].includes(this.currentCalculation())) {
+    if (["NaN", "Infinity"].includes(this.currentCalculation())) {
       this.clear();
       return;
     }
@@ -161,14 +187,14 @@ export class CalculatorService {
       const lastNumber = match[0];
       const index = match.index!;
 
-      if (lastNumber.startsWith('-')) {
+      if (lastNumber.startsWith("-")) {
         this.currentCalculation.set(
           // Die Rechnung ohne Minuszeichen speichern
-          calculation.slice(0, index) + lastNumber.slice(1),
+          calculation.slice(0, index) + lastNumber.slice(1)
         );
       } else {
         this.currentCalculation.set(
-          calculation.slice(0, index) + '-' + lastNumber,
+          calculation.slice(0, index) + "-" + lastNumber
         );
       }
     }
