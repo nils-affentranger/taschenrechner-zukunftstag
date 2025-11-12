@@ -17,23 +17,3 @@ button {
 :focus {
   outline: none;
 }
-
-.cell-1x2 > button {
-  border-top-left-radius: 8px;
-}
-
-.cell-2x1 > button {
-  border-top-left-radius: 8px;
-}
-
-.cell-4x1 > button {
-  border-top-right-radius: 8px;
-}
-
-.cell-1x6 > button {
-  border-bottom-left-radius: 8px;
-}
-
-.cell-4x6 > button {
-  border-bottom-right-radius: 8px;
-}
