@@ -1,6 +1,5 @@
-/* Buttons schöner gestalten */
-
 button {
+  display: flex;
   border: none;
   font-size: 14px;
   width: 100%;
@@ -10,14 +9,31 @@ button {
   user-select: none;
   background-color: #be4ecf;
   color: #dc68ee;
-}
-:hover {
-  background-color: #d05fe9;
-  cursor: pointer;
+  border-radius: 8px;
 }
 :active {
   background-color: #da73f1;
 }
 :focus {
   outline: none;
+}
+
+.cell-1x2 > button {
+  border-top-left-radius: 8px;
+}
+
+.cell-2x1 > button {
+  border-top-left-radius: 8px;
+}
+
+.cell-4x1 > button {
+  border-top-right-radius: 8px;
+}
+
+.cell-1x6 > button {
+  border-bottom-left-radius: 8px;
+}
+
+.cell-4x6 > button {
+  border-bottom-right-radius: 8px;
 }

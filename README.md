@@ -36,6 +36,11 @@ Füge dazu das Symbol `assets/clear.svg` in den Knopf [clear-history-button.comp
 
 ### Challenge 5
 
+Zur Zeit werden die Buttons nicht erhellt, wenn man mit der Maus darüber fährt.
+Deine Aufgabe ist es jetzt das richtige file zu suchen und darin diesen erhellenden Effekt hinzuzufügen.
+
+### Challenge 6
+
 Im Moment erlaubt der Rechner, dass ein Operator (+, -, ×, ÷) am Anfang der Rechnung stehen kann.  
 Beispiel: `*2+2` ist keine gültige Rechnung. Finde heraus, wie du das verhindern kannst.
 
@@ -47,7 +52,7 @@ Verwende dazu ein `if`-Statement. Beispiel:
 
 ```ts
 if (rechnung == leer) {
-  return;
+  ...
 }
 ```
 

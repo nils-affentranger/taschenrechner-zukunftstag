@@ -8,7 +8,7 @@ math.import(
   {
     divide: function (a: number, b: number) {
       if (math.isZero(b)) {
-        throw new Error("Cannot devide by zero");
+        throw new Error("Cannot divide by zero");
       }
       return originalDivide(a, b);
     },
@@ -115,8 +115,9 @@ export class CalculatorService {
           this.lastActionWasEvaluation = true;
         }
       } catch (e) {
+        console.log(e);
         let message = "Cannot divide by zero";
-        if (e instanceof Error && e.message === "Cannot devide by zero") {
+        if (e instanceof Error && e.message === "Cannot divide by zero") {
           this.currentCalculation.set(message);
         }
         // Calculation-display rot erblitzen lassen
